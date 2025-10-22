@@ -1,6 +1,7 @@
-import { Loader2 } from 'lucide-react'
 import { Outlet } from 'react-router-dom'
 
+import { ErrorPage } from '@/components/error-page'
+import { LoadingPage } from '@/components/loading-page'
 import {
   RestaurantProvider,
   useRestaurant,
@@ -11,33 +12,8 @@ import { Middleware } from '../app/middleware'
 function RestaurantGuard() {
   const { restaurant, isLoading, error } = useRestaurant()
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="space-y-2 text-center">
-          <Loader2 className="text-primary mx-auto size-8 animate-spin" />
-
-          <p className="text-muted-foreground text-sm">
-            Carregando restaurante...
-          </p>
-        </div>
-      </div>
-    )
-  }
-
-  if (error || !restaurant) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="max-w-md text-center">
-          <h1 className="text-2xl font-bold">Restaurante não encontrado</h1>
-
-          <p className="text-muted-foreground mt-2 text-sm">
-            {error || 'Verifique se o endereço está correto'}
-          </p>
-        </div>
-      </div>
-    )
-  }
+  if (isLoading) return <LoadingPage text="Carregando restaurante..." />
+  if (error || !restaurant) return <ErrorPage error={error} />
 
   return <Outlet />
 }

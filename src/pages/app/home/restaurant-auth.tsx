@@ -10,7 +10,7 @@ export function RestaurantAuth() {
   const [showEmailForm, setShowEmailForm] = useState(false)
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 px-4">
       <p className="text-center text-sm">
         Faça login e peça com mais agilidade
       </p>

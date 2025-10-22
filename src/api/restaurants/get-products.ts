@@ -3,6 +3,7 @@ import { api } from '@/lib/axios'
 export interface Product {
   id: string
   name: string
+  description: string | null
   priceInCents: number
   photoUrl: string | null
   active: boolean
