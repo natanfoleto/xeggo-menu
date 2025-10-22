@@ -3,7 +3,6 @@ import { api } from '@/lib/axios'
 export interface Product {
   id: string
   name: string
-  description: string | null
   priceInCents: number
   photoUrl: string | null
   active: boolean
@@ -20,11 +19,23 @@ export interface GetProductsResponse {
 
 export interface GetProductsParams {
   slug: string
+  categoryId?: string
+  search?: string
 }
 
-export async function getProducts({ slug }: GetProductsParams) {
+export async function getProducts({
+  slug,
+  categoryId,
+  search,
+}: GetProductsParams) {
   const response = await api.deauth.get<GetProductsResponse>(
     `/restaurants/${slug}/products`,
+    {
+      params: {
+        ...(categoryId && { categoryId }),
+        ...(search && { search }),
+      },
+    },
   )
 
   return response.data.products

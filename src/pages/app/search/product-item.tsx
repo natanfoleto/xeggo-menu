@@ -21,10 +21,10 @@ interface ProductItemProps {
 
 export function ProductItem({ product, slug }: ProductItemProps) {
   return (
-    <div className="flex items-center gap-4 border-b px-4 py-6 last:border-0">
-      <div className="flex-1 space-y-4">
+    <div className="flex items-center gap-4 border-b p-4 last:border-0">
+      <div className="flex-1 space-y-2">
         <div>
-          <h3 className="text-lg font-medium">{product.name}</h3>
+          <h2 className="font-medium">{product.name}</h2>
 
           {product.description && (
             <p className="text-muted-foreground text-xs">
@@ -53,7 +53,7 @@ export function ProductItem({ product, slug }: ProductItemProps) {
         <p>{formatCurrency(product.priceInCents / 100)}</p>
       </div>
 
-      <Avatar className="size-20 rounded-lg">
+      <Avatar className="size-24 rounded-lg">
         <AvatarImage
           src={product.photoUrl || ''}
           alt={product.name}
