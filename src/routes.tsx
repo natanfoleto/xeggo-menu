@@ -2,8 +2,9 @@ import { createBrowserRouter } from 'react-router-dom'
 
 import { AppLayout } from './pages/_layouts/app'
 import { NotFound } from './pages/404'
-import { Home } from './pages/app/home'
-import { Menu } from './pages/app/menu'
+import { Home } from './pages/app/home/home'
+import { Info } from './pages/app/info/info'
+import { Menu } from './pages/app/menu/menu'
 
 export const router = createBrowserRouter([
   {
@@ -13,7 +14,7 @@ export const router = createBrowserRouter([
     children: [
       { path: '/:slug', element: <Home /> },
       { path: '/:slug/menu', element: <Menu /> },
-      // { path: '/:slug/info', element: <Info /> },
+      { path: '/:slug/info', element: <Info /> },
       // { path: '/:slug/sign-in', element: <SignIn /> },
       // { path: '/:slug/sign-up', element: <SignUp /> },
       // { path: '/:slug/cart', element: <Cart /> },
