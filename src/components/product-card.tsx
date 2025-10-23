@@ -27,7 +27,7 @@ export function ProductCard({
 }: ProductCardProps) {
   return (
     <Link
-      to={`/${slug}/products/${product.id}`}
+      to={`/${slug}/product/${product.id}`}
       className={cn(
         'hover:bg-muted flex items-center gap-4 border-b px-4 py-6 transition-colors',
         !lastBorder && 'last:border-0',

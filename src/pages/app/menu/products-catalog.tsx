@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import { Box, Loader2 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
-import { getCategories } from '@/api/restaurants/get-categories'
-import { getProducts } from '@/api/restaurants/get-products'
+import { getCategories } from '@/api/categories/get-categories'
+import { getProducts } from '@/api/products/get-products'
 import { useRestaurant } from '@/contexts/restaurant-context'
 
 import { CategoriesNav } from './categories-nav'

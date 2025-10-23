@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
 import { useParams } from 'react-router-dom'
 
-import { getCategories } from '@/api/restaurants/get-categories'
-import { getProducts } from '@/api/restaurants/get-products'
+import { getCategories } from '@/api/categories/get-categories'
+import { getProducts } from '@/api/products/get-products'
 import { LoadingPage } from '@/components/loading-page'
 import { PageHeader } from '@/components/page-header'
 import { useRestaurant } from '@/contexts/restaurant-context'
@@ -13,6 +13,7 @@ import { OtherCategories } from './other-categories'
 
 export function Category() {
   const { restaurant, slug } = useRestaurant()
+
   const { id } = useParams<{ id: string }>()
 
   const { data: categories, isLoading: categoriesLoading } = useQuery({

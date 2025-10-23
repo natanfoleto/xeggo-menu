@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 
-import { getCategories } from '@/api/restaurants/get-categories'
+import { getCategories } from '@/api/categories/get-categories'
 import { LoadingSection } from '@/components/loading-section'
 import { Button } from '@/components/ui/button'
 import { useRestaurant } from '@/contexts/restaurant-context'
