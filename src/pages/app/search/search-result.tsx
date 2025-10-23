@@ -3,9 +3,8 @@ import { useSearchParams } from 'react-router-dom'
 
 import { getProducts } from '@/api/restaurants/get-products'
 import { LoadingSection } from '@/components/loading-section'
+import { ProductCard } from '@/components/product-card'
 import { useRestaurant } from '@/contexts/restaurant-context'
-
-import { ProductItem } from './product-item'
 
 export function SearchResult() {
   const { slug } = useRestaurant()
@@ -26,7 +25,7 @@ export function SearchResult() {
 
   if (!products || products.length === 0) {
     return (
-      <div className="text-center">
+      <div className="py-2 text-center">
         <p className="text-muted-foreground text-sm">
           {`Nenhum produto encontrado para "${search}".`}
         </p>
@@ -34,13 +33,20 @@ export function SearchResult() {
     )
   }
 
+  const resultText =
+    products.length === 1
+      ? `1 produto encontrado para "${search}"`
+      : `${products.length} produtos encontrados para "${search}"`
+
   return (
-    <div className="space-y-2">
-      <h2 className="text-muted-foreground text-center text-sm">{`${products.length} produtos econtrados para "${search}"`}</h2>
+    <div className="space-y-2 py-2">
+      <h2 className="text-muted-foreground text-center text-sm">
+        {resultText}
+      </h2>
 
       <div className="bg-background">
         {products.map((product) => (
-          <ProductItem key={product.id} product={product} slug={slug!} />
+          <ProductCard key={product.id} product={product} slug={slug!} />
         ))}
       </div>
     </div>

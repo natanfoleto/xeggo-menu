@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import { ProductItem } from './product-item'
+import { ProductCard } from '@/components/product-card'
 
 interface CategorySectionProps {
   category: {
@@ -38,7 +38,7 @@ export const CategorySection = forwardRef<HTMLDivElement, CategorySectionProps>(
 
         <div className="bg-background">
           {category.products.map((product) => (
-            <ProductItem key={product.id} product={product} slug={slug} />
+            <ProductCard key={product.id} product={product} slug={slug} />
           ))}
         </div>
       </div>

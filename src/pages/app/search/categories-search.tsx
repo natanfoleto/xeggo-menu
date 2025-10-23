@@ -20,7 +20,7 @@ export function CategoriesSearch() {
   if (!categories || categories.length === 0) return null
 
   return (
-    <div className="space-y-3 px-4">
+    <div className="space-y-3 p-4">
       <h2>Categorias</h2>
 
       <div className="flex flex-wrap gap-3">

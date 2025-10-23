@@ -24,7 +24,7 @@ export function Search() {
       <div className="flex min-h-screen flex-col pb-16">
         <InputSearch />
 
-        <div className="flex-1 py-4">
+        <div className="flex-1">
           {hasSearch ? <SearchResult /> : <CategoriesSearch />}
         </div>
       </div>

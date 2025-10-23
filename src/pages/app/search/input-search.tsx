@@ -45,7 +45,7 @@ export function InputSearch() {
           placeholder="Buscar produtos"
           value={localValue}
           onChange={(e) => setLocalValue(e.target.value)}
-          className="placeholder:text-muted-foreground h-12 rounded-md pr-10 pl-10"
+          className="placeholder:text-muted-foreground pr-10 pl-10 text-sm"
         />
 
         {localValue && (
@@ -54,7 +54,7 @@ export function InputSearch() {
             className="absolute top-1/2 right-3 -translate-y-1/2"
             aria-label="Limpar busca"
           >
-            <X className="text-muted-foreground size-5" />
+            <X className="text-muted-foreground size-4" />
           </button>
         )}
       </div>
