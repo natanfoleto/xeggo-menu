@@ -7,22 +7,30 @@ import { getProduct } from '@/api/products/get-product'
 import { ErrorPage } from '@/components/error-page'
 import { LoadingPage } from '@/components/loading-page'
 import { PageHeader } from '@/components/page-header'
+import { useOrder } from '@/contexts/order-context'
 import { useRestaurant } from '@/contexts/restaurant-context'
 
 import { ProductActions } from './product-actions'
 import { ProductDetails } from './product-details'
 import { ProductOptions } from './product-options'
+interface CartComplement {
+  id: string
+  name: string
+  quantity: number
+  priceInCents: number
+}
 
 export function Product() {
   const { restaurant, slug } = useRestaurant()
+  const { addToBag } = useOrder()
+
   const { id } = useParams<{ id: string }>()
 
+  const [observations, setObservations] = useState('')
+  const [quantity, setQuantity] = useState(1)
   const [selectedComplements, setSelectedComplements] = useState<
     Record<string, number>
   >({})
-
-  const [quantity, setQuantity] = useState(1)
-  const [observations, setObservations] = useState('')
 
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', slug, id],
@@ -55,12 +63,32 @@ export function Product() {
   }
 
   const handleAddToCart = () => {
-    console.log({
-      product,
-      selectedComplements,
-      observations,
+    if (!product) return
+
+    const selectedComplementsList: CartComplement[] = []
+
+    product.complementGroups.forEach((group) => {
+      group.complements.forEach((complement) => {
+        const qty = selectedComplements[complement.id] || 0
+        if (qty > 0) {
+          selectedComplementsList.push({
+            id: complement.id,
+            name: complement.name,
+            quantity: qty,
+            priceInCents: complement.priceInCents || 0,
+          })
+        }
+      })
+    })
+
+    addToBag({
+      productId: product.id,
+      productName: product.name,
+      productPhotoUrl: product.photoUrl,
       quantity,
-      totalPrice,
+      priceInCents: product.priceInCents,
+      observations,
+      complements: selectedComplementsList,
     })
   }
 

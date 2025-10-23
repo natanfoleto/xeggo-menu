@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
+import { BackToTop } from '@/components/back-to-top'
 import { BottomNavigation } from '@/components/bottom-navigation'
 import { useRestaurant } from '@/contexts/restaurant-context'
 
@@ -15,9 +16,10 @@ export function Menu() {
     <>
       <Helmet title={restaurant.name} />
 
-      <div className="flex min-h-screen flex-col pb-14">
+      <div className="flex min-h-screen flex-col pb-16">
         <RestaurantInfo restaurant={restaurant} slug={slug} />
         <ProductsCatalog />
+        <BackToTop />
       </div>
 
       <BottomNavigation />

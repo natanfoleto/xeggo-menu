@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom'
 
 import { AppLayout } from './pages/_layouts/app'
 import { NotFound } from './pages/404'
+import { Bag } from './pages/app/bag/bag'
 import { Category } from './pages/app/category/category'
 import { Home } from './pages/app/home/home'
 import { Info } from './pages/app/info/info'
@@ -21,6 +22,7 @@ export const router = createBrowserRouter([
       { path: '/:slug/search', element: <Search /> },
       { path: '/:slug/category/:id', element: <Category /> },
       { path: '/:slug/product/:id', element: <Product /> },
+      { path: '/:slug/bag', element: <Bag /> },
     ],
   },
 ])

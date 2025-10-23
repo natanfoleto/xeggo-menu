@@ -1,3 +1,6 @@
+import { ZoomIn } from 'lucide-react'
+
+import { ImageModal } from '@/components/image-modal'
 import { formatCurrency } from '@/utils/format-currency'
 
 interface ProductDetailsProps {
@@ -17,11 +20,17 @@ export function ProductDetails({ product }: ProductDetailsProps) {
   return (
     <div>
       {product.photoUrl ? (
-        <img
-          src={product.photoUrl}
-          alt={product.name}
-          className="h-44 w-full object-cover"
-        />
+        <ImageModal src={product.photoUrl} alt={product.name}>
+          <button className="relative w-full">
+            <ZoomIn className="bg-foreground text-muted absolute right-1.5 bottom-2.5 rounded-md stroke-2 p-1" />
+
+            <img
+              src={product.photoUrl}
+              alt={product.name}
+              className="h-44 w-full cursor-pointer object-cover transition-opacity hover:opacity-90"
+            />
+          </button>
+        </ImageModal>
       ) : (
         <div className="bg-muted flex h-44 w-full items-center justify-center"></div>
       )}

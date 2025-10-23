@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 
 import { ErrorPage } from '@/components/error-page'
 import { LoadingPage } from '@/components/loading-page'
+import { OrderProvider } from '@/contexts/order-context'
 import {
   RestaurantProvider,
   useRestaurant,
@@ -24,7 +25,9 @@ export function AppLayout() {
       <Middleware />
 
       <RestaurantProvider>
-        <RestaurantGuard />
+        <OrderProvider>
+          <RestaurantGuard />
+        </OrderProvider>
       </RestaurantProvider>
     </>
   )
