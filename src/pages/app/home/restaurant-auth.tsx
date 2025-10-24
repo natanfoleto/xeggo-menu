@@ -1,13 +1,65 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
 import { Mail } from 'lucide-react'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useSearchParams } from 'react-router-dom'
+import { toast } from 'sonner'
+import { z } from 'zod'
 
 import { signInWithGoogle } from '@/api/auth/sign-in-with-google'
+import { signInWithLink } from '@/api/auth/sign-in-with-link'
 import { FormInput } from '@/components/form/form-input'
 import { GoogleIcon } from '@/components/google-icon'
 import { Button } from '@/components/ui/button'
+import { useRestaurant } from '@/contexts/restaurant-context'
+
+const signInSchema = z.object({
+  email: z.string().email(),
+})
+
+type SignInSchema = z.infer<typeof signInSchema>
 
 export function RestaurantAuth() {
+  const { slug } = useRestaurant()
+
+  const [searchParams] = useSearchParams()
+
   const [showEmailForm, setShowEmailForm] = useState(false)
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<SignInSchema>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: searchParams.get('email') ?? '',
+    },
+  })
+
+  const { mutateAsync: authenticateWithLink } = useMutation({
+    mutationFn: signInWithLink,
+  })
+
+  async function handleAuthenticateWithLink({ email }: SignInSchema) {
+    try {
+      await authenticateWithLink({ email })
+
+      toast.success('Enviamos um link de autenticação para seu e-mail.', {
+        action: {
+          label: 'Reenviar',
+          onClick: () => authenticateWithLink({ email }),
+        },
+      })
+    } catch (err) {
+      toast.error('Credenciais inválidas')
+    }
+  }
+
+  async function handleSignInWithGoogle() {
+    await signInWithGoogle({ slug: slug! })
+  }
 
   return (
     <div className="space-y-4 px-4">
@@ -27,7 +79,7 @@ export function RestaurantAuth() {
           </Button>
 
           <Button
-            onClick={signInWithGoogle}
+            onClick={handleSignInWithGoogle}
             variant="secondary"
             className="w-full"
           >
@@ -37,17 +89,30 @@ export function RestaurantAuth() {
         </div>
       ) : (
         <div className="space-y-2">
-          <FormInput
-            id="email"
-            type="email"
-            placeholder="E-mail"
-            autoComplete="email"
-            className="text-sm"
-          />
+          <form
+            onSubmit={handleSubmit(handleAuthenticateWithLink)}
+            className="space-y-2"
+          >
+            <FormInput
+              id="email"
+              type="email"
+              placeholder="E-mail"
+              autoCapitalize="none"
+              autoComplete="email"
+              autoCorrect="off"
+              className="text-sm"
+              {...register('email')}
+            />
 
-          <Button type="submit" className="w-full" variant="outline">
-            Continuar
-          </Button>
+            <Button
+              type="submit"
+              className="w-full"
+              variant="outline"
+              disabled={isSubmitting}
+            >
+              Continuar
+            </Button>
+          </form>
 
           <Button
             type="button"

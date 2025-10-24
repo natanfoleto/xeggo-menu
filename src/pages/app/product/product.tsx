@@ -7,18 +7,12 @@ import { getProduct } from '@/api/products/get-product'
 import { ErrorPage } from '@/components/error-page'
 import { LoadingPage } from '@/components/loading-page'
 import { PageHeader } from '@/components/page-header'
-import { useOrder } from '@/contexts/order-context'
+import { type BagComplement, useOrder } from '@/contexts/order-context'
 import { useRestaurant } from '@/contexts/restaurant-context'
 
 import { ProductActions } from './product-actions'
 import { ProductDetails } from './product-details'
 import { ProductOptions } from './product-options'
-interface CartComplement {
-  id: string
-  name: string
-  quantity: number
-  priceInCents: number
-}
 
 export function Product() {
   const { restaurant, slug } = useRestaurant()
@@ -62,14 +56,15 @@ export function Product() {
     }))
   }
 
-  const handleAddToCart = () => {
+  const handleAddToBag = () => {
     if (!product) return
 
-    const selectedComplementsList: CartComplement[] = []
+    const selectedComplementsList: BagComplement[] = []
 
     product.complementGroups.forEach((group) => {
       group.complements.forEach((complement) => {
         const qty = selectedComplements[complement.id] || 0
+
         if (qty > 0) {
           selectedComplementsList.push({
             id: complement.id,
@@ -93,12 +88,8 @@ export function Product() {
   }
 
   if (!restaurant || !slug || !id) return null
-
   if (isLoading) return <LoadingPage text="Carregando produto..." />
-
-  if (!product) {
-    return <ErrorPage error="Produto não encontrado." />
-  }
+  if (!product) return <ErrorPage error="Produto não encontrado." />
 
   return (
     <>
@@ -122,7 +113,7 @@ export function Product() {
           quantity={quantity}
           totalPrice={totalPrice}
           onQuantityChange={setQuantity}
-          onAddToCart={handleAddToCart}
+          onAddToCart={handleAddToBag}
         />
       </div>
     </>

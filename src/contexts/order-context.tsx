@@ -1,6 +1,8 @@
-import { createContext, type ReactNode, useContext, useState } from 'react'
+import { createContext, type ReactNode, useContext } from 'react'
 
-interface BagComplement {
+import { useStorage } from '@/hooks/use-storage'
+
+export interface BagComplement {
   id: string
   name: string
   quantity: number
@@ -53,12 +55,13 @@ interface OrderProviderProps {
 }
 
 export function OrderProvider({ children }: OrderProviderProps) {
-  const [bagItems, setBagItems] = useState<BagItem[]>([])
-
+  const [bagItems, setBagItems] = useStorage<BagItem[]>('bag-items', [])
   const [deliveryAddress, setDeliveryAddress] =
-    useState<DeliveryAddress | null>(null)
-
-  const [paymentMethod, setPaymentMethod] = useState<string | null>(null)
+    useStorage<DeliveryAddress | null>('delivery-address', null)
+  const [paymentMethod, setPaymentMethod] = useStorage<string | null>(
+    'payment-method',
+    null,
+  )
 
   const bagTotal = bagItems.reduce((total, item) => {
     const itemTotal = item.priceInCents * item.quantity
