@@ -2,10 +2,12 @@ import { BookOpen, LogIn, Search, ShoppingBag, User } from 'lucide-react'
 
 import { useAuth } from '@/contexts/auth-context'
 import { useOrder } from '@/contexts/order-context'
+import { useRestaurant } from '@/contexts/restaurant-context'
 
 import { NavLink } from './nav-link'
 
 export function BottomNavigation() {
+  const { restaurant } = useRestaurant()
   const { isAuthenticated } = useAuth()
   const { bagItemsCount } = useOrder()
 
@@ -26,19 +28,22 @@ export function BottomNavigation() {
           </div>
         </NavLink>
 
-        <NavLink to={`/bag`}>
-          <div className="relative flex flex-col items-center gap-1">
-            <ShoppingBag className="size-4" />
+        {!restaurant ||
+          (restaurant.isOpen && (
+            <NavLink to={`/bag`}>
+              <div className="relative flex flex-col items-center gap-1">
+                <ShoppingBag className="size-4" />
 
-            {bagItemsCount > 0 && (
-              <span className="absolute -top-2 right-0.5 flex size-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-                {bagItemsCount > 99 ? '99+' : bagItemsCount}
-              </span>
-            )}
+                {bagItemsCount > 0 && (
+                  <span className="absolute -top-2 right-0.5 flex size-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                    {bagItemsCount > 99 ? '99+' : bagItemsCount}
+                  </span>
+                )}
 
-            <span className="text-xs">Sacola</span>
-          </div>
-        </NavLink>
+                <span className="text-xs">Sacola</span>
+              </div>
+            </NavLink>
+          ))}
 
         {isAuthenticated ? (
           <NavLink to={`/profile`}>

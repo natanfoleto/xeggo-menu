@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { createOrder } from '@/api/orders/create-order'
@@ -18,7 +18,7 @@ import { CheckoutSummary } from './checkout-summary'
 
 export function Checkout() {
   const navigate = useNavigate()
-  const { restaurant } = useRestaurant()
+  const { restaurant, slug } = useRestaurant()
   const { address } = useAuth()
   const { bagItems, paymentMethods, resetOrder } = useOrder()
 
@@ -61,6 +61,11 @@ export function Checkout() {
 
   const canSubmit =
     bagItems.length > 0 && paymentMethods.length > 0 && address && !isPending
+
+  if (!restaurant) return null
+  if (!restaurant.isOpen) {
+    return <Navigate to={`/${slug}/menu`} replace />
+  }
 
   return (
     <>

@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async'
+import { Navigate } from 'react-router-dom'
 
 import { BottomNavigation } from '@/components/bottom-navigation'
 import { NavLink } from '@/components/nav-link'
@@ -11,9 +12,13 @@ import { DeliveryAddress } from './delivery-address'
 import { PaymentMethod } from './payment-method'
 
 export function Bag() {
-  const { restaurant } = useRestaurant()
+  const { restaurant, slug } = useRestaurant()
 
   if (!restaurant) return null
+
+  if (!restaurant.isOpen) {
+    return <Navigate to={`/${slug}/menu`} replace />
+  }
 
   return (
     <>
