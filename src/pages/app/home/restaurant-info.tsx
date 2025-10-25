@@ -6,6 +6,7 @@ interface RestaurantInfoProps {
   restaurant: {
     name: string
     description: string | null
+    primaryColor: string | null
     avatarUrl: string | null
     isOpen: boolean
     segments: string[]
@@ -16,7 +17,10 @@ export function RestaurantInfo({ restaurant }: RestaurantInfoProps) {
   return (
     <div>
       <div className="relative">
-        <div className="bg-muted h-24 w-full bg-gradient-to-br sm:h-40" />
+        <div
+          className="bg-muted h-24 w-full sm:h-40"
+          style={{ backgroundColor: '' }}
+        />
 
         <div className="absolute -bottom-8 left-1/2 -translate-x-1/2">
           <Avatar className="border-muted size-24 rounded-2xl border-2 shadow-lg sm:h-28 sm:w-28">

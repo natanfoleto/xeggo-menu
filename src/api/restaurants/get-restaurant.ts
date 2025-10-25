@@ -4,6 +4,7 @@ export interface Restaurant {
   id: string
   name: string
   description: string | null
+  primaryColor: string | null
   slug: string
   avatarUrl: string | null
   minOrderInCents: number | null

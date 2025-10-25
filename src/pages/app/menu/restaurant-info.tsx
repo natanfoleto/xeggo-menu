@@ -10,6 +10,8 @@ import { getInitialsName } from '@/utils/get-initials-name'
 interface RestaurantInfoProps {
   restaurant: {
     name: string
+    description: string | null
+    primaryColor: string | null
     avatarUrl: string | null
     isOpen: boolean
     segments: string[]
@@ -20,8 +22,11 @@ interface RestaurantInfoProps {
 
 export function RestaurantInfo({ restaurant }: RestaurantInfoProps) {
   return (
-    <>
-      <div className="bg-muted h-24 w-full bg-gradient-to-br sm:h-40" />
+    <div>
+      <div
+        className="bg-muted h-24 w-full sm:h-40"
+        style={{ backgroundColor: restaurant.primaryColor ?? '' }}
+      />
 
       <div className="relative flex flex-col gap-6 py-6">
         <NavLink to="/info">
@@ -76,6 +81,6 @@ export function RestaurantInfo({ restaurant }: RestaurantInfoProps) {
           )}
         </div>
       </div>
-    </>
+    </div>
   )
 }

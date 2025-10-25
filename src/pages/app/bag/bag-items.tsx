@@ -6,14 +6,6 @@ import { formatCurrency } from '@/utils/format-currency'
 export function BagItems() {
   const { bagItems, updateItemQuantity } = useOrder()
 
-  if (bagItems.length === 0) {
-    return (
-      <div className="p-4 text-center">
-        <p className="text-muted-foreground text-sm">Sua sacola está vazia</p>
-      </div>
-    )
-  }
-
   return (
     <div className="space-y-4 px-4">
       <div>
@@ -87,7 +79,7 @@ export function BagItems() {
 
       <NavLink to="/menu">
         <Button variant="link" className="w-full text-xs">
-          Adicionar mais itens
+          Adicionar {bagItems.length ? 'mais' : ''} itens
         </Button>
       </NavLink>
     </div>

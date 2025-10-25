@@ -1,0 +1,93 @@
+import { useMutation } from '@tanstack/react-query'
+import { Helmet } from 'react-helmet-async'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
+
+import { createOrder } from '@/api/orders/create-order'
+import { BottomNavigation } from '@/components/bottom-navigation'
+import { PageHeader } from '@/components/page-header'
+import { Button } from '@/components/ui/button'
+import { useAuth } from '@/contexts/auth-context'
+import { useOrder } from '@/contexts/order-context'
+import { useRestaurant } from '@/contexts/restaurant-context'
+import { formatAddress } from '@/utils/format-address'
+
+import { CheckoutAddress } from './checkout-address'
+import { CheckoutPaymentMethods } from './checkout-payment-methods'
+import { CheckoutSummary } from './checkout-summary'
+
+export function Checkout() {
+  const navigate = useNavigate()
+  const { restaurant } = useRestaurant()
+  const { address } = useAuth()
+  const { bagItems, paymentMethods, resetOrder } = useOrder()
+
+  const { mutateAsync: createOrderFn, isPending } = useMutation({
+    mutationFn: createOrder,
+    onSuccess: () => {
+      toast.success('Pedido realizado com sucesso!')
+
+      resetOrder()
+
+      navigate('/menu')
+    },
+  })
+
+  async function handleCreateOrder() {
+    if (!address) return toast.error('Selecione um endereço de entrega')
+
+    if (paymentMethods.length === 0)
+      return toast.error('Selecione ao menos uma forma de pagamento')
+
+    if (bagItems.length === 0) return toast.error('Adicione itens ao carrinho')
+
+    if (!restaurant) return toast.error('Restaurante não encontrado')
+
+    await createOrderFn({
+      restaurantId: restaurant.id,
+      deliveryAddress: formatAddress(address),
+      paymentMethods,
+      items: bagItems.map((item) => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        observations: item.observations || undefined,
+        complements: item.complements.map((comp) => ({
+          complementId: comp.id,
+          quantity: comp.quantity,
+        })),
+      })),
+    })
+  }
+
+  const canSubmit =
+    bagItems.length > 0 && paymentMethods.length > 0 && address && !isPending
+
+  return (
+    <>
+      <Helmet title="Finalizar pedido" />
+
+      <div className="flex min-h-screen flex-col pb-36">
+        <PageHeader title="Finalize seu pedido" />
+
+        <div className="flex flex-1 flex-col gap-8 p-4">
+          <CheckoutSummary />
+          <CheckoutAddress />
+          <CheckoutPaymentMethods />
+        </div>
+
+        <div className="bg-background fixed inset-x-0 bottom-16 border-t p-4">
+          <Button
+            onClick={handleCreateOrder}
+            disabled={!canSubmit}
+            className="w-full"
+            size="lg"
+          >
+            {isPending ? 'Finalizando...' : 'Finalizar pedido'}
+          </Button>
+        </div>
+      </div>
+
+      <BottomNavigation />
+    </>
+  )
+}

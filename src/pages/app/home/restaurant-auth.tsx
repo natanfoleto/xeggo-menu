@@ -72,7 +72,7 @@ export function RestaurantAuth() {
           <Button
             onClick={() => setShowEmailForm(true)}
             variant="outline"
-            className="w-full"
+            className="border-muted-foreground w-full"
           >
             <Mail className="size-4" />
             Continuar com e-mail
@@ -80,8 +80,8 @@ export function RestaurantAuth() {
 
           <Button
             onClick={handleSignInWithGoogle}
-            variant="secondary"
-            className="w-full"
+            variant="outline"
+            className="border-muted-foreground w-full"
           >
             <GoogleIcon />
             Continuar com Google
@@ -106,8 +106,8 @@ export function RestaurantAuth() {
 
             <Button
               type="submit"
-              className="w-full"
               variant="outline"
+              className="border-muted-foreground w-full"
               disabled={isSubmitting}
             >
               Continuar

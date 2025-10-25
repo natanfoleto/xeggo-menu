@@ -5,6 +5,7 @@ import { NotFound } from './pages/404'
 import { Address } from './pages/app/address/address'
 import { Bag } from './pages/app/bag/bag'
 import { Category } from './pages/app/category/category'
+import { Checkout } from './pages/app/checkout/checkout'
 import { Home } from './pages/app/home/home'
 import { Info } from './pages/app/info/info'
 import { Menu } from './pages/app/menu/menu'
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
       { path: '/:slug/category/:id', element: <Category /> },
       { path: '/:slug/product/:id', element: <Product /> },
       { path: '/:slug/bag', element: <Bag /> },
+      { path: '/:slug/checkout', element: <Checkout /> },
       { path: '/:slug/profile', element: <Profile /> },
       { path: '/:slug/profile/update', element: <UpdateProfile /> },
       { path: '/:slug/address', element: <Address /> },

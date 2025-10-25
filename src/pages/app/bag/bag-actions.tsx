@@ -1,5 +1,6 @@
 import { CircleArrowRight } from 'lucide-react'
 
+import { NavLink } from '@/components/nav-link'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/contexts/auth-context'
 import { useOrder } from '@/contexts/order-context'
@@ -29,15 +30,17 @@ export function BagActions() {
           </span>
         </div>
 
-        <Button
-          size="lg"
-          className="w-full text-base font-normal"
-          onClick={handleSubmitOrder}
-          disabled={!canSubmit}
-        >
-          Enviar pedido
-          <CircleArrowRight className="size-5" />
-        </Button>
+        <NavLink to="/checkout">
+          <Button
+            size="lg"
+            className="w-full text-base font-normal"
+            onClick={handleSubmitOrder}
+            disabled={!canSubmit}
+          >
+            Enviar pedido
+            <CircleArrowRight className="size-5" />
+          </Button>
+        </NavLink>
 
         {!canSubmit && bagItems.length > 0 && (
           <p className="text-muted-foreground text-center text-xs">
