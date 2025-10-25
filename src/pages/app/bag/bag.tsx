@@ -19,7 +19,7 @@ export function Bag() {
     <>
       <Helmet title={`Sacola - ${restaurant.name}`} />
 
-      <div className="min-h-screen pb-16">
+      <div className="relative min-h-screen pb-52">
         <PageHeader title="Sacola" />
 
         <div className="flex items-center justify-between p-4">

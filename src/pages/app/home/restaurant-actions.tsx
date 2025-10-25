@@ -1,25 +1,20 @@
-import { Link } from 'react-router-dom'
-
+import { NavLink } from '@/components/nav-link'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/contexts/auth-context'
-import { useRestaurant } from '@/contexts/restaurant-context'
 
 export function RestaurantActions() {
-  const { slug } = useRestaurant()
   const { isAuthenticated, logout } = useAuth()
-
-  if (!slug) return null
 
   return (
     <div className="space-y-4 px-4">
       <div className="space-y-1">
-        <Button asChild className="w-full">
-          <Link to={`/${slug}/menu`}>Ver cardápio</Link>
-        </Button>
+        <NavLink to="/menu">
+          <Button className="w-full">Ver cardápio</Button>
+        </NavLink>
 
-        <Button asChild className="w-full">
-          <Link to={`/${slug}/info`}>Ver restaurante</Link>
-        </Button>
+        <NavLink to="/info">
+          <Button className="w-full">Ver restaurante</Button>
+        </NavLink>
       </div>
 
       {isAuthenticated && (

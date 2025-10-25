@@ -1,44 +1,60 @@
 import { Button } from '@/components/ui/button'
 import { useOrder } from '@/contexts/order-context'
+import { useRestaurant } from '@/contexts/restaurant-context'
 
 const PAYMENT_METHODS: Record<string, string> = {
   cash: 'Dinheiro',
   creditCard: 'Cartão de Crédito',
   debitCard: 'Cartão de Débito',
   pix: 'PIX',
+  voucher: 'Voucher',
+  bankTransfer: 'Transferência Bancária',
 }
 
 export function PaymentMethod() {
-  const { paymentMethod } = useOrder()
+  const { restaurant } = useRestaurant()
+  const { paymentMethods, setPaymentMethods } = useOrder()
 
-  const handleAddPayment = () => {
-    console.log('Adicionar forma de pagamento')
+  if (!restaurant?.paymentMethods || restaurant.paymentMethods.length === 0) {
+    return null
+  }
+
+  const handleTogglePaymentMethod = (method: string) => {
+    const currentMethods = paymentMethods || []
+
+    if (currentMethods.includes(method)) {
+      setPaymentMethods(currentMethods.filter((m) => m !== method))
+    } else {
+      setPaymentMethods([...currentMethods, method])
+    }
   }
 
   return (
     <div className="space-y-4 border-t p-4">
-      <h2 className="text-muted-foreground text-sm">Forma de pagamento</h2>
+      <div>
+        <h2 className="text-sm">Formas de pagamento</h2>
+        <p className="text-muted-foreground text-xs">
+          Selecione uma ou mais formas de pagamento
+        </p>
+      </div>
 
-      {paymentMethod ? (
-        <div className="rounded-lg border p-4">
-          <p className="font-medium">
-            {PAYMENT_METHODS[paymentMethod] || paymentMethod}
-          </p>
+      <div className="flex items-center gap-1">
+        {restaurant.paymentMethods.map((method) => {
+          const isSelected = paymentMethods?.includes(method) || false
 
-          <Button
-            variant="outline"
-            size="sm"
-            className="mt-3"
-            onClick={handleAddPayment}
-          >
-            Alterar
-          </Button>
-        </div>
-      ) : (
-        <Button variant="link" className="w-full" onClick={handleAddPayment}>
-          Adicionar forma de pagamento
-        </Button>
-      )}
+          return (
+            <Button
+              key={method}
+              variant={isSelected ? 'default' : 'outline'}
+              size="xs"
+              onClick={() => handleTogglePaymentMethod(method)}
+              className="w-min text-xs font-normal transition-all"
+            >
+              {PAYMENT_METHODS[method] || method}
+            </Button>
+          )
+        })}
+      </div>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import { ChevronRight, DollarSign, ShoppingBasket } from 'lucide-react'
-import { Link } from 'react-router-dom'
 
+import { NavLink } from '@/components/nav-link'
 import { RestaurantBadges } from '@/components/restaurant-badges'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { formatCurrency } from '@/utils/format-currency'
@@ -8,7 +8,6 @@ import { formatPaymentMethods } from '@/utils/format-payment-methods'
 import { getInitialsName } from '@/utils/get-initials-name'
 
 interface RestaurantInfoProps {
-  slug: string
   restaurant: {
     name: string
     avatarUrl: string | null
@@ -19,13 +18,13 @@ interface RestaurantInfoProps {
   }
 }
 
-export function RestaurantInfo({ restaurant, slug }: RestaurantInfoProps) {
+export function RestaurantInfo({ restaurant }: RestaurantInfoProps) {
   return (
     <>
       <div className="bg-muted h-24 w-full bg-gradient-to-br sm:h-40" />
 
       <div className="relative flex flex-col gap-6 py-6">
-        <Link to={`/${slug}/info`}>
+        <NavLink to="/info">
           <ChevronRight className="absolute top-6 right-4 size-5" />
 
           <div className="flex items-start gap-4 px-4">
@@ -41,7 +40,7 @@ export function RestaurantInfo({ restaurant, slug }: RestaurantInfoProps) {
             </Avatar>
 
             <div className="space-y-2">
-              <h1 className="text-xl font-bold sm:text-3xl">
+              <h1 className="text-foreground text-xl font-bold sm:text-3xl">
                 {restaurant.name}
               </h1>
 
@@ -51,7 +50,7 @@ export function RestaurantInfo({ restaurant, slug }: RestaurantInfoProps) {
               />
             </div>
           </div>
-        </Link>
+        </NavLink>
 
         <div className="space-y-1 px-4">
           {restaurant.minOrderInCents && (

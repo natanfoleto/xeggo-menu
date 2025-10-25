@@ -36,7 +36,7 @@ export function Profile() {
       <div className="flex min-h-screen flex-col pb-16">
         <PageHeader title="Perfil" />
 
-        <div className="flex flex-1 flex-col gap-4">
+        <div className="flex flex-1 flex-col gap-0">
           <ProfileInfo user={user} />
           <ProfileActions />
           <ProfileLogout />

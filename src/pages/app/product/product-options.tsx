@@ -122,7 +122,7 @@ export function ProductOptions({
                               <Minus className="size-4" />
                             </Button>
 
-                            <span>{quantity}</span>
+                            <span className="text-sm">{quantity}</span>
 
                             <Button
                               size="icon"

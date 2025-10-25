@@ -10,7 +10,7 @@ interface ProfileInfoProps {
 
 export function ProfileInfo({ user }: ProfileInfoProps) {
   return (
-    <div className="flex flex-col items-center gap-2 p-4">
+    <div className="flex flex-col items-center gap-2 p-6">
       <Avatar className="size-16">
         <AvatarFallback className="text-muted-foreground font-medium">
           {getInitialsName(user.name)}
@@ -18,7 +18,7 @@ export function ProfileInfo({ user }: ProfileInfoProps) {
       </Avatar>
 
       <div className="text-center">
-        <p>{user.name}</p>
+        <h2>{user.name}</h2>
         <p className="text-muted-foreground text-sm">{user.email}</p>
       </div>
     </div>

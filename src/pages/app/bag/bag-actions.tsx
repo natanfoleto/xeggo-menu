@@ -1,14 +1,16 @@
 import { CircleArrowRight } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { useAuth } from '@/contexts/auth-context'
 import { useOrder } from '@/contexts/order-context'
 import { formatCurrency } from '@/utils/format-currency'
 
 export function BagActions() {
-  const { bagTotal, bagItems, deliveryAddress, paymentMethod } = useOrder()
+  const { address } = useAuth()
+  const { bagTotal, bagItems, paymentMethods } = useOrder()
 
   const canSubmit =
-    bagItems.length > 0 && deliveryAddress !== null && paymentMethod !== null
+    bagItems.length > 0 && address !== null && paymentMethods.length > 0
 
   const handleSubmitOrder = () => {
     if (!canSubmit) return
@@ -17,8 +19,8 @@ export function BagActions() {
   }
 
   return (
-    <div className="bg-background border-t p-4">
-      <div className="space-y-3">
+    <div className="bg-background fixed right-0 bottom-16 left-0 border-t p-4">
+      <div className="w-full space-y-2">
         <div className="flex items-center justify-between">
           <span className="font-medium">Total</span>
 

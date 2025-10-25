@@ -1,13 +1,10 @@
-import { Link } from 'react-router-dom'
-
+import { NavLink } from '@/components/nav-link'
 import { Button } from '@/components/ui/button'
 import { useOrder } from '@/contexts/order-context'
-import { useRestaurant } from '@/contexts/restaurant-context'
 import { formatCurrency } from '@/utils/format-currency'
 
 export function BagItems() {
   const { bagItems, updateItemQuantity } = useOrder()
-  const { slug } = useRestaurant()
 
   if (bagItems.length === 0) {
     return (
@@ -68,16 +65,16 @@ export function BagItems() {
 
               <div className="flex items-center justify-between">
                 <Button
-                  variant="ghost"
-                  className="p-0"
+                  variant="link"
+                  className="p-0 text-xs"
                   onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
                 >
                   Remover
                 </Button>
 
                 <Button
-                  variant="ghost"
-                  className="p-0"
+                  variant="link"
+                  className="p-0 text-xs"
                   onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
                 >
                   Adicionar
@@ -88,9 +85,11 @@ export function BagItems() {
         })}
       </div>
 
-      <Button variant="link" className="w-full" asChild>
-        <Link to={`/${slug}/menu`}>Adicionar mais itens</Link>
-      </Button>
+      <NavLink to="/menu">
+        <Button variant="link" className="w-full text-xs">
+          Adicionar mais itens
+        </Button>
+      </NavLink>
     </div>
   )
 }

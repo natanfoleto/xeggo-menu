@@ -100,7 +100,7 @@ export function RestaurantAuth() {
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
-              className="text-sm"
+              className="border-muted-foreground text-sm"
               {...register('email')}
             />
 

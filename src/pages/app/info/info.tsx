@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async'
-import { Link } from 'react-router-dom'
 
 import { Branding } from '@/components/branding'
+import { NavLink } from '@/components/nav-link'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'
 import { useRestaurant } from '@/contexts/restaurant-context'
@@ -28,14 +28,15 @@ export function Info() {
         <RestaurantPaymentMethods />
 
         <div className="px-4 pt-6">
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="border-foreground w-full"
-          >
-            <Link to={`/${slug}/menu`}>Voltar para o cardápio</Link>
-          </Button>
+          <NavLink to="/menu">
+            <Button
+              variant="outline"
+              size="lg"
+              className="border-muted-foreground text-foreground w-full"
+            >
+              Voltar para o cardápio
+            </Button>
+          </NavLink>
         </div>
 
         <div className="pt-6 pb-4">

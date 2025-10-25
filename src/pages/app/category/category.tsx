@@ -47,7 +47,7 @@ export function Category() {
         <PageHeader title={currentCategory?.name || 'Categoria'} />
 
         <CategoryProducts products={products || []} slug={slug} />
-        <OtherCategories categories={otherCategories} slug={slug} />
+        <OtherCategories categories={otherCategories} />
       </div>
     </>
   )

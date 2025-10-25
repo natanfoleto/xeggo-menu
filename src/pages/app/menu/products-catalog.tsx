@@ -138,7 +138,6 @@ export function ProductsCatalog() {
               categoryRefs.current[category.id] = el
             }}
             category={category}
-            slug={slug!}
           />
         ))}
       </div>

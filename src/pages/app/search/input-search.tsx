@@ -45,7 +45,7 @@ export function InputSearch() {
           placeholder="Buscar produtos"
           value={localValue}
           onChange={(e) => setLocalValue(e.target.value)}
-          className="placeholder:text-muted-foreground pr-10 pl-10 text-sm"
+          className="placeholder:text-muted-foreground border-muted-foreground pr-10 pl-10 text-sm"
         />
 
         {localValue && (

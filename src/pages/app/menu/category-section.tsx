@@ -19,11 +19,10 @@ interface CategorySectionProps {
       }[]
     }>
   }
-  slug: string
 }
 
 export const CategorySection = forwardRef<HTMLDivElement, CategorySectionProps>(
-  ({ category, slug }, ref) => {
+  ({ category }, ref) => {
     return (
       <div ref={ref}>
         <div className="p-4">
@@ -38,7 +37,7 @@ export const CategorySection = forwardRef<HTMLDivElement, CategorySectionProps>(
 
         <div className="bg-background">
           {category.products.map((product) => (
-            <ProductCard key={product.id} product={product} slug={slug} />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>

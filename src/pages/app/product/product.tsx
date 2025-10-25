@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { getProduct } from '@/api/products/get-product'
 import { ErrorPage } from '@/components/error-page'
@@ -15,6 +15,8 @@ import { ProductDetails } from './product-details'
 import { ProductOptions } from './product-options'
 
 export function Product() {
+  const navigate = useNavigate()
+
   const { restaurant, slug } = useRestaurant()
   const { addToBag } = useOrder()
 
@@ -85,6 +87,8 @@ export function Product() {
       observations,
       complements: selectedComplementsList,
     })
+
+    navigate(`/${slug}/menu`)
   }
 
   if (!restaurant || !slug || !id) return null
@@ -113,7 +117,7 @@ export function Product() {
           quantity={quantity}
           totalPrice={totalPrice}
           onQuantityChange={setQuantity}
-          onAddToCart={handleAddToBag}
+          onAddToBag={handleAddToBag}
         />
       </div>
     </>

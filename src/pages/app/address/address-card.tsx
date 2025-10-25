@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CircleCheck, EllipsisVertical } from 'lucide-react'
-import { toast } from 'sonner'
 
 import { deleteCustomerAddress } from '@/api/addresses/delete-customer-address'
 import type { CustomerAddress } from '@/api/addresses/get-customer-addresses'
@@ -26,8 +25,6 @@ export function AddressCard({ address }: AddressCardProps) {
       mutationFn: setActiveCustomerAddress,
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['customer-addresses'] })
-
-        toast.success('Endereço principal definido!')
       },
     })
 
@@ -35,8 +32,6 @@ export function AddressCard({ address }: AddressCardProps) {
     mutationFn: deleteCustomerAddress,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['customer-addresses'] })
-
-      toast.success('Endereço excluído com sucesso!')
     },
   })
 
@@ -47,9 +42,6 @@ export function AddressCard({ address }: AddressCardProps) {
   }
 
   async function handleDelete() {
-    if (address.isActive)
-      return toast.error('Não é possível excluir o endereço principal!')
-
     await deleteAddress({ addressId: address.id })
   }
 
@@ -57,7 +49,7 @@ export function AddressCard({ address }: AddressCardProps) {
     <div className="w-full rounded-md border">
       <div className="flex items-center justify-between gap-2 border-b p-4">
         <div className="flex-1 space-y-0.5">
-          <h2 className="font-medium">
+          <h2 className="text-sm font-medium">
             {address.street}, {address.number}
           </h2>
 
@@ -85,7 +77,7 @@ export function AddressCard({ address }: AddressCardProps) {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
-            <NavLink to={`/profile/address/save?id=${address.id}`}>
+            <NavLink to={`/address/save?id=${address.id}`}>
               <DropdownMenuItem>Editar</DropdownMenuItem>
             </NavLink>
 

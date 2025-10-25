@@ -8,7 +8,7 @@ interface ProductActionsProps {
   quantity: number
   totalPrice: number
   onQuantityChange: (quantity: number) => void
-  onAddToCart: () => void
+  onAddToBag: () => void
 }
 
 export function ProductActions({
@@ -16,7 +16,7 @@ export function ProductActions({
   quantity,
   totalPrice,
   onQuantityChange,
-  onAddToCart,
+  onAddToBag,
 }: ProductActionsProps) {
   return (
     <div className="bg-background fixed right-0 bottom-0 left-0 border-t">
@@ -32,7 +32,7 @@ export function ProductActions({
               <Minus className="size-4" />
             </Button>
 
-            <span className="font-semibold">{quantity}</span>
+            <span className="text-sm">{quantity}</span>
 
             <Button
               size="icon"
@@ -44,7 +44,7 @@ export function ProductActions({
             </Button>
           </div>
 
-          <Button size="lg" className="flex-1" onClick={onAddToCart}>
+          <Button size="lg" className="flex-1" onClick={onAddToBag}>
             Adicionar {formatCurrency(totalPrice / 100)}
           </Button>
         </div>

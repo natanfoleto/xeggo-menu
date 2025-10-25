@@ -10,12 +10,12 @@ export function BackToTop() {
   return (
     <div className="bg-muted flex justify-center py-6">
       <Button
-        variant="link"
+        variant="ghost"
         onClick={scrollToTop}
-        className="text-md w-full max-w-sm gap-1.5"
+        className="w-min max-w-sm gap-1.5"
       >
         Voltar ao topo
-        <ArrowUp className="size-5" />
+        <ArrowUp className="size-4" />
       </Button>
     </div>
   )

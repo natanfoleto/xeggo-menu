@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom'
-
+import { NavLink } from '@/components/nav-link'
 import { Button } from '@/components/ui/button'
 
 interface OtherCategoriesProps {
@@ -7,10 +6,9 @@ interface OtherCategoriesProps {
     id: string
     name: string
   }[]
-  slug: string
 }
 
-export function OtherCategories({ categories, slug }: OtherCategoriesProps) {
+export function OtherCategories({ categories }: OtherCategoriesProps) {
   if (categories.length === 0) return null
 
   return (
@@ -19,14 +17,14 @@ export function OtherCategories({ categories, slug }: OtherCategoriesProps) {
 
       <div className="flex flex-wrap gap-2">
         {categories.map((category) => (
-          <Button
-            key={category.id}
-            variant="outline"
-            className="font-normal"
-            asChild
-          >
-            <Link to={`/${slug}/category/${category.id}`}>{category.name}</Link>
-          </Button>
+          <NavLink to={`/category/${category.id}`} key={category.id}>
+            <Button
+              variant="outline"
+              className="text-foreground border-muted-foreground font-normal"
+            >
+              {category.name}
+            </Button>
+          </NavLink>
         ))}
       </div>
     </div>

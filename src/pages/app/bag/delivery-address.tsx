@@ -1,51 +1,56 @@
+import { NavLink } from '@/components/nav-link'
 import { Button } from '@/components/ui/button'
-import { useOrder } from '@/contexts/order-context'
+import { useAuth } from '@/contexts/auth-context'
 
 export function DeliveryAddress() {
-  const { deliveryAddress } = useOrder()
+  const { address } = useAuth()
 
   const handleAddAddress = () => {
     console.log('Adicionar endereço')
   }
 
   return (
-    <div className="space-y-4 border-t p-4">
-      <h2 className="text-muted-foreground text-sm">Endereço de entrega</h2>
+    <div className="space-y-2 border-t p-4">
+      <h2 className="text-sm">Endereço de entrega</h2>
 
-      {deliveryAddress ? (
-        <div className="rounded-lg border p-4">
-          <p className="font-medium">
-            {deliveryAddress.street}, {deliveryAddress.number}
-          </p>
-
-          {deliveryAddress.complement && (
-            <p className="text-muted-foreground text-sm">
-              {deliveryAddress.complement}
+      {address ? (
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <p className="text-sm">
+              {address.street}, {address.number}
             </p>
-          )}
 
-          <p className="text-muted-foreground text-sm">
-            {deliveryAddress.neighborhood}, {deliveryAddress.city}/
-            {deliveryAddress.state}
-          </p>
+            {address.complement && (
+              <p className="text-muted-foreground text-xs">
+                {address.complement} - {address.neighborhood}
+              </p>
+            )}
 
-          <p className="text-muted-foreground text-sm">
-            CEP: {deliveryAddress.zipCode}
-          </p>
+            <p className="text-muted-foreground text-xs">
+              CEP {address.zipCode} - {address.state} - {address.city}
+            </p>
+          </div>
 
-          <Button
-            variant="outline"
-            size="sm"
-            className="mt-3"
-            onClick={handleAddAddress}
-          >
-            Alterar endereço
-          </Button>
+          <NavLink to="/address">
+            <Button
+              variant="link"
+              className="px-0 text-xs"
+              onClick={handleAddAddress}
+            >
+              Alterar endereço
+            </Button>
+          </NavLink>
         </div>
       ) : (
-        <Button variant="link" className="w-full" onClick={handleAddAddress}>
-          Adicionar endereço
-        </Button>
+        <NavLink to="/address">
+          <Button
+            variant="link"
+            className="w-full text-xs"
+            onClick={handleAddAddress}
+          >
+            Adicionar endereço
+          </Button>
+        </NavLink>
       )}
     </div>
   )

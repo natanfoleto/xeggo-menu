@@ -20,31 +20,16 @@ interface BagItem {
   complements: BagComplement[]
 }
 
-interface DeliveryAddress {
-  zipCode: string
-  street: string
-  number: string
-  complement?: string
-  neighborhood: string
-  city: string
-  state: string
-}
-
 interface OrderContextData {
   bagItems: BagItem[]
   bagTotal: number
   bagItemsCount: number
-
-  deliveryAddress: DeliveryAddress | null
-  paymentMethod: string | null
-
+  paymentMethods: string[]
   addToBag: (item: Omit<BagItem, 'id'>) => void
   removeFromBag: (itemId: string) => void
   updateItemQuantity: (itemId: string, quantity: number) => void
   clearBag: () => void
-
-  setDeliveryAddress: (address: DeliveryAddress) => void
-  setPaymentMethod: (method: string) => void
+  setPaymentMethods: (methods: string[]) => void
   resetOrder: () => void
 }
 
@@ -56,11 +41,9 @@ interface OrderProviderProps {
 
 export function OrderProvider({ children }: OrderProviderProps) {
   const [bagItems, setBagItems] = useStorage<BagItem[]>('bag-items', [])
-  const [deliveryAddress, setDeliveryAddress] =
-    useStorage<DeliveryAddress | null>('delivery-address', null)
-  const [paymentMethod, setPaymentMethod] = useStorage<string | null>(
-    'payment-method',
-    null,
+  const [paymentMethods, setPaymentMethods] = useStorage<string[]>(
+    'payment-methods',
+    [],
   )
 
   const bagTotal = bagItems.reduce((total, item) => {
@@ -107,8 +90,7 @@ export function OrderProvider({ children }: OrderProviderProps) {
 
   const resetOrder = () => {
     clearBag()
-    setDeliveryAddress(null)
-    setPaymentMethod(null)
+    setPaymentMethods([])
   }
 
   return (
@@ -117,14 +99,12 @@ export function OrderProvider({ children }: OrderProviderProps) {
         bagItems,
         bagTotal,
         bagItemsCount,
-        deliveryAddress,
-        paymentMethod,
+        paymentMethods,
         addToBag,
         removeFromBag,
         updateItemQuantity,
         clearBag,
-        setDeliveryAddress,
-        setPaymentMethod,
+        setPaymentMethods,
         resetOrder,
       }}
     >

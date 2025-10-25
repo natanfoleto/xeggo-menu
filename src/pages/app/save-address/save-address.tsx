@@ -211,7 +211,7 @@ export function SaveAddress() {
             <Label htmlFor="zipCode">CEP</Label>
             <FormInput
               id="zipCode"
-              className="text-sm"
+              className="border-muted-foreground text-sm"
               placeholder="00000-000"
               disabled={isLoading}
               {...register('zipCode')}
@@ -223,7 +223,7 @@ export function SaveAddress() {
             <Label htmlFor="street">Rua</Label>
             <FormInput
               id="street"
-              className="text-sm"
+              className="border-muted-foreground text-sm"
               placeholder="Nome da rua"
               disabled={isLoading}
               {...register('street')}
@@ -236,7 +236,7 @@ export function SaveAddress() {
               <Label htmlFor="number">Número</Label>
               <FormInput
                 id="number"
-                className="text-sm"
+                className="border-muted-foreground text-sm"
                 placeholder="123"
                 disabled={isLoading}
                 {...register('number')}
@@ -248,7 +248,7 @@ export function SaveAddress() {
               <Label htmlFor="complement">Complemento</Label>
               <FormInput
                 id="complement"
-                className="text-sm"
+                className="border-muted-foreground text-sm"
                 placeholder="Apto, Casa..."
                 disabled={isLoading}
                 {...register('complement')}
@@ -261,7 +261,7 @@ export function SaveAddress() {
             <Label htmlFor="neighborhood">Bairro</Label>
             <FormInput
               id="neighborhood"
-              className="text-sm"
+              className="border-muted-foreground text-sm"
               placeholder="Nome do bairro"
               disabled={isLoading}
               {...register('neighborhood')}
@@ -274,7 +274,7 @@ export function SaveAddress() {
               <Label htmlFor="city">Cidade</Label>
               <FormInput
                 id="city"
-                className="text-sm"
+                className="border-muted-foreground text-sm"
                 placeholder="Nome da cidade"
                 disabled={isLoading}
                 {...register('city')}
@@ -286,7 +286,7 @@ export function SaveAddress() {
               <Label htmlFor="state">Estado</Label>
               <FormInput
                 id="state"
-                className="text-sm"
+                className="border-muted-foreground text-sm"
                 placeholder="SP"
                 maxLength={2}
                 disabled={isLoading}

@@ -1,12 +1,11 @@
-import { Link } from 'react-router-dom'
-
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { cn } from '@/lib/utils'
 import { formatCurrency } from '@/utils/format-currency'
 import { getInitialsName } from '@/utils/get-initials-name'
 
+import { NavLink } from './nav-link'
+
 interface ProductCardProps {
-  slug: string
   product: {
     id: string
     name: string
@@ -20,14 +19,10 @@ interface ProductCardProps {
   lastBorder?: boolean
 }
 
-export function ProductCard({
-  product,
-  slug,
-  lastBorder = false,
-}: ProductCardProps) {
+export function ProductCard({ product, lastBorder = false }: ProductCardProps) {
   return (
-    <Link
-      to={`/${slug}/product/${product.id}`}
+    <NavLink
+      to={`/product/${product.id}`}
       className={cn(
         'hover:bg-muted flex items-center gap-4 border-b px-4 py-6 transition-colors',
         !lastBorder && 'last:border-0',
@@ -35,7 +30,9 @@ export function ProductCard({
     >
       <div className="flex-1 space-y-4">
         <div className="space-y-1">
-          <h2 className="text-lg font-medium">{product.name}</h2>
+          <h2 className="text-foreground text-lg font-medium">
+            {product.name}
+          </h2>
 
           {product.ingredients.length > 0 && (
             <p className="text-muted-foreground line-clamp-2 text-sm">
@@ -59,6 +56,6 @@ export function ProductCard({
           {getInitialsName(product.name)}
         </AvatarFallback>
       </Avatar>
-    </Link>
+    </NavLink>
   )
 }

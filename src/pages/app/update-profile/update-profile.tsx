@@ -103,7 +103,7 @@ export function UpdateProfile() {
             <Label htmlFor="name">Nome completo</Label>
             <FormInput
               id="name"
-              className="text-sm"
+              className="border-muted-foreground text-sm"
               placeholder="Seu nome completo"
               autoCorrect="off"
               disabled={isLoadingProfile}
@@ -117,7 +117,7 @@ export function UpdateProfile() {
             <FormInput
               id="email"
               type="email"
-              className="text-sm"
+              className="border-muted-foreground text-sm"
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
@@ -135,7 +135,7 @@ export function UpdateProfile() {
                 setValue('phone', value, { shouldDirty: true })
               }
               disabled={isSubmitting || isLoadingProfile}
-              className="text-sm"
+              className="border-muted-foreground text-sm"
               error={errors.phone?.message}
             />
           </div>

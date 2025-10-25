@@ -7,16 +7,16 @@ import { ProductsCatalog } from './products-catalog'
 import { RestaurantInfo } from './restaurant-info'
 
 export function Menu() {
-  const { restaurant, slug } = useRestaurant()
+  const { restaurant } = useRestaurant()
 
-  if (!restaurant || !slug) return null
+  if (!restaurant) return null
 
   return (
     <>
       <Helmet title={restaurant.name} />
 
       <div className="flex min-h-screen flex-col pb-16">
-        <RestaurantInfo restaurant={restaurant} slug={slug} />
+        <RestaurantInfo restaurant={restaurant} />
         <ProductsCatalog />
       </div>
 

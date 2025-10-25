@@ -26,7 +26,7 @@ export function Address() {
             ))}
           </div>
 
-          <NavLink to={`/profile/address/save`}>
+          <NavLink to="/address/save">
             <Button className="w-full" variant="secondary">
               <Plus />
               Adicionar novo endereço
