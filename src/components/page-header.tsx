@@ -12,7 +12,7 @@ export function PageHeader({ title }: PageHeaderProps) {
     <div className="relative flex items-center justify-center border-b p-4">
       <button
         onClick={() => navigate(-1)}
-        className="absolute top-4 left-4"
+        className="absolute top-4 left-4 cursor-pointer"
         aria-label="Voltar"
       >
         <ArrowLeft className="size-5" />

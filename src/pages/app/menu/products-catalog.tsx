@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { getCategories } from '@/api/categories/get-categories'
 import { getProducts } from '@/api/products/get-products'
+import { BackToTop } from '@/components/back-to-top'
 import { useRestaurant } from '@/contexts/restaurant-context'
 
 import { CategoriesNav } from './categories-nav'
@@ -95,28 +96,22 @@ export function ProductsCatalog() {
     )
   }
 
-  if (!categories || categories.length === 0) {
-    return (
-      <div className="flex flex-1 flex-col items-center justify-center gap-2">
-        <Box className="text-muted-foreground size-8 stroke-1" />
-        <p className="text-muted-foreground text-sm">
-          Nenhuma categoria disponível.
-        </p>
-      </div>
-    )
-  }
-
   const productsByCategory = categories
-    .map((category) => ({
+    ?.map((category) => ({
       ...category,
       products: products?.filter((p) => p.categoryId === category.id) || [],
     }))
     .filter((cat) => cat.products.length > 0)
 
-  if (productsByCategory.length === 0) {
+  if (
+    !categories ||
+    !productsByCategory ||
+    categories.length === 0 ||
+    productsByCategory.length === 0
+  ) {
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-2">
-        <Box className="text-muted-foreground size-8 stroke-1" />
+        <Box className="text-muted-foreground size-7 stroke-1" />
 
         <p className="text-muted-foreground text-sm">
           Nenhum produto disponível.
@@ -147,6 +142,8 @@ export function ProductsCatalog() {
           />
         ))}
       </div>
+
+      {categories.length && products?.length && <BackToTop />}
     </div>
   )
 }

@@ -11,9 +11,9 @@ import { DeliveryAddress } from './delivery-address'
 import { PaymentMethod } from './payment-method'
 
 export function Bag() {
-  const { restaurant, slug } = useRestaurant()
+  const { restaurant } = useRestaurant()
 
-  if (!restaurant || !slug) return null
+  if (!restaurant) return null
 
   return (
     <>
@@ -28,7 +28,7 @@ export function Bag() {
             <p>{restaurant.name}</p>
           </div>
 
-          <NavLink to={`/${slug}/menu`}>Ver cardápio</NavLink>
+          <NavLink to={`/menu`}>Ver cardápio</NavLink>
         </div>
 
         <BagItems />

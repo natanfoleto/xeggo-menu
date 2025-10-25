@@ -53,7 +53,7 @@ export function RestaurantAuth() {
         },
       })
     } catch (err) {
-      toast.error('Credenciais inválidas')
+      console.log(err)
     }
   }
 

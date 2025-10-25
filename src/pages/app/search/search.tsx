@@ -25,7 +25,7 @@ export function Search() {
       <div className="flex min-h-screen flex-col pb-16">
         <InputSearch />
 
-        <div className="flex flex-1 flex-col items-center justify-between pb-6">
+        <div className="flex flex-1 flex-col justify-between pb-6">
           {hasSearch ? <SearchResult /> : <CategoriesSearch />}
 
           <Branding />
