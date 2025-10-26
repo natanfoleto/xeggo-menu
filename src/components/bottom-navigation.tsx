@@ -11,6 +11,8 @@ export function BottomNavigation() {
   const { isAuthenticated } = useAuth()
   const { bagItemsCount } = useOrder()
 
+  const canShowBag = !!(restaurant && restaurant.isOpen)
+
   return (
     <div className="bg-background fixed right-0 bottom-0 left-0 z-50 border-t">
       <nav className="flex h-16 items-center justify-evenly gap-4 lg:space-x-6">
@@ -20,7 +22,6 @@ export function BottomNavigation() {
             <span className="text-xs">Cardápio</span>
           </div>
         </NavLink>
-
         <NavLink to={`/search`}>
           <div className="flex flex-col items-center gap-1">
             <Search className="size-4" />
@@ -28,22 +29,21 @@ export function BottomNavigation() {
           </div>
         </NavLink>
 
-        {!restaurant ||
-          (restaurant.isOpen && (
-            <NavLink to={`/bag`}>
-              <div className="relative flex flex-col items-center gap-1">
-                <ShoppingBag className="size-4" />
+        {canShowBag && (
+          <NavLink to={`/bag`}>
+            <div className="relative flex flex-col items-center gap-1">
+              <ShoppingBag className="size-4" />
 
-                {bagItemsCount > 0 && (
-                  <span className="absolute -top-2 right-0.5 flex size-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-                    {bagItemsCount > 99 ? '99+' : bagItemsCount}
-                  </span>
-                )}
+              {bagItemsCount > 0 && (
+                <span className="absolute -top-2 right-0.5 flex size-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                  {bagItemsCount > 99 ? '99+' : bagItemsCount}
+                </span>
+              )}
 
-                <span className="text-xs">Sacola</span>
-              </div>
-            </NavLink>
-          ))}
+              <span className="text-xs">Sacola</span>
+            </div>
+          </NavLink>
+        )}
 
         {isAuthenticated ? (
           <NavLink to={`/profile`}>

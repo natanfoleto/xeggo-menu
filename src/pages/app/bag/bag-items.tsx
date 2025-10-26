@@ -4,7 +4,7 @@ import { useOrder } from '@/contexts/order-context'
 import { formatCurrency } from '@/utils/format-currency'
 
 export function BagItems() {
-  const { bagItems, updateItemQuantity } = useOrder()
+  const { bagItems, bagItemsCount, updateItemQuantity } = useOrder()
 
   return (
     <div className="space-y-4 px-4">
@@ -76,6 +76,12 @@ export function BagItems() {
           )
         })}
       </div>
+
+      {bagItemsCount === 0 && (
+        <p className="text-muted-foreground text-center text-xs">
+          Sua sacola está vazia
+        </p>
+      )}
 
       <NavLink to="/menu">
         <Button variant="link" className="w-full text-xs">

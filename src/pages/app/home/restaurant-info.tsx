@@ -18,8 +18,8 @@ export function RestaurantInfo({ restaurant }: RestaurantInfoProps) {
     <div>
       <div className="relative">
         <div
-          className="bg-muted h-24 w-full sm:h-40"
-          style={{ backgroundColor: '' }}
+          className="bg-muted h-24 w-full sm:h-32"
+          style={{ backgroundColor: restaurant.primaryColor ?? '' }}
         />
 
         <div className="absolute -bottom-8 left-1/2 -translate-x-1/2">

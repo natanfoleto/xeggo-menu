@@ -11,7 +11,7 @@ interface ProfileInfoProps {
 export function ProfileInfo({ user }: ProfileInfoProps) {
   return (
     <div className="flex flex-col items-center gap-2 p-6">
-      <Avatar className="size-16">
+      <Avatar className="size-14">
         <AvatarFallback className="text-muted-foreground font-medium">
           {getInitialsName(user.name)}
         </AvatarFallback>

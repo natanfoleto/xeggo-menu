@@ -24,7 +24,7 @@ export function RestaurantInfo({ restaurant }: RestaurantInfoProps) {
   return (
     <div>
       <div
-        className="bg-muted h-24 w-full sm:h-40"
+        className="bg-muted h-24 w-full sm:h-32"
         style={{ backgroundColor: restaurant.primaryColor ?? '' }}
       />
 

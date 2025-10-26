@@ -1,4 +1,4 @@
-import { BadgeCheck } from 'lucide-react'
+import { ShieldCheck } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 
 import { Branding } from '@/components/branding'
@@ -19,15 +19,15 @@ export function Home() {
     <>
       <Helmet title={restaurant.name} />
 
-      <div className="flex min-h-screen flex-col space-y-16">
+      <div className="flex min-h-screen flex-col space-y-12">
         <RestaurantInfo restaurant={restaurant} />
 
         {!isAuthenticated ? (
           <RestaurantAuth />
         ) : (
           user && (
-            <div className="flex flex-col items-center gap-2">
-              <BadgeCheck className="size-5" />
+            <div className="bg-muted flex flex-col items-center gap-2 py-8">
+              <ShieldCheck />
 
               <div className="text-center">
                 <p className="text-sm">{user.name}</p>

@@ -107,7 +107,7 @@ export function RestaurantAuth() {
             <Button
               type="submit"
               variant="outline"
-              className="border-muted-foreground w-full"
+              className="border-muted-foreground w-full font-normal"
               disabled={isSubmitting}
             >
               Continuar

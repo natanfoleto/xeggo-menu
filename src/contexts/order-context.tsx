@@ -1,6 +1,7 @@
 import { createContext, type ReactNode, useContext } from 'react'
 
 import { useStorage } from '@/hooks/use-storage'
+import { compareEqualItems } from '@/utils/compare-equal-items'
 
 export interface BagComplement {
   id: string
@@ -9,7 +10,7 @@ export interface BagComplement {
   priceInCents: number
 }
 
-interface BagItem {
+export interface BagItem {
   id: string
   productId: string
   productName: string
@@ -61,12 +62,29 @@ export function OrderProvider({ children }: OrderProviderProps) {
   )
 
   const addToBag = (item: Omit<BagItem, 'id'>) => {
-    const newItem: BagItem = {
-      ...item,
-      id: `${item.productId}-${Date.now()}-${Math.random()}`,
-    }
+    setBagItems((prev) => {
+      const existingItemIndex = prev.findIndex((bagItem) =>
+        compareEqualItems(item, bagItem),
+      )
 
-    setBagItems((prev) => [...prev, newItem])
+      if (existingItemIndex !== -1) {
+        const updatedItems = [...prev]
+
+        updatedItems[existingItemIndex] = {
+          ...updatedItems[existingItemIndex],
+          quantity: updatedItems[existingItemIndex].quantity + item.quantity,
+        }
+
+        return updatedItems
+      }
+
+      const newItem: BagItem = {
+        ...item,
+        id: `${item.productId}-${Date.now()}-${Math.random()}`,
+      }
+
+      return [...prev, newItem]
+    })
   }
 
   const removeFromBag = (itemId: string) => {
