@@ -14,8 +14,12 @@ export interface OrderItem {
 
 export interface CreateOrderRequest {
   restaurantId: string
-  deliveryAddress: string
+  orderType: 'delivery' | 'pickup'
+  deliveryAddress?: string | null
   paymentMethods: string[]
+  changeForInCents?: number | null
+  couponCode?: string | null
+  observations?: string | null
   items: OrderItem[]
 }
 
@@ -25,15 +29,23 @@ export interface CreateOrderResponse {
 
 export async function createOrder({
   restaurantId,
+  orderType,
   deliveryAddress,
   paymentMethods,
+  changeForInCents,
+  couponCode,
+  observations,
   items,
 }: CreateOrderRequest) {
   const response = await api.auth.post<CreateOrderResponse>(
     `/restaurants/${restaurantId}/orders`,
     {
+      orderType,
       deliveryAddress,
       paymentMethods,
+      changeForInCents,
+      couponCode,
+      observations,
       items,
     },
   )

@@ -1,12 +1,12 @@
 import { useOrder } from '@/contexts/order-context'
 import { formatCurrency } from '@/utils/format-currency'
 
-export function CheckoutSummary() {
-  const { bagItems, bagTotal } = useOrder()
+export function CheckoutItems() {
+  const { bagItems } = useOrder()
 
   return (
-    <div className="space-y-3">
-      <h2 className="text-muted-foreground text-sm">Resumo do pedido</h2>
+    <div className="space-y-2 py-4">
+      <h2 className="text-muted-foreground text-sm">Itens do pedido</h2>
 
       <div className="space-y-2">
         {bagItems.map((item) => {
@@ -27,7 +27,6 @@ export function CheckoutSummary() {
 
                 {item.complements.length > 0 && (
                   <p className="text-muted-foreground text-xs">
-                    +{' '}
                     {item.complements
                       .map((c) => `${c.quantity}x ${c.name}`)
                       .join(', ')}
@@ -35,7 +34,7 @@ export function CheckoutSummary() {
                 )}
 
                 {item.observations && (
-                  <p className="text-muted-foreground text-xs italic">
+                  <p className="text-muted-foreground text-xs">
                     Obs: {item.observations}
                   </p>
                 )}
@@ -47,13 +46,6 @@ export function CheckoutSummary() {
             </div>
           )
         })}
-
-        <div className="border-t pt-2">
-          <div className="flex justify-between font-medium">
-            <span>Total</span>
-            <span>{formatCurrency(bagTotal / 100)}</span>
-          </div>
-        </div>
       </div>
     </div>
   )

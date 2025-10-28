@@ -16,34 +16,34 @@ export function CheckoutPaymentMethods() {
   const { paymentMethods } = useOrder()
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between border-t py-4">
+      <div className="space-y-2">
         <h2 className="text-muted-foreground text-sm">Formas de pagamento</h2>
 
-        <NavLink to="/bag">
-          <Button variant="link" size="sm" className="h-auto p-0 text-xs">
-            Alterar
-          </Button>
-        </NavLink>
+        {paymentMethods.length > 0 ? (
+          <div className="space-x-2">
+            {paymentMethods.map((method) => (
+              <Badge
+                key={method}
+                variant="outline"
+                className="border-muted-foreground font-normal"
+              >
+                {PAYMENT_METHODS[method] || method}
+              </Badge>
+            ))}
+          </div>
+        ) : (
+          <p className="text-muted-foreground text-xs">
+            Nenhuma forma de pagamento selecionada
+          </p>
+        )}
       </div>
 
-      {paymentMethods.length > 0 ? (
-        <div className="space-x-2">
-          {paymentMethods.map((method) => (
-            <Badge
-              key={method}
-              variant="outline"
-              className="border-muted-foreground font-normal"
-            >
-              {PAYMENT_METHODS[method] || method}
-            </Badge>
-          ))}
-        </div>
-      ) : (
-        <p className="text-muted-foreground text-xs">
-          Nenhuma forma de pagamento selecionada
-        </p>
-      )}
+      <NavLink to="/bag">
+        <Button variant="link" size="sm" className="h-auto p-0 text-xs">
+          Alterar
+        </Button>
+      </NavLink>
     </div>
   )
 }

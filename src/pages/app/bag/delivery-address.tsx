@@ -1,13 +1,17 @@
 import { NavLink } from '@/components/nav-link'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/contexts/auth-context'
+import { useOrder } from '@/contexts/order-context'
 
 export function DeliveryAddress() {
   const { address } = useAuth()
+  const { orderType } = useOrder()
 
   const handleAddAddress = () => {
     console.log('Adicionar endereço')
   }
+
+  if (orderType === 'pickup') return null
 
   return (
     <div className="space-y-2 border-t p-4">

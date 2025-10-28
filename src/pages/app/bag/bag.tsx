@@ -8,7 +8,11 @@ import { useRestaurant } from '@/contexts/restaurant-context'
 
 import { BagActions } from './bag-actions'
 import { BagItems } from './bag-items'
+import { ChangeFor } from './change-for'
+import { CouponCode } from './coupon-code'
 import { DeliveryAddress } from './delivery-address'
+import { OrderObservations } from './order-observations'
+import { OrderType } from './order-type'
 import { PaymentMethod } from './payment-method'
 
 export function Bag() {
@@ -24,7 +28,7 @@ export function Bag() {
     <>
       <Helmet title={`Sacola - ${restaurant.name}`} />
 
-      <div className="relative min-h-screen pb-52">
+      <div className="relative min-h-screen pb-16">
         <PageHeader title="Sacola" />
 
         <div className="flex items-center justify-between p-4">
@@ -37,8 +41,12 @@ export function Bag() {
         </div>
 
         <BagItems />
+        <OrderType />
         <DeliveryAddress />
         <PaymentMethod />
+        <ChangeFor />
+        <CouponCode />
+        <OrderObservations />
         <BagActions />
       </div>
 

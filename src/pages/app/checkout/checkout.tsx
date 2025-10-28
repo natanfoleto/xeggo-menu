@@ -13,14 +13,26 @@ import { useRestaurant } from '@/contexts/restaurant-context'
 import { formatAddress } from '@/utils/format-address'
 
 import { CheckoutAddress } from './checkout-address'
+import { CheckoutCouponCode } from './checkout-coupon-code'
+import { CheckoutItems } from './checkout-items'
+import { CheckoutObservations } from './checkout-observations'
+import { CheckoutOrderType } from './checkout-order-type'
 import { CheckoutPaymentMethods } from './checkout-payment-methods'
-import { CheckoutSummary } from './checkout-summary'
+import { CheckoutValues } from './checkout-values'
 
 export function Checkout() {
   const navigate = useNavigate()
   const { restaurant, slug } = useRestaurant()
   const { address } = useAuth()
-  const { bagItems, paymentMethods, resetOrder } = useOrder()
+  const {
+    orderType,
+    paymentMethods,
+    changeForInCents,
+    couponCode,
+    observations,
+    bagItems,
+    resetOrder,
+  } = useOrder()
 
   const { mutateAsync: createOrderFn, isPending } = useMutation({
     mutationFn: createOrder,
@@ -45,8 +57,12 @@ export function Checkout() {
 
     await createOrderFn({
       restaurantId: restaurant.id,
+      orderType,
       deliveryAddress: formatAddress(address),
       paymentMethods,
+      changeForInCents,
+      couponCode,
+      observations,
       items: bagItems.map((item) => ({
         productId: item.productId,
         quantity: item.quantity,
@@ -74,10 +90,14 @@ export function Checkout() {
       <div className="flex min-h-screen flex-col pb-36">
         <PageHeader title="Finalize seu pedido" />
 
-        <div className="flex flex-1 flex-col gap-8 p-4">
-          <CheckoutSummary />
+        <div className="flex flex-1 flex-col gap-0 px-4">
+          <CheckoutItems />
+          <CheckoutOrderType />
           <CheckoutAddress />
           <CheckoutPaymentMethods />
+          <CheckoutCouponCode />
+          <CheckoutObservations />
+          <CheckoutValues />
         </div>
 
         <div className="bg-background fixed inset-x-0 bottom-16 border-t p-4">

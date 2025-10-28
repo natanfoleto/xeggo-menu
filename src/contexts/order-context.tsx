@@ -23,14 +23,27 @@ export interface BagItem {
 
 interface OrderContextData {
   bagItems: BagItem[]
+  bagSubtotal: number
   bagTotal: number
   bagItemsCount: number
+  orderType: 'delivery' | 'pickup'
   paymentMethods: string[]
+  changeForInCents: number | null
+  deliveryFeeInCents: number | null
+  discountInCents: number | null
+  couponCode: string | null
+  observations: string | null
   addToBag: (item: Omit<BagItem, 'id'>) => void
   removeFromBag: (itemId: string) => void
   updateItemQuantity: (itemId: string, quantity: number) => void
   clearBag: () => void
+  setOrderType: (type: 'delivery' | 'pickup') => void
   setPaymentMethods: (methods: string[]) => void
+  setChangeForInCents: (value: number | null) => void
+  setDeliveryFeeInCents: (value: number | null) => void
+  setDiscountInCents: (value: number | null) => void
+  setCouponCode: (code: string | null) => void
+  setObservations: (obs: string | null) => void
   resetOrder: () => void
 }
 
@@ -42,19 +55,65 @@ interface OrderProviderProps {
 
 export function OrderProvider({ children }: OrderProviderProps) {
   const [bagItems, setBagItems] = useStorage<BagItem[]>('bag-items', [])
+
+  const [orderType, setOrderType] = useStorage<'delivery' | 'pickup'>(
+    'order-type',
+    'delivery',
+  )
+
   const [paymentMethods, setPaymentMethods] = useStorage<string[]>(
     'payment-methods',
     [],
   )
 
-  const bagTotal = bagItems.reduce((total, item) => {
+  const [changeForInCents, setChangeForInCents] = useStorage<number | null>(
+    'change-for-in-cents',
+    null,
+  )
+
+  const [deliveryFeeInCents, setDeliveryFeeInCents] = useStorage<number | null>(
+    'delivery-fee-in-cents',
+    null,
+  )
+
+  const [discountInCents, setDiscountInCents] = useStorage<number | null>(
+    'discount-in-cents',
+    null,
+  )
+
+  const [couponCode, setCouponCode] = useStorage<string | null>(
+    'coupon-code',
+    null,
+  )
+
+  const [observations, setObservations] = useStorage<string | null>(
+    'observations',
+    null,
+  )
+
+  const bagSubtotal = bagItems.reduce((total, item) => {
     const itemTotal = item.priceInCents * item.quantity
+
     const complementsTotal = item.complements.reduce(
       (sum, comp) => sum + comp.priceInCents * comp.quantity,
       0,
     )
+
     return total + itemTotal + complementsTotal * item.quantity
   }, 0)
+
+  const bagTotal =
+    bagItems.reduce((total, item) => {
+      const itemTotal = item.priceInCents * item.quantity
+
+      const complementsTotal = item.complements.reduce(
+        (sum, comp) => sum + comp.priceInCents * comp.quantity,
+        0,
+      )
+      return total + itemTotal + complementsTotal * item.quantity
+    }, 0) +
+    (deliveryFeeInCents || 0) -
+    (discountInCents || 0)
 
   const bagItemsCount = bagItems.reduce(
     (count, item) => count + item.quantity,
@@ -108,21 +167,40 @@ export function OrderProvider({ children }: OrderProviderProps) {
 
   const resetOrder = () => {
     clearBag()
+    setOrderType('delivery')
     setPaymentMethods([])
+    setChangeForInCents(null)
+    setDeliveryFeeInCents(null)
+    setDiscountInCents(null)
+    setCouponCode(null)
+    setObservations(null)
   }
 
   return (
     <OrderContext.Provider
       value={{
         bagItems,
+        bagSubtotal,
         bagTotal,
         bagItemsCount,
+        orderType,
         paymentMethods,
+        changeForInCents,
+        deliveryFeeInCents,
+        discountInCents,
+        couponCode,
+        observations,
         addToBag,
         removeFromBag,
         updateItemQuantity,
         clearBag,
+        setOrderType,
         setPaymentMethods,
+        setChangeForInCents,
+        setDeliveryFeeInCents,
+        setDiscountInCents,
+        setCouponCode,
+        setObservations,
         resetOrder,
       }}
     >
