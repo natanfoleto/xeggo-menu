@@ -8,7 +8,7 @@ import { useOrder } from '@/contexts/order-context'
 export function ChangeFor() {
   const { paymentMethods, changeForInCents, setChangeForInCents } = useOrder()
 
-  const [inputValue, setInputValue] = useState(0)
+  const [inputValue, setInputValue] = useState(changeForInCents ?? 0)
 
   const hasCashPayment = paymentMethods.includes('cash')
 
@@ -28,13 +28,16 @@ export function ChangeFor() {
         <FormPriceInput
           value={changeForInCents || inputValue}
           onChange={setInputValue}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') setChangeForInCents(inputValue)
+          }}
           className="text-xs"
         />
 
         <Button
-          variant="outline"
           size="icon"
           onClick={() => setChangeForInCents(inputValue)}
+          disabled={changeForInCents === inputValue}
         >
           <ArrowRight />
         </Button>

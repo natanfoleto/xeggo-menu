@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 
 import { AppLayout } from './pages/_layouts/app'
+import { ProtectedLayout } from './pages/_layouts/protected'
 import { NotFound } from './pages/404'
 import { Address } from './pages/app/address/address'
 import { Bag } from './pages/app/bag/bag'
@@ -27,12 +28,54 @@ export const router = createBrowserRouter([
       { path: '/:slug/search', element: <Search /> },
       { path: '/:slug/category/:id', element: <Category /> },
       { path: '/:slug/product/:id', element: <Product /> },
-      { path: '/:slug/bag', element: <Bag /> },
-      { path: '/:slug/checkout', element: <Checkout /> },
-      { path: '/:slug/profile', element: <Profile /> },
-      { path: '/:slug/profile/update', element: <UpdateProfile /> },
-      { path: '/:slug/address', element: <Address /> },
-      { path: '/:slug/address/save', element: <SaveAddress /> },
+      {
+        path: '/:slug/bag',
+        element: (
+          <ProtectedLayout requireOpen>
+            <Bag />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/:slug/checkout',
+        element: (
+          <ProtectedLayout requireOpen>
+            <Checkout />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/:slug/profile',
+        element: (
+          <ProtectedLayout>
+            <Profile />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/:slug/profile/update',
+        element: (
+          <ProtectedLayout>
+            <UpdateProfile />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/:slug/address',
+        element: (
+          <ProtectedLayout>
+            <Address />
+          </ProtectedLayout>
+        ),
+      },
+      {
+        path: '/:slug/address/save',
+        element: (
+          <ProtectedLayout>
+            <SaveAddress />
+          </ProtectedLayout>
+        ),
+      },
     ],
   },
 ])

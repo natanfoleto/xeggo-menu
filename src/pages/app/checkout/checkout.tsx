@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { createOrder } from '@/api/orders/create-order'
@@ -13,6 +13,7 @@ import { useRestaurant } from '@/contexts/restaurant-context'
 import { formatAddress } from '@/utils/format-address'
 
 import { CheckoutAddress } from './checkout-address'
+import { CheckoutChangeFor } from './checkout-change-for'
 import { CheckoutCouponCode } from './checkout-coupon-code'
 import { CheckoutItems } from './checkout-items'
 import { CheckoutObservations } from './checkout-observations'
@@ -22,8 +23,9 @@ import { CheckoutValues } from './checkout-values'
 
 export function Checkout() {
   const navigate = useNavigate()
-  const { restaurant, slug } = useRestaurant()
+
   const { address } = useAuth()
+  const { restaurant } = useRestaurant()
   const {
     orderType,
     paymentMethods,
@@ -78,11 +80,6 @@ export function Checkout() {
   const canSubmit =
     bagItems.length > 0 && paymentMethods.length > 0 && address && !isPending
 
-  if (!restaurant) return null
-  if (!restaurant.isOpen) {
-    return <Navigate to={`/${slug}/menu`} replace />
-  }
-
   return (
     <>
       <Helmet title="Finalizar pedido" />
@@ -95,6 +92,7 @@ export function Checkout() {
           <CheckoutOrderType />
           <CheckoutAddress />
           <CheckoutPaymentMethods />
+          <CheckoutChangeFor />
           <CheckoutCouponCode />
           <CheckoutObservations />
           <CheckoutValues />

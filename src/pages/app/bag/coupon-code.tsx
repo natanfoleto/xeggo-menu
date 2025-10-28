@@ -132,7 +132,6 @@ export function CouponCode() {
           />
 
           <Button
-            variant="outline"
             size="icon"
             onClick={handleApplyCoupon}
             disabled={!inputValue.trim() || isPending}

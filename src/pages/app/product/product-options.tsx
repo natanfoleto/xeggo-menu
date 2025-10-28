@@ -47,7 +47,7 @@ export function ProductOptions({
   }
 
   return (
-    <div className="bg-muted pb-24">
+    <div className="bg-muted">
       {complementGroups.length > 0 && (
         <div className="bg-background divide-y">
           {complementGroups.map((group) => {
@@ -147,7 +147,7 @@ export function ProductOptions({
         </div>
       )}
 
-      <div className="bg-muted space-y-2 border-t px-4 py-8">
+      <div className="bg-muted space-y-2 border-t px-4 pt-8 pb-40">
         <Label htmlFor="observations" className="text-md font-normal">
           Observações
         </Label>

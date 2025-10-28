@@ -22,6 +22,7 @@ export function BottomNavigation() {
             <span className="text-xs">Cardápio</span>
           </div>
         </NavLink>
+
         <NavLink to={`/search`}>
           <div className="flex flex-col items-center gap-1">
             <Search className="size-4" />
@@ -29,7 +30,7 @@ export function BottomNavigation() {
           </div>
         </NavLink>
 
-        {canShowBag && (
+        {isAuthenticated && canShowBag && (
           <NavLink to={`/bag`}>
             <div className="relative flex flex-col items-center gap-1">
               <ShoppingBag className="size-4" />

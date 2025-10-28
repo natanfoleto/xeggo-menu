@@ -11,6 +11,7 @@ import {
   type GetCustomerProfileResponse,
 } from '@/api/customers/get-customer-profile'
 import { useStorage } from '@/hooks/use-storage'
+import { resetOrder } from '@/utils/reset-order'
 
 export interface CustomerProfile extends GetCustomerProfileResponse {}
 
@@ -97,6 +98,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setUser(null)
     setAddress(null)
     setAddresses([])
+    resetOrder()
     signOut()
   }
 
