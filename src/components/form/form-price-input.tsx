@@ -1,4 +1,4 @@
-import { type KeyboardEvent, useState } from 'react'
+import { type KeyboardEvent, useEffect, useState } from 'react'
 
 import { FormInput } from '@/components/form/form-input'
 import { formatCurrency } from '@/utils/format-currency'
@@ -6,7 +6,7 @@ import { formatCurrency } from '@/utils/format-currency'
 interface PriceInputProps {
   value: number
   onChange: (value: number) => void
-  onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void
+  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void
   disabled?: boolean
   error?: string
   className?: string
@@ -23,6 +23,10 @@ export function FormPriceInput({
   const [displayValue, setDisplayValue] = useState<string>(
     formatCurrency(value / 100),
   )
+
+  useEffect(() => {
+    setDisplayValue(formatCurrency(value / 100))
+  }, [value])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value

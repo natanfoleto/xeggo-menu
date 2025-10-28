@@ -8,6 +8,7 @@ export interface Restaurant {
   slug: string
   avatarUrl: string | null
   minOrderInCents: number | null
+  deliveryFeeInCents: number | null
   zipCode: string | null
   street: string | null
   number: string | null

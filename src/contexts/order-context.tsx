@@ -3,6 +3,8 @@ import { createContext, type ReactNode, useContext } from 'react'
 import { useStorage } from '@/hooks/use-storage'
 import { compareEqualItems } from '@/utils/compare-equal-items'
 
+import { useRestaurant } from './restaurant-context'
+
 export interface BagComplement {
   id: string
   name: string
@@ -40,7 +42,6 @@ interface OrderContextData {
   setOrderType: (type: 'delivery' | 'pickup') => void
   setPaymentMethods: (methods: string[]) => void
   setChangeForInCents: (value: number | null) => void
-  setDeliveryFeeInCents: (value: number | null) => void
   setDiscountInCents: (value: number | null) => void
   setCouponCode: (code: string | null) => void
   setObservations: (obs: string | null) => void
@@ -54,6 +55,8 @@ interface OrderProviderProps {
 }
 
 export function OrderProvider({ children }: OrderProviderProps) {
+  const { restaurant } = useRestaurant()
+
   const [bagItems, setBagItems] = useStorage<BagItem[]>('bag-items', [])
 
   const [orderType, setOrderType] = useStorage<'delivery' | 'pickup'>(
@@ -71,11 +74,6 @@ export function OrderProvider({ children }: OrderProviderProps) {
     null,
   )
 
-  const [deliveryFeeInCents, setDeliveryFeeInCents] = useStorage<number | null>(
-    'delivery-fee-in-cents',
-    null,
-  )
-
   const [discountInCents, setDiscountInCents] = useStorage<number | null>(
     'discount-in-cents',
     null,
@@ -90,6 +88,8 @@ export function OrderProvider({ children }: OrderProviderProps) {
     'observations',
     null,
   )
+
+  const deliveryFeeInCents = restaurant?.deliveryFeeInCents ?? 0
 
   const bagSubtotal = bagItems.reduce((total, item) => {
     const itemTotal = item.priceInCents * item.quantity
@@ -170,7 +170,6 @@ export function OrderProvider({ children }: OrderProviderProps) {
     setOrderType('delivery')
     setPaymentMethods([])
     setChangeForInCents(null)
-    setDeliveryFeeInCents(null)
     setDiscountInCents(null)
     setCouponCode(null)
     setObservations(null)
@@ -197,7 +196,6 @@ export function OrderProvider({ children }: OrderProviderProps) {
         setOrderType,
         setPaymentMethods,
         setChangeForInCents,
-        setDeliveryFeeInCents,
         setDiscountInCents,
         setCouponCode,
         setObservations,

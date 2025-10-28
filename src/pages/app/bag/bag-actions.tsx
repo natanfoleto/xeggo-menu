@@ -6,6 +6,7 @@ import { formatCurrency } from '@/utils/format-currency'
 
 export function BagActions() {
   const { address } = useAuth()
+
   const {
     deliveryFeeInCents,
     discountInCents,
