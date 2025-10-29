@@ -23,7 +23,7 @@ export function CheckoutAddress() {
         )}
       </div>
 
-      <NavLink to="/address">
+      <NavLink to="/profile/address">
         <Button variant="link" size="sm" className="h-auto p-0 text-xs">
           Alterar
         </Button>

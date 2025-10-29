@@ -6,21 +6,57 @@ export function RestaurantActions() {
   const { isAuthenticated, logout } = useAuth()
 
   return (
-    <div className="space-y-4 px-4">
-      <div className="space-y-1">
+    <div className="flex flex-1 flex-col justify-between space-y-4 px-4">
+      <div className="space-y-2">
         <NavLink to="/menu">
-          <Button className="w-full">Ver cardápio</Button>
+          <Button
+            variant="outline"
+            className="border-muted-foreground text-foreground w-full font-normal"
+          >
+            Ver cardápio
+          </Button>
         </NavLink>
 
         <NavLink to="/info">
-          <Button className="w-full">Ver restaurante</Button>
+          <Button
+            variant="outline"
+            className="border-muted-foreground text-foreground w-full font-normal"
+          >
+            Ver restaurante
+          </Button>
         </NavLink>
+
+        {isAuthenticated && (
+          <NavLink to="/profile/orders">
+            <Button
+              variant="outline"
+              className="border-muted-foreground text-foreground w-full font-normal"
+            >
+              Meus pedidos
+            </Button>
+          </NavLink>
+        )}
       </div>
 
       {isAuthenticated && (
-        <Button onClick={logout} className="w-full">
-          Sair
-        </Button>
+        <div className="space-y-2">
+          <NavLink to="/profile">
+            <Button
+              variant="outline"
+              className="border-muted-foreground text-foreground w-full font-normal"
+            >
+              Minha conta
+            </Button>
+          </NavLink>
+
+          <Button
+            onClick={logout}
+            variant="outline"
+            className="border-muted-foreground text-foreground w-full font-normal"
+          >
+            Sair
+          </Button>
+        </div>
       )}
     </div>
   )

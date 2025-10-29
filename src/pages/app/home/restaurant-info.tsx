@@ -15,7 +15,7 @@ interface RestaurantInfoProps {
 
 export function RestaurantInfo({ restaurant }: RestaurantInfoProps) {
   return (
-    <div>
+    <div className="border-b pb-8">
       <div className="relative">
         <div
           className="bg-muted h-24 w-full sm:h-32"

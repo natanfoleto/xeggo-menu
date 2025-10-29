@@ -9,7 +9,7 @@ export async function updateCustomerProfile({
   name,
   phone,
 }: UpdateCustomerProfileRequest) {
-  await api.auth.put('/profile/customer', {
+  await api.auth.put('/customers/profile', {
     name,
     phone,
   })

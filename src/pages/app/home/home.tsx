@@ -1,4 +1,3 @@
-import { ShieldCheck } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 
 import { Branding } from '@/components/branding'
@@ -11,7 +10,7 @@ import { RestaurantInfo } from './restaurant-info'
 
 export function Home() {
   const { restaurant } = useRestaurant()
-  const { isAuthenticated, user } = useAuth()
+  const { isAuthenticated } = useAuth()
 
   if (!restaurant) return null
 
@@ -19,27 +18,14 @@ export function Home() {
     <>
       <Helmet title={restaurant.name} />
 
-      <div className="flex min-h-screen flex-col space-y-12">
+      <div className="flex min-h-screen flex-col space-y-8">
         <RestaurantInfo restaurant={restaurant} />
 
-        {!isAuthenticated ? (
-          <RestaurantAuth />
-        ) : (
-          user && (
-            <div className="bg-muted flex flex-col items-center gap-2 py-8">
-              <ShieldCheck />
-
-              <div className="text-center">
-                <p className="text-sm">{user.name}</p>
-                <p className="text-muted-foreground text-xs">{user.email}</p>
-              </div>
-            </div>
-          )
-        )}
+        {!isAuthenticated && <RestaurantAuth />}
 
         <RestaurantActions />
 
-        <div className="bg-muted flex flex-1 items-end justify-center py-6">
+        <div className="bg-muted flex items-end justify-center py-6">
           <Branding />
         </div>
       </div>

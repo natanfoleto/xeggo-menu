@@ -11,7 +11,7 @@ export function BottomNavigation() {
   const { isAuthenticated } = useAuth()
   const { bagItemsCount } = useOrder()
 
-  const canShowBag = !!(restaurant && restaurant.isOpen)
+  const canShowBag = !!(restaurant && restaurant.isOpen && bagItemsCount > 0)
 
   return (
     <div className="bg-background fixed right-0 bottom-0 left-0 z-50 border-t">

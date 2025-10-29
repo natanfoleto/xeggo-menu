@@ -25,7 +25,7 @@ const customerProfileFormSchema = z.object({
 
 type CustomerProfileFormSchema = z.infer<typeof customerProfileFormSchema>
 
-export function UpdateProfile() {
+export function ProfileData() {
   const queryClient = useQueryClient()
 
   const { user, isLoading: isLoadingProfile } = useAuth()
@@ -90,10 +90,10 @@ export function UpdateProfile() {
 
   return (
     <>
-      <Helmet title="Meu perfil" />
+      <Helmet title="Meus dados" />
 
       <div className="flex min-h-screen flex-col pb-16">
-        <PageHeader title="Meu perfil" />
+        <PageHeader title="Meus dados" />
 
         <form
           onSubmit={handleSubmit(handleUpdateCustomerProfile)}

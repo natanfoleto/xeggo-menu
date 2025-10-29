@@ -11,7 +11,7 @@ export interface GetCustomerProfileResponse {
 
 export async function getCustomerProfile() {
   const response =
-    await api.auth.get<GetCustomerProfileResponse>('/profile/customer')
+    await api.auth.get<GetCustomerProfileResponse>('/customers/profile')
 
   return response.data
 }

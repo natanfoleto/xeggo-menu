@@ -21,7 +21,7 @@ export function Info() {
       <Helmet title={restaurant.name} />
 
       <div>
-        <PageHeader title="Perfil da loja" />
+        <PageHeader title="Perfil do restaurante" />
         <RestaurantData />
         <RestaurantAddress />
         <RestaurantOpeningHours />

@@ -39,7 +39,7 @@ const addressFormSchema = z.object({
 
 type AddressFormSchema = z.infer<typeof addressFormSchema>
 
-export function SaveAddress() {
+export function ProfileSaveAddress() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [searchParams] = useSearchParams()

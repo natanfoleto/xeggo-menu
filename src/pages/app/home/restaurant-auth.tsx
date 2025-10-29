@@ -62,11 +62,7 @@ export function RestaurantAuth() {
   }
 
   return (
-    <div className="space-y-4 px-4">
-      <p className="text-center text-sm">
-        Faça login e peça com mais agilidade
-      </p>
-
+    <div className="space-y-4 border-b px-4 pb-8">
       {!showEmailForm ? (
         <div className="space-y-2">
           <Button
@@ -88,7 +84,7 @@ export function RestaurantAuth() {
           </Button>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-1">
           <form
             onSubmit={handleSubmit(handleAuthenticateWithLink)}
             className="space-y-2"

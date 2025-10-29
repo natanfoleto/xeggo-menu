@@ -9,7 +9,7 @@ import { useAuth } from '@/contexts/auth-context'
 
 import { AddressCard } from './address-card'
 
-export function Address() {
+export function ProfileAddress() {
   const { addresses } = useAuth()
 
   return (
@@ -26,10 +26,10 @@ export function Address() {
             ))}
           </div>
 
-          <NavLink to="/address/save">
-            <Button className="w-full" variant="secondary">
+          <NavLink to="/profile/address/save">
+            <Button variant="secondary" className="w-full border font-normal">
               <Plus />
-              Adicionar novo endereço
+              Adicionar endereço
             </Button>
           </NavLink>
         </div>
