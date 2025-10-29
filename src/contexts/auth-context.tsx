@@ -37,13 +37,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [address, setAddress] = useState<CustomerAddress | null>(null)
   const [addresses, setAddresses] = useState<CustomerAddress[]>([])
 
-  const { isError: isAuthCheckError } = useQuery({
+  const { data: authCheckData, isError: isAuthCheckError } = useQuery({
     queryKey: ['auth-check'],
     queryFn: authCheckCustomer,
     retry: false,
     staleTime: Infinity,
-    enabled: true,
   })
+
+  const isAuthCheckSuccess = authCheckData?.authenticated === true
 
   const {
     data: customerData,
@@ -54,7 +55,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     queryFn: getCustomerProfile,
     retry: false,
     staleTime: 5 * 60 * 1000,
-    enabled: !isAuthCheckError,
+    enabled: isAuthCheckSuccess,
   })
 
   const { data: addressesData } = useQuery({
@@ -62,7 +63,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     queryFn: getCustomerAddresses,
     retry: false,
     staleTime: 5 * 60 * 1000,
-    enabled: !isAuthCheckError && !!customerData,
+    enabled: isAuthCheckSuccess && !!customerData,
   })
 
   useEffect(() => {
@@ -70,7 +71,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setUser(null)
       setAddress(null)
       setAddresses([])
-      signOut()
     }
   }, [isAuthCheckError, setUser])
 
@@ -102,7 +102,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     signOut()
   }
 
-  const isAuthenticated = !isAuthCheckError && user !== null
+  const isAuthenticated = isAuthCheckSuccess && user !== null
   const isLoading = isLoadingCustomerData
 
   return (
@@ -113,7 +113,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         addresses,
         isLoading,
         isAuthenticated,
-        isCheckingAuth: !isAuthCheckError && !customerData,
+        isCheckingAuth:
+          !isAuthCheckError && !customerData && !isAuthCheckSuccess,
         refetch,
         logout,
       }}

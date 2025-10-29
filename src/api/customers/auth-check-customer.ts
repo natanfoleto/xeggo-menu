@@ -6,7 +6,7 @@ export interface AuthCheckCustomerResponse {
 
 export async function authCheckCustomer() {
   const response = await api.auth.get<AuthCheckCustomerResponse>(
-    '/auth/check/customer',
+    '/customers/auth/check',
   )
 
   return response.data

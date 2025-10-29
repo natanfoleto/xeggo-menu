@@ -3,19 +3,19 @@ import { createBrowserRouter } from 'react-router-dom'
 import { AppLayout } from './pages/_layouts/app'
 import { ProtectedLayout } from './pages/_layouts/protected'
 import { NotFound } from './pages/404'
-import { Bag } from './pages/app/bag/bag'
-import { Category } from './pages/app/category/category'
-import { Checkout } from './pages/app/checkout/checkout'
-import { Home } from './pages/app/home/home'
-import { Info } from './pages/app/info/info'
-import { Menu } from './pages/app/menu/menu'
-import { Product } from './pages/app/product/product'
-import { Profile } from './pages/app/profile/profile'
-import { ProfileAddress } from './pages/app/profile-address/profile-address'
-import { ProfileData } from './pages/app/profile-data/profile-data'
-import { ProfileOrders } from './pages/app/profile-orders/profile-orders'
-import { ProfileSaveAddress } from './pages/app/profile-save-address/profile-save-address'
-import { Search } from './pages/app/search/search'
+import { Bag } from './pages/app/bag'
+import { Category } from './pages/app/category'
+import { Checkout } from './pages/app/checkout'
+import { Home } from './pages/app/home'
+import { Menu } from './pages/app/menu'
+import { Product } from './pages/app/product'
+import { Profile } from './pages/app/profile'
+import { ProfileAddress } from './pages/app/profile-address'
+import { ProfileData } from './pages/app/profile-data'
+import { ProfileOrders } from './pages/app/profile-orders'
+import { ProfileSaveAddress } from './pages/app/profile-save-address'
+import { Restaurant } from './pages/app/restaurant'
+import { Search } from './pages/app/search'
 
 export const router = createBrowserRouter([
   {
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
     children: [
       { path: '/:slug', element: <Home /> },
       { path: '/:slug/menu', element: <Menu /> },
-      { path: '/:slug/info', element: <Info /> },
+      { path: '/:slug/info', element: <Restaurant /> },
       { path: '/:slug/search', element: <Search /> },
       { path: '/:slug/category/:id', element: <Category /> },
       { path: '/:slug/product/:id', element: <Product /> },

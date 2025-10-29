@@ -11,7 +11,7 @@ import { RestaurantData } from './restaurant-data'
 import { RestaurantOpeningHours } from './restaurant-opening-hours'
 import { RestaurantPaymentMethods } from './restaurant-payment-methods'
 
-export function Info() {
+export function Restaurant() {
   const { restaurant, slug } = useRestaurant()
 
   if (!restaurant || !slug) return null
