@@ -9,7 +9,7 @@ interface ProtectedLayoutProps {
   requireOpen?: boolean
 }
 
-export function ProtectedLayout({
+export function SafeRestaurantLayout({
   children,
   requireOpen = false,
 }: ProtectedLayoutProps) {

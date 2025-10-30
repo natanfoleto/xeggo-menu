@@ -11,26 +11,26 @@ export function RestaurantActions() {
         <NavLink to="/menu">
           <Button
             variant="outline"
-            className="border-muted-foreground text-foreground w-full font-normal"
+            className="not-dark:border-muted-foreground text-foreground w-full font-normal"
           >
             Ver cardápio
           </Button>
         </NavLink>
 
-        <NavLink to="/info">
+        <NavLink to="/about">
           <Button
             variant="outline"
-            className="border-muted-foreground text-foreground w-full font-normal"
+            className="not-dark:border-muted-foreground text-foreground w-full font-normal"
           >
             Ver restaurante
           </Button>
         </NavLink>
 
         {isAuthenticated && (
-          <NavLink to="/profile/orders">
+          <NavLink to="/orders" disablePrefix>
             <Button
               variant="outline"
-              className="border-muted-foreground text-foreground w-full font-normal"
+              className="not-dark:border-muted-foreground text-foreground w-full font-normal"
             >
               Meus pedidos
             </Button>
@@ -40,10 +40,10 @@ export function RestaurantActions() {
 
       {isAuthenticated && (
         <div className="space-y-2">
-          <NavLink to="/profile">
+          <NavLink to="/profile" disablePrefix>
             <Button
               variant="outline"
-              className="border-muted-foreground text-foreground w-full font-normal"
+              className="not-dark:border-muted-foreground text-foreground w-full font-normal"
             >
               Minha conta
             </Button>
@@ -52,7 +52,7 @@ export function RestaurantActions() {
           <Button
             onClick={logout}
             variant="outline"
-            className="border-muted-foreground text-foreground w-full font-normal"
+            className="not-dark:border-muted-foreground text-foreground w-full font-normal"
           >
             Sair
           </Button>

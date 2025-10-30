@@ -28,7 +28,7 @@ export function CategoriesSearch() {
           <NavLink to={`/category/${category.id}`} key={category.id}>
             <Button
               variant="outline"
-              className="text-foreground border-muted-foreground font-normal"
+              className="text-foreground not-dark:border-muted-foreground font-normal"
             >
               {category.name}
             </Button>

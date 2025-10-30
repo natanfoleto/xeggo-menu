@@ -2,14 +2,13 @@ import { Outlet } from 'react-router-dom'
 
 import { ErrorPage } from '@/components/error-page'
 import { LoadingPage } from '@/components/loading-page'
-import { AuthProvider } from '@/contexts/auth-context'
 import { OrderProvider } from '@/contexts/order-context'
 import {
   RestaurantProvider,
   useRestaurant,
 } from '@/contexts/restaurant-context'
 
-import { Middleware } from '../app/middleware'
+import { RestaurantMiddleware } from '../middlewares/restaurant'
 
 function RestaurantGuard() {
   const { restaurant, isLoading, error } = useRestaurant()
@@ -20,17 +19,15 @@ function RestaurantGuard() {
   return <Outlet />
 }
 
-export function AppLayout() {
+export function RestaurantLayout() {
   return (
     <>
-      <Middleware />
+      <RestaurantMiddleware />
 
       <RestaurantProvider>
-        <AuthProvider>
-          <OrderProvider>
-            <RestaurantGuard />
-          </OrderProvider>
-        </AuthProvider>
+        <OrderProvider>
+          <RestaurantGuard />
+        </OrderProvider>
       </RestaurantProvider>
     </>
   )

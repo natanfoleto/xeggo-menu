@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
-export function Middleware() {
+export function RestaurantMiddleware() {
   const location = useLocation()
 
   useEffect(() => {

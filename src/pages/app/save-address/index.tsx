@@ -13,7 +13,7 @@ import {
 } from '@/api/addresses/get-customer-address'
 import type { GetCustomerAddressesResponse } from '@/api/addresses/get-customer-addresses'
 import { updateCustomerAddress } from '@/api/addresses/update-customer-address'
-import { BottomNavigation } from '@/components/bottom-navigation'
+import { Branding } from '@/components/branding'
 import { FormInput } from '@/components/form/form-input'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'
@@ -39,7 +39,7 @@ const addressFormSchema = z.object({
 
 type AddressFormSchema = z.infer<typeof addressFormSchema>
 
-export function ProfileSaveAddress() {
+export function SaveAddress() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [searchParams] = useSearchParams()
@@ -200,7 +200,7 @@ export function ProfileSaveAddress() {
     <>
       <Helmet title={isEditing ? 'Editar endereço' : 'Novo endereço'} />
 
-      <div className="flex min-h-screen flex-col pb-16">
+      <div className="flex min-h-screen flex-col">
         <PageHeader title={isEditing ? 'Editar endereço' : 'Novo endereço'} />
 
         <form
@@ -211,7 +211,7 @@ export function ProfileSaveAddress() {
             <Label htmlFor="zipCode">CEP</Label>
             <FormInput
               id="zipCode"
-              className="border-muted-foreground text-sm"
+              className="not-dark:border-muted-foreground text-sm"
               placeholder="00000-000"
               disabled={isLoading}
               {...register('zipCode')}
@@ -223,7 +223,7 @@ export function ProfileSaveAddress() {
             <Label htmlFor="street">Rua</Label>
             <FormInput
               id="street"
-              className="border-muted-foreground text-sm"
+              className="not-dark:border-muted-foreground text-sm"
               placeholder="Nome da rua"
               disabled={isLoading}
               {...register('street')}
@@ -236,7 +236,7 @@ export function ProfileSaveAddress() {
               <Label htmlFor="number">Número</Label>
               <FormInput
                 id="number"
-                className="border-muted-foreground text-sm"
+                className="not-dark:border-muted-foreground text-sm"
                 placeholder="123"
                 disabled={isLoading}
                 {...register('number')}
@@ -248,7 +248,7 @@ export function ProfileSaveAddress() {
               <Label htmlFor="complement">Complemento</Label>
               <FormInput
                 id="complement"
-                className="border-muted-foreground text-sm"
+                className="not-dark:border-muted-foreground text-sm"
                 placeholder="Apto, Casa..."
                 disabled={isLoading}
                 {...register('complement')}
@@ -261,7 +261,7 @@ export function ProfileSaveAddress() {
             <Label htmlFor="neighborhood">Bairro</Label>
             <FormInput
               id="neighborhood"
-              className="border-muted-foreground text-sm"
+              className="not-dark:border-muted-foreground text-sm"
               placeholder="Nome do bairro"
               disabled={isLoading}
               {...register('neighborhood')}
@@ -274,7 +274,7 @@ export function ProfileSaveAddress() {
               <Label htmlFor="city">Cidade</Label>
               <FormInput
                 id="city"
-                className="border-muted-foreground text-sm"
+                className="not-dark:border-muted-foreground text-sm"
                 placeholder="Nome da cidade"
                 disabled={isLoading}
                 {...register('city')}
@@ -286,7 +286,7 @@ export function ProfileSaveAddress() {
               <Label htmlFor="state">Estado</Label>
               <FormInput
                 id="state"
-                className="border-muted-foreground text-sm"
+                className="not-dark:border-muted-foreground text-sm"
                 placeholder="SP"
                 maxLength={2}
                 disabled={isLoading}
@@ -325,9 +325,11 @@ export function ProfileSaveAddress() {
             {isSubmitting ? 'Salvando...' : 'Salvar'}
           </Button>
         </form>
-      </div>
 
-      <BottomNavigation />
+        <div className="bg-muted flex items-end justify-center py-6">
+          <Branding />
+        </div>
+      </div>
     </>
   )
 }

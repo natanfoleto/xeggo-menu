@@ -11,7 +11,7 @@ export function ProfileLogout() {
       <Button
         onClick={logout}
         variant="outline"
-        className="text-foreground border-muted-foreground w-full font-normal"
+        className="text-foreground not-dark:border-muted-foreground w-full font-normal"
       >
         <LogOut className="text-muted-foreground size-4" />
         Sair

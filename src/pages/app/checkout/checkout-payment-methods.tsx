@@ -26,7 +26,7 @@ export function CheckoutPaymentMethods() {
               <Badge
                 key={method}
                 variant="outline"
-                className="border-muted-foreground font-normal"
+                className="not-dark:border-muted-foreground font-normal"
               >
                 {PAYMENT_METHODS[method] || method}
               </Badge>

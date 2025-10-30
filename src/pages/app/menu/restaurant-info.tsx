@@ -29,7 +29,7 @@ export function RestaurantInfo({ restaurant }: RestaurantInfoProps) {
       />
 
       <div className="relative flex flex-col gap-6 py-6">
-        <NavLink to="/info">
+        <NavLink to="/about">
           <ChevronRight className="absolute top-6 right-4 size-5" />
 
           <div className="flex items-start gap-4 px-4">

@@ -23,7 +23,7 @@ export function CheckoutAddress() {
         )}
       </div>
 
-      <NavLink to="/profile/address">
+      <NavLink to="/address" disablePrefix>
         <Button variant="link" size="sm" className="h-auto p-0 text-xs">
           Alterar
         </Button>

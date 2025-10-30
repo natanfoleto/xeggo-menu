@@ -5,7 +5,11 @@ import { NavLink } from '@/components/nav-link'
 export function ProfileActions() {
   return (
     <div className="flex flex-1 flex-col border-y">
-      <NavLink to="/profile/data" className="hover:bg-muted border-b px-4 py-6">
+      <NavLink
+        to="/customer"
+        disablePrefix
+        className="hover:bg-muted border-b px-4 py-6"
+      >
         <div className="flex w-full items-center gap-4">
           <UserRound className="text-muted-foreground size-5" />
 
@@ -21,7 +25,8 @@ export function ProfileActions() {
       </NavLink>
 
       <NavLink
-        to="/profile/address"
+        to="/address"
+        disablePrefix
         className="hover:bg-muted border-b px-4 py-6"
       >
         <div className="flex w-full items-center gap-4">
@@ -39,7 +44,8 @@ export function ProfileActions() {
       </NavLink>
 
       <NavLink
-        to="/profile/orders"
+        to="/orders"
+        disablePrefix
         className="hover:bg-muted border-b px-4 py-6"
       >
         <div className="flex w-full items-center gap-4">

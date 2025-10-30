@@ -35,7 +35,7 @@ export function DeliveryAddress() {
             </p>
           </div>
 
-          <NavLink to="/profile/address">
+          <NavLink to="/address" disablePrefix>
             <Button
               variant="link"
               className="px-0 text-xs"
@@ -46,7 +46,7 @@ export function DeliveryAddress() {
           </NavLink>
         </div>
       ) : (
-        <NavLink to="/profile/address">
+        <NavLink to="/address" disablePrefix>
           <Button
             variant="link"
             className="w-full text-xs"

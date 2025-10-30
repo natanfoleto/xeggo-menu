@@ -14,14 +14,14 @@ export function CheckoutOrderType() {
         {orderType === 'delivery' ? (
           <Badge
             variant="outline"
-            className="border-muted-foreground font-normal"
+            className="not-dark:border-muted-foreground font-normal"
           >
             Entrega
           </Badge>
         ) : (
           <Badge
             variant="outline"
-            className="border-muted-foreground font-normal"
+            className="not-dark:border-muted-foreground font-normal"
           >
             Retirada
           </Badge>

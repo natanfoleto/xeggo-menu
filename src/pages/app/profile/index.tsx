@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
-import { BottomNavigation } from '@/components/bottom-navigation'
+import { Branding } from '@/components/branding'
 import { PageHeader } from '@/components/page-header'
 import { useAuth } from '@/contexts/auth-context'
 
@@ -17,7 +17,7 @@ export function Profile() {
     <>
       <Helmet title="Perfil" />
 
-      <div className="flex min-h-screen flex-col pb-16">
+      <div className="flex min-h-screen flex-col">
         <PageHeader title="Perfil" />
 
         <div className="flex flex-1 flex-col gap-0">
@@ -25,9 +25,11 @@ export function Profile() {
           <ProfileActions />
           <ProfileLogout />
         </div>
-      </div>
 
-      <BottomNavigation />
+        <div className="bg-muted flex items-end justify-center py-6">
+          <Branding />
+        </div>
+      </div>
     </>
   )
 }

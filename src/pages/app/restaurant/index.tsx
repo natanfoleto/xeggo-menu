@@ -1,45 +1,31 @@
 import { Helmet } from 'react-helmet-async'
 
 import { Branding } from '@/components/branding'
-import { NavLink } from '@/components/nav-link'
-import { PageHeader } from '@/components/page-header'
-import { Button } from '@/components/ui/button'
+import { useAuth } from '@/contexts/auth-context'
 import { useRestaurant } from '@/contexts/restaurant-context'
 
-import { RestaurantAddress } from './restaurant-address'
-import { RestaurantData } from './restaurant-data'
-import { RestaurantOpeningHours } from './restaurant-opening-hours'
-import { RestaurantPaymentMethods } from './restaurant-payment-methods'
+import { RestaurantActions } from './restaurant-actions'
+import { RestaurantAuth } from './restaurant-auth'
+import { RestaurantInfo } from './restaurant-info'
 
 export function Restaurant() {
-  const { restaurant, slug } = useRestaurant()
+  const { restaurant } = useRestaurant()
+  const { isAuthenticated } = useAuth()
 
-  if (!restaurant || !slug) return null
+  if (!restaurant) return null
 
   return (
     <>
       <Helmet title={restaurant.name} />
 
-      <div>
-        <PageHeader title="Perfil do restaurante" />
-        <RestaurantData />
-        <RestaurantAddress />
-        <RestaurantOpeningHours />
-        <RestaurantPaymentMethods />
+      <div className="flex min-h-screen flex-col space-y-8">
+        <RestaurantInfo restaurant={restaurant} />
 
-        <div className="px-4 pt-6">
-          <NavLink to="/menu">
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-muted-foreground text-foreground w-full"
-            >
-              Voltar para o cardápio
-            </Button>
-          </NavLink>
-        </div>
+        {!isAuthenticated && <RestaurantAuth />}
 
-        <div className="pt-6 pb-4">
+        <RestaurantActions />
+
+        <div className="bg-muted flex items-end justify-center py-6">
           <Branding />
         </div>
       </div>

@@ -1,89 +1,106 @@
 import { createBrowserRouter } from 'react-router-dom'
 
-import { AppLayout } from './pages/_layouts/app'
-import { ProtectedLayout } from './pages/_layouts/protected'
-import { NotFound } from './pages/404'
+import { About } from './pages/app/about'
+import { Address } from './pages/app/address'
 import { Bag } from './pages/app/bag'
 import { Category } from './pages/app/category'
 import { Checkout } from './pages/app/checkout'
+import { Customer } from './pages/app/customer'
 import { Home } from './pages/app/home'
 import { Menu } from './pages/app/menu'
+import { Orders } from './pages/app/orders'
 import { Product } from './pages/app/product'
 import { Profile } from './pages/app/profile'
-import { ProfileAddress } from './pages/app/profile-address'
-import { ProfileData } from './pages/app/profile-data'
-import { ProfileOrders } from './pages/app/profile-orders'
-import { ProfileSaveAddress } from './pages/app/profile-save-address'
 import { Restaurant } from './pages/app/restaurant'
+import { SaveAddress } from './pages/app/save-address'
 import { Search } from './pages/app/search'
+import { AppLayout } from './pages/layouts/app'
+import { RestaurantLayout } from './pages/layouts/restaurant'
+import { RootLayout } from './pages/layouts/root'
+import { SafeAppLayout } from './pages/layouts/safe-app'
+import { SafeRestaurantLayout } from './pages/layouts/safe-restaurant'
+import { NotFound } from './pages/not-found'
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <AppLayout />,
+    element: <RootLayout />,
     errorElement: <NotFound />,
     children: [
-      { path: '/:slug', element: <Home /> },
-      { path: '/:slug/menu', element: <Menu /> },
-      { path: '/:slug/info', element: <Restaurant /> },
-      { path: '/:slug/search', element: <Search /> },
-      { path: '/:slug/category/:id', element: <Category /> },
-      { path: '/:slug/product/:id', element: <Product /> },
       {
-        path: '/:slug/bag',
-        element: (
-          <ProtectedLayout requireOpen>
-            <Bag />
-          </ProtectedLayout>
-        ),
+        path: '',
+        element: <AppLayout />,
+        children: [
+          { index: true, element: <Home /> },
+          {
+            path: 'profile',
+            element: (
+              <SafeAppLayout>
+                <Profile />
+              </SafeAppLayout>
+            ),
+          },
+          {
+            path: 'customer',
+            element: (
+              <SafeAppLayout>
+                <Customer />
+              </SafeAppLayout>
+            ),
+          },
+          {
+            path: 'address',
+            element: (
+              <SafeAppLayout>
+                <Address />
+              </SafeAppLayout>
+            ),
+          },
+          {
+            path: 'address/save',
+            element: (
+              <SafeAppLayout>
+                <SaveAddress />
+              </SafeAppLayout>
+            ),
+          },
+          {
+            path: 'orders',
+            element: (
+              <SafeAppLayout>
+                <Orders />
+              </SafeAppLayout>
+            ),
+          },
+        ],
       },
       {
-        path: '/:slug/checkout',
-        element: (
-          <ProtectedLayout requireOpen>
-            <Checkout />
-          </ProtectedLayout>
-        ),
-      },
-      {
-        path: '/:slug/profile',
-        element: (
-          <ProtectedLayout>
-            <Profile />
-          </ProtectedLayout>
-        ),
-      },
-      {
-        path: '/:slug/profile/data',
-        element: (
-          <ProtectedLayout>
-            <ProfileData />
-          </ProtectedLayout>
-        ),
-      },
-      {
-        path: '/:slug/profile/address',
-        element: (
-          <ProtectedLayout>
-            <ProfileAddress />
-          </ProtectedLayout>
-        ),
-      },
-      {
-        path: '/:slug/profile/address/save',
-        element: (
-          <ProtectedLayout>
-            <ProfileSaveAddress />
-          </ProtectedLayout>
-        ),
-      },
-      {
-        path: '/:slug/profile/orders',
-        element: (
-          <ProtectedLayout>
-            <ProfileOrders />
-          </ProtectedLayout>
-        ),
+        path: ':slug',
+        element: <RestaurantLayout />,
+        children: [
+          { index: true, element: <Restaurant /> },
+          { path: 'menu', element: <Menu /> },
+          { path: 'about', element: <About /> },
+          { path: 'search', element: <Search /> },
+          { path: 'category/:id', element: <Category /> },
+          { path: 'product/:id', element: <Product /> },
+          {
+            path: 'bag',
+            element: (
+              <SafeRestaurantLayout requireOpen>
+                <Bag />
+              </SafeRestaurantLayout>
+            ),
+          },
+          {
+            path: 'checkout',
+            element: (
+              <SafeRestaurantLayout requireOpen>
+                <Checkout />
+              </SafeRestaurantLayout>
+            ),
+          },
+        ],
       },
     ],
   },

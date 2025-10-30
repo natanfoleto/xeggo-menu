@@ -9,7 +9,7 @@ import {
   updateCustomerProfile,
   type UpdateCustomerProfileRequest,
 } from '@/api/customers/update-customer-profile'
-import { BottomNavigation } from '@/components/bottom-navigation'
+import { Branding } from '@/components/branding'
 import { FormInput } from '@/components/form/form-input'
 import { FormPhoneInput } from '@/components/form/form-phone-input'
 import { PageHeader } from '@/components/page-header'
@@ -25,7 +25,7 @@ const customerProfileFormSchema = z.object({
 
 type CustomerProfileFormSchema = z.infer<typeof customerProfileFormSchema>
 
-export function ProfileData() {
+export function Customer() {
   const queryClient = useQueryClient()
 
   const { user, isLoading: isLoadingProfile } = useAuth()
@@ -92,7 +92,7 @@ export function ProfileData() {
     <>
       <Helmet title="Meus dados" />
 
-      <div className="flex min-h-screen flex-col pb-16">
+      <div className="flex min-h-screen flex-col">
         <PageHeader title="Meus dados" />
 
         <form
@@ -103,7 +103,7 @@ export function ProfileData() {
             <Label htmlFor="name">Nome completo</Label>
             <FormInput
               id="name"
-              className="border-muted-foreground text-sm"
+              className="not-dark:border-muted-foreground text-sm"
               placeholder="Seu nome completo"
               autoCorrect="off"
               disabled={isLoadingProfile}
@@ -117,7 +117,7 @@ export function ProfileData() {
             <FormInput
               id="email"
               type="email"
-              className="border-muted-foreground text-sm"
+              className="not-dark:border-muted-foreground text-sm"
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
@@ -135,7 +135,7 @@ export function ProfileData() {
                 setValue('phone', value, { shouldDirty: true })
               }
               disabled={isSubmitting || isLoadingProfile}
-              className="border-muted-foreground text-sm"
+              className="not-dark:border-muted-foreground text-sm"
               error={errors.phone?.message}
             />
           </div>
@@ -147,9 +147,11 @@ export function ProfileData() {
             {isSubmitting ? 'Salvando...' : 'Salvar'}
           </Button>
         </form>
-      </div>
 
-      <BottomNavigation />
+        <div className="bg-muted flex items-end justify-center py-6">
+          <Branding />
+        </div>
+      </div>
     </>
   )
 }

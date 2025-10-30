@@ -95,7 +95,7 @@ export function OrderFilters() {
           })
         }}
       >
-        <SelectTrigger className="border-muted-foreground w-full">
+        <SelectTrigger className="not-dark:border-muted-foreground w-full">
           <SelectValue placeholder="Todos os restaurantes" />
         </SelectTrigger>
 
@@ -122,7 +122,7 @@ export function OrderFilters() {
           })
         }}
       >
-        <SelectTrigger className="border-muted-foreground w-full">
+        <SelectTrigger className="not-dark:border-muted-foreground w-full">
           <SelectValue />
         </SelectTrigger>
 
@@ -138,7 +138,7 @@ export function OrderFilters() {
 
       <Input
         type="date"
-        className="border-muted-foreground text-sm"
+        className="not-dark:border-muted-foreground text-sm"
         {...register('date')}
       />
 
@@ -147,7 +147,7 @@ export function OrderFilters() {
           type="submit"
           variant="outline"
           size="sm"
-          className="border-muted-foreground text-foreground flex-1 font-normal"
+          className="not-dark:border-muted-foreground text-foreground flex-1 font-normal"
         >
           <Search className="size-4" />
           Filtrar resultados
@@ -157,7 +157,7 @@ export function OrderFilters() {
           type="button"
           variant="outline"
           size="sm"
-          className="border-muted-foreground text-foreground flex-1 font-normal"
+          className="not-dark:border-muted-foreground text-foreground flex-1 font-normal"
           onClick={handleClearFilters}
         >
           <X className="size-4" />

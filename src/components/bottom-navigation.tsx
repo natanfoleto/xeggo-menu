@@ -47,7 +47,7 @@ export function BottomNavigation() {
         )}
 
         {isAuthenticated ? (
-          <NavLink to={`/profile`}>
+          <NavLink to={`/profile`} disablePrefix>
             <div className="flex flex-col items-center gap-1">
               <User className="size-5" />
               <span className="text-xs">Perfil</span>

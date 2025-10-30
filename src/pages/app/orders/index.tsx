@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { useSearchParams } from 'react-router-dom'
 
 import { getCustomerOrders } from '@/api/customers/get-customer-orders'
-import { BottomNavigation } from '@/components/bottom-navigation'
+import { Branding } from '@/components/branding'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'
 
@@ -19,7 +19,7 @@ const statusMap: Record<string, string> = {
   delivered: 'Entregue',
 }
 
-export function ProfileOrders() {
+export function Orders() {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const status = searchParams.get('status')
@@ -77,7 +77,7 @@ export function ProfileOrders() {
     <>
       <Helmet title="Meus pedidos" />
 
-      <div className="min-h-screen space-y-4 pb-24">
+      <div className="min-h-screen space-y-4">
         <PageHeader title="Meus pedidos" />
 
         <div className="space-y-4 px-4">
@@ -116,9 +116,11 @@ export function ProfileOrders() {
             </div>
           )}
         </div>
-      </div>
 
-      <BottomNavigation />
+        <div className="bg-muted flex items-end justify-center py-6">
+          <Branding />
+        </div>
+      </div>
     </>
   )
 }
