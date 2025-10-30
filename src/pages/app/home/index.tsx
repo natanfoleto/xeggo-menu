@@ -4,10 +4,10 @@ import { useSearchParams } from 'react-router-dom'
 
 import { getRestaurants } from '@/api/restaurants/get-restaurants'
 import { Branding } from '@/components/branding'
+import { Header } from '@/components/header'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/contexts/auth-context'
 
-import { Header } from './header'
 import { RestaurantCard } from './restaurant-card'
 import {
   type RestaurantFilters,
@@ -67,7 +67,7 @@ export function Home() {
     <>
       <Helmet title="xeggo" />
 
-      <div className="flex min-h-screen max-w-screen-xl flex-col">
+      <div className="flex min-h-screen flex-col">
         <Header />
 
         <div className="flex-1 space-y-6 p-4">

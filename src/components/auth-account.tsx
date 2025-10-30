@@ -12,7 +12,10 @@ import { signInWithLink } from '@/api/auth/sign-in-with-link'
 import { FormInput } from '@/components/form/form-input'
 import { GoogleIcon } from '@/components/google-icon'
 import { Button } from '@/components/ui/button'
-import { useRestaurant } from '@/contexts/restaurant-context'
+
+interface AuthAccountProps {
+  slug?: string | null
+}
 
 const signInSchema = z.object({
   email: z.string().email(),
@@ -20,9 +23,7 @@ const signInSchema = z.object({
 
 type SignInSchema = z.infer<typeof signInSchema>
 
-export function RestaurantAuth() {
-  const { slug } = useRestaurant()
-
+export function AuthAccount({ slug }: AuthAccountProps) {
   const [searchParams] = useSearchParams()
 
   const [showEmailForm, setShowEmailForm] = useState(false)
@@ -58,11 +59,11 @@ export function RestaurantAuth() {
   }
 
   async function handleSignInWithGoogle() {
-    await signInWithGoogle({ slug: slug! })
+    await signInWithGoogle({ slug })
   }
 
   return (
-    <div className="space-y-4 border-b px-4 pb-8">
+    <div className="space-y-4 px-4 pb-8">
       {!showEmailForm ? (
         <div className="space-y-2">
           <Button

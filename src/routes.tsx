@@ -1,25 +1,26 @@
 import { createBrowserRouter } from 'react-router-dom'
 
-import { About } from './pages/app/about'
 import { Address } from './pages/app/address'
-import { Bag } from './pages/app/bag'
-import { Category } from './pages/app/category'
-import { Checkout } from './pages/app/checkout'
+import { Auth } from './pages/app/auth'
 import { Customer } from './pages/app/customer'
 import { Home } from './pages/app/home'
-import { Menu } from './pages/app/menu'
 import { Orders } from './pages/app/orders'
-import { Product } from './pages/app/product'
 import { Profile } from './pages/app/profile'
-import { Restaurant } from './pages/app/restaurant'
 import { SaveAddress } from './pages/app/save-address'
-import { Search } from './pages/app/search'
 import { AppLayout } from './pages/layouts/app'
 import { RestaurantLayout } from './pages/layouts/restaurant'
 import { RootLayout } from './pages/layouts/root'
 import { SafeAppLayout } from './pages/layouts/safe-app'
 import { SafeRestaurantLayout } from './pages/layouts/safe-restaurant'
 import { NotFound } from './pages/not-found'
+import { About } from './pages/restaurants/about'
+import { Bag } from './pages/restaurants/bag'
+import { Category } from './pages/restaurants/category'
+import { Checkout } from './pages/restaurants/checkout'
+import { Menu } from './pages/restaurants/menu'
+import { Product } from './pages/restaurants/product'
+import { Restaurant } from './pages/restaurants/restaurant'
+import { Search } from './pages/restaurants/search'
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,7 @@ export const router = createBrowserRouter([
         element: <AppLayout />,
         children: [
           { index: true, element: <Home /> },
+          { path: 'auth', element: <Auth /> },
           {
             path: 'profile',
             element: (

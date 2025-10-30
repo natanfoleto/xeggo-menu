@@ -38,8 +38,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [addresses, setAddresses] = useState<CustomerAddress[]>([])
 
   const {
+    data: authCheckData,
     isError: isAuthCheckError,
-    isSuccess: isAuthCheckSuccess,
     isLoading: isLoadingAuthCheck,
   } = useQuery({
     queryKey: ['auth-check'],
@@ -47,6 +47,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     retry: false,
     staleTime: Infinity,
   })
+
+  const isAuthCheckSuccess = authCheckData?.authenticated === true
 
   const {
     data: customerData,
