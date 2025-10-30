@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async'
 import { useSearchParams } from 'react-router-dom'
 
 import { BottomNavigation } from '@/components/bottom-navigation'
-import { Branding } from '@/components/branding'
 import { useRestaurant } from '@/contexts/restaurant-context'
 
 import { CategoriesSearch } from './categories-search'
@@ -27,8 +26,6 @@ export function Search() {
 
         <div className="flex flex-1 flex-col justify-between pb-6">
           {hasSearch ? <SearchResult /> : <CategoriesSearch />}
-
-          <Branding />
         </div>
       </div>
 

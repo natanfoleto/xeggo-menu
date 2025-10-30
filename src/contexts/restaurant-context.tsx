@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import Cookies from 'js-cookie'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext } from 'react'
 
 import {
   getRestaurant,
@@ -23,15 +23,7 @@ export function RestaurantProvider({
 }: {
   children: React.ReactNode
 }) {
-  const [slug, setSlug] = useState<string | null>(null)
-
-  useEffect(() => {
-    const restaurantSlug = Cookies.get('restaurant')
-
-    if (restaurantSlug) {
-      setSlug(restaurantSlug)
-    }
-  }, [])
+  const slug = Cookies.get('restaurant') || null
 
   const {
     data: restaurant,
