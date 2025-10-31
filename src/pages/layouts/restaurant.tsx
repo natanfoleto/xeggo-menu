@@ -11,24 +11,34 @@ import {
 import { RestaurantMiddleware } from '../middlewares/restaurant'
 
 function RestaurantGuard() {
-  const { restaurant, isLoading, error } = useRestaurant()
+  const { restaurant, isLoading, error, slug } = useRestaurant()
+
+  if (!slug) return <ErrorPage error="Nenhum restaurante encontrado" />
 
   if (isLoading) return <LoadingPage text="Carregando restaurante..." />
-  if (error || !restaurant) return <ErrorPage error={error} />
+
+  if (error) return <ErrorPage error={error} />
+
+  if (!restaurant) return <ErrorPage error="Nenhum restaurante encontrado" />
 
   return <Outlet />
+}
+
+function RestaurantContent() {
+  return (
+    <RestaurantProvider>
+      <OrderProvider>
+        <RestaurantGuard />
+      </OrderProvider>
+    </RestaurantProvider>
+  )
 }
 
 export function RestaurantLayout() {
   return (
     <>
       <RestaurantMiddleware />
-
-      <RestaurantProvider>
-        <OrderProvider>
-          <RestaurantGuard />
-        </OrderProvider>
-      </RestaurantProvider>
+      <RestaurantContent />
     </>
   )
 }

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import Cookies from 'js-cookie'
 import { createContext, useContext } from 'react'
+import { useParams } from 'react-router-dom'
 
 import {
   getRestaurant,
@@ -23,12 +24,16 @@ export function RestaurantProvider({
 }: {
   children: React.ReactNode
 }) {
-  const slug = Cookies.get('restaurant') || null
+  const cookieSlug = Cookies.get('restaurant')
+
+  const { slug: urlSlug } = useParams<{ slug: string }>()
+
+  const slug = urlSlug || cookieSlug || null
 
   const {
     data: restaurant,
     isLoading,
-    error,
+    isError,
   } = useQuery({
     queryKey: ['restaurant', slug],
     queryFn: () => getRestaurant(slug!),
@@ -44,7 +49,7 @@ export function RestaurantProvider({
       value={{
         restaurant: restaurant || null,
         isLoading,
-        error: error ? 'Restaurante não encontrado' : null,
+        error: isError ? 'Restaurante não encontrado' : null,
         slug,
       }}
     >

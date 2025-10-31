@@ -7,9 +7,9 @@ interface LoadingPageProps {
 export function LoadingPage({ text = 'Carregando...' }: LoadingPageProps) {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-2">
-      <Loader2 className="size-7 animate-spin stroke-1" />
+      <Loader2 className="size-7 animate-spin" />
 
-      {text && <p className="text-muted-foreground text-sm">{text}</p>}
+      {text && <p className="text-sm">{text}</p>}
     </div>
   )
 }
