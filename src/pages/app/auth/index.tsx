@@ -16,7 +16,7 @@ export function Auth() {
     <>
       <Helmet title="Entre ou cadastre-se" />
 
-      <div className="flex min-h-screen max-w-screen-xl flex-col">
+      <div className="flex flex-col">
         <Header />
 
         <div className="flex-1 space-y-4 p-4 py-4">

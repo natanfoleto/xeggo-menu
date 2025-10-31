@@ -66,7 +66,7 @@ export function Home() {
     <>
       <Helmet title="xeggo" />
 
-      <div className="flex min-h-screen flex-col">
+      <div className="flex flex-col">
         <Header />
 
         <div className="flex-1 space-y-6 p-4">

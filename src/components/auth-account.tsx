@@ -97,7 +97,7 @@ export function AuthAccount({ slug }: AuthAccountProps) {
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
-              className="not-dark:border-muted-foreground text-sm"
+              className="not-dark:border-muted-foreground text-center text-sm"
               {...register('email')}
             />
 
