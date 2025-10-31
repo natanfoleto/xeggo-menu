@@ -1,7 +1,6 @@
 import { Plus } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 
-import { Branding } from '@/components/branding'
 import { NavLink } from '@/components/nav-link'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'
@@ -32,10 +31,6 @@ export function Address() {
               Adicionar endereço
             </Button>
           </NavLink>
-        </div>
-
-        <div className="bg-muted flex items-end justify-center py-6">
-          <Branding />
         </div>
       </div>
     </>

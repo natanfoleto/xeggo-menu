@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet-async'
 
-import { Branding } from '@/components/branding'
 import { NavLink } from '@/components/nav-link'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'
@@ -37,10 +36,6 @@ export function About() {
               Voltar para o cardápio
             </Button>
           </NavLink>
-        </div>
-
-        <div className="pt-6 pb-4">
-          <Branding />
         </div>
       </div>
     </>

@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async'
 import { useSearchParams } from 'react-router-dom'
 
 import { getRestaurants } from '@/api/restaurants/get-restaurants'
-import { Branding } from '@/components/branding'
 import { Header } from '@/components/header'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/contexts/auth-context'
@@ -105,10 +104,6 @@ export function Home() {
               </Button>
             </div>
           )}
-        </div>
-
-        <div className="bg-muted flex items-end justify-center py-6">
-          <Branding />
         </div>
       </div>
     </>

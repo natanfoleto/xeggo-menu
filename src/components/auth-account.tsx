@@ -69,7 +69,7 @@ export function AuthAccount({ slug }: AuthAccountProps) {
           <Button
             onClick={() => setShowEmailForm(true)}
             variant="outline"
-            className="not-dark:border-muted-foreground w-full"
+            className="not-dark:border-muted-foreground w-full font-normal"
           >
             <Mail className="size-4" />
             Continuar com e-mail
@@ -78,7 +78,7 @@ export function AuthAccount({ slug }: AuthAccountProps) {
           <Button
             onClick={handleSignInWithGoogle}
             variant="outline"
-            className="not-dark:border-muted-foreground w-full"
+            className="not-dark:border-muted-foreground w-full font-normal"
           >
             <GoogleIcon />
             Continuar com Google
