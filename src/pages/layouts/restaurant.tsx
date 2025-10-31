@@ -15,7 +15,7 @@ function RestaurantGuard() {
 
   if (!slug) return <ErrorPage error="Nenhum restaurante encontrado" />
 
-  if (isLoading) return <LoadingPage text="Carregando restaurante..." />
+  if (!isLoading) return <LoadingPage />
 
   if (error) return <ErrorPage error={error} />
 

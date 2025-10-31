@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { Box, Loader2 } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 import { getCategories } from '@/api/categories/get-categories'
@@ -111,10 +111,8 @@ export function ProductsCatalog() {
   ) {
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-2">
-        <Box className="text-muted-foreground size-7 stroke-1" />
-
         <p className="text-muted-foreground text-sm">
-          Nenhum produto disponível.
+          Nenhum produto encontrado
         </p>
       </div>
     )
