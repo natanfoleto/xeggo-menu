@@ -17,7 +17,7 @@ export function Restaurant() {
     <>
       <Helmet title={restaurant.name} />
 
-      <div className="flex min-h-screen flex-col space-y-8">
+      <div className="flex min-h-screen flex-col">
         <RestaurantInfo restaurant={restaurant} />
 
         {!isAuthenticated && <RestaurantAuth />}
