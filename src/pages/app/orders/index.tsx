@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async'
 import { useSearchParams } from 'react-router-dom'
 
 import { getCustomerOrders } from '@/api/customers/get-customer-orders'
-import { Branding } from '@/components/branding'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'
 
@@ -115,10 +114,6 @@ export function Orders() {
               )}
             </div>
           )}
-        </div>
-
-        <div className="bg-muted flex items-end justify-center py-6">
-          <Branding />
         </div>
       </div>
     </>

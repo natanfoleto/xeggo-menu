@@ -9,7 +9,6 @@ import {
   updateCustomerProfile,
   type UpdateCustomerProfileRequest,
 } from '@/api/customers/update-customer-profile'
-import { Branding } from '@/components/branding'
 import { FormInput } from '@/components/form/form-input'
 import { FormPhoneInput } from '@/components/form/form-phone-input'
 import { PageHeader } from '@/components/page-header'
@@ -147,10 +146,6 @@ export function Customer() {
             {isSubmitting ? 'Salvando...' : 'Salvar'}
           </Button>
         </form>
-
-        <div className="bg-muted flex items-end justify-center py-6">
-          <Branding />
-        </div>
       </div>
     </>
   )

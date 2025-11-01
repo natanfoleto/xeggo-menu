@@ -43,7 +43,7 @@ export function Checkout() {
 
       resetOrder()
 
-      navigate('/menu')
+      navigate('/orders')
     },
   })
 

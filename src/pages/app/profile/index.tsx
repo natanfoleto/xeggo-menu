@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet-async'
 
-import { Branding } from '@/components/branding'
 import { PageHeader } from '@/components/page-header'
 import { useAuth } from '@/contexts/auth-context'
 
@@ -24,10 +23,6 @@ export function Profile() {
           <ProfileInfo user={user} />
           <ProfileActions />
           <ProfileLogout />
-        </div>
-
-        <div className="bg-muted flex items-end justify-center py-6">
-          <Branding />
         </div>
       </div>
     </>

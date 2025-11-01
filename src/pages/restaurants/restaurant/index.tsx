@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet-async'
 
-import { Branding } from '@/components/branding'
 import { useAuth } from '@/contexts/auth-context'
 import { useRestaurant } from '@/contexts/restaurant-context'
 
@@ -18,16 +17,12 @@ export function Restaurant() {
     <>
       <Helmet title={restaurant.name} />
 
-      <div className="flex min-h-screen flex-col space-y-8">
+      <div className="flex min-h-screen flex-col">
         <RestaurantInfo restaurant={restaurant} />
 
         {!isAuthenticated && <RestaurantAuth />}
 
         <RestaurantActions />
-
-        <div className="bg-muted flex items-end justify-center py-6">
-          <Branding />
-        </div>
       </div>
     </>
   )

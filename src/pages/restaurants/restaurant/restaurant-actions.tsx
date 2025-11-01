@@ -6,7 +6,7 @@ export function RestaurantActions() {
   const { isAuthenticated, logout } = useAuth()
 
   return (
-    <div className="flex flex-1 flex-col justify-between space-y-4 px-4">
+    <div className="flex flex-col justify-between space-y-6 px-4 py-6">
       <div className="space-y-2">
         <NavLink to="/menu">
           <Button
@@ -25,8 +25,10 @@ export function RestaurantActions() {
             Ver restaurante
           </Button>
         </NavLink>
+      </div>
 
-        {isAuthenticated && (
+      {isAuthenticated && (
+        <div className="space-y-2">
           <NavLink to="/orders" disablePrefix>
             <Button
               variant="outline"
@@ -35,11 +37,7 @@ export function RestaurantActions() {
               Meus pedidos
             </Button>
           </NavLink>
-        )}
-      </div>
 
-      {isAuthenticated && (
-        <div className="space-y-2">
           <NavLink to="/profile" disablePrefix>
             <Button
               variant="outline"

@@ -91,13 +91,10 @@ export function RestaurantFilters({
         <Drawer open={drawerOpen} onOpenChange={handleOpenChange}>
           <DrawerTrigger asChild>
             <Button
-              variant="outline"
+              variant="brand"
               size="sm"
-              className={`not-dark:border-muted-foreground flex-shrink-0 text-xs font-normal hover:border-violet-400 hover:text-violet-700 ${
-                filters.segments.length > 0
-                  ? 'border-violet-400 bg-violet-100 text-violet-700 hover:bg-violet-100 dark:bg-violet-900/30 dark:text-violet-400'
-                  : ''
-              }`}
+              data-state={filters.segments.length > 0 ? 'active' : 'inactive'}
+              className="flex-shrink-0 text-xs font-normal"
             >
               Categorias
             </Button>
@@ -147,26 +144,20 @@ export function RestaurantFilters({
         </Drawer>
 
         <Button
-          variant="outline"
+          variant="brand"
           size="sm"
-          className={`not-dark:border-muted-foreground flex-shrink-0 text-xs font-normal hover:border-violet-400 hover:text-violet-700 ${
-            filters.open
-              ? 'border-violet-400 bg-violet-100 text-violet-700 hover:bg-violet-100 dark:bg-violet-900/30 dark:text-violet-400'
-              : ''
-          }`}
+          data-state={filters.open ? 'active' : 'inactive'}
+          className="flex-shrink-0 text-xs font-normal"
           onClick={() => onFiltersChange({ ...filters, open: !filters.open })}
         >
           Abertos
         </Button>
 
         <Button
-          variant="outline"
+          variant="brand"
           size="sm"
-          className={`not-dark:border-muted-foreground flex-shrink-0 text-xs font-normal hover:border-violet-400 hover:text-violet-700 ${
-            filters.deliveryFee
-              ? 'border-violet-400 bg-violet-100 text-violet-700 hover:bg-violet-100 dark:bg-violet-900/30 dark:text-violet-400'
-              : ''
-          }`}
+          data-state={filters.deliveryFee ? 'active' : 'inactive'}
+          className="flex-shrink-0 text-xs font-normal"
           onClick={() =>
             onFiltersChange({
               ...filters,
@@ -179,9 +170,10 @@ export function RestaurantFilters({
 
         {hasActiveFilters && (
           <Button
-            variant="outline"
+            variant="brand"
             size="sm"
-            className="flex-shrink-0 border-violet-400 bg-violet-100 text-xs font-normal text-violet-700 hover:border-violet-400 hover:bg-violet-100 hover:text-violet-700 dark:bg-violet-900/30 dark:text-violet-400"
+            data-state="active"
+            className="flex-shrink-0 text-xs font-normal"
             onClick={handleClearFilters}
           >
             Limpar

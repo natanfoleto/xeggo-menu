@@ -1,6 +1,6 @@
 import { ZoomIn } from 'lucide-react'
 
-import { ImageModal } from '@/components/image-modal'
+import { ProductImage } from '@/pages/restaurants/product/product-image'
 import { formatCurrency } from '@/utils/format-currency'
 
 interface ProductDetailsProps {
@@ -20,7 +20,13 @@ export function ProductDetails({ product }: ProductDetailsProps) {
   return (
     <div>
       {product.photoUrl ? (
-        <ImageModal src={product.photoUrl} alt={product.name}>
+        <ProductImage
+          src={product.photoUrl}
+          alt={product.name}
+          name={product.name}
+          description={product.description}
+          ingredients={product.ingredients}
+        >
           <button className="relative w-full">
             <ZoomIn className="bg-foreground text-muted absolute right-1.5 bottom-2.5 rounded-md stroke-2 p-1" />
 
@@ -30,7 +36,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
               className="h-44 w-full cursor-pointer object-cover transition-opacity hover:opacity-90"
             />
           </button>
-        </ImageModal>
+        </ProductImage>
       ) : (
         <div className="bg-muted flex h-44 w-full items-center justify-center"></div>
       )}

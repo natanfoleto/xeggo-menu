@@ -13,7 +13,6 @@ import {
 } from '@/api/addresses/get-customer-address'
 import type { GetCustomerAddressesResponse } from '@/api/addresses/get-customer-addresses'
 import { updateCustomerAddress } from '@/api/addresses/update-customer-address'
-import { Branding } from '@/components/branding'
 import { FormInput } from '@/components/form/form-input'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'
@@ -325,10 +324,6 @@ export function SaveAddress() {
             {isSubmitting ? 'Salvando...' : 'Salvar'}
           </Button>
         </form>
-
-        <div className="bg-muted flex items-end justify-center py-6">
-          <Branding />
-        </div>
       </div>
     </>
   )

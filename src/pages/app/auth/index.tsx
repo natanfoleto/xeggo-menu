@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async'
 import { Navigate } from 'react-router-dom'
 
 import { AuthAccount } from '@/components/auth-account'
-import { Branding } from '@/components/branding'
 import { Header } from '@/components/header'
 import { useAuth } from '@/contexts/auth-context'
 
@@ -17,7 +16,7 @@ export function Auth() {
     <>
       <Helmet title="Entre ou cadastre-se" />
 
-      <div className="flex min-h-screen max-w-screen-xl flex-col">
+      <div className="flex flex-col">
         <Header />
 
         <div className="flex-1 space-y-4 p-4 py-4">
@@ -36,10 +35,6 @@ export function Auth() {
           </p>
 
           <AuthAccount />
-        </div>
-
-        <div className="bg-muted flex items-end justify-center py-6">
-          <Branding />
         </div>
       </div>
     </>
