@@ -11,7 +11,7 @@ export function ProfileActions() {
         className="hover:bg-muted border-b px-4 py-4"
       >
         <div className="flex w-full items-center gap-3">
-          <UserRound className="text-muted-foreground size-5" />
+          <UserRound className="text-muted-foreground size-4" />
 
           <div className="flex-1">
             <h2 className="text-foreground">Meus dados</h2>
@@ -20,7 +20,7 @@ export function ProfileActions() {
             </p>
           </div>
 
-          <ChevronRight className="text-muted-foreground size-5" />
+          <ChevronRight className="text-muted-foreground size-4" />
         </div>
       </NavLink>
 
@@ -30,7 +30,7 @@ export function ProfileActions() {
         className="hover:bg-muted border-b px-4 py-4"
       >
         <div className="flex w-full items-center gap-3">
-          <MapPin className="text-muted-foreground size-5" />
+          <MapPin className="text-muted-foreground size-4" />
 
           <div className="flex-1">
             <h2 className="text-foreground">Endereços</h2>
@@ -39,7 +39,7 @@ export function ProfileActions() {
             </p>
           </div>
 
-          <ChevronRight className="text-muted-foreground size-5" />
+          <ChevronRight className="text-muted-foreground size-4" />
         </div>
       </NavLink>
 
@@ -49,7 +49,7 @@ export function ProfileActions() {
         className="hover:bg-muted border-b px-4 py-4"
       >
         <div className="flex w-full items-center gap-3">
-          <UtensilsCrossed className="text-muted-foreground size-5" />
+          <UtensilsCrossed className="text-muted-foreground size-4" />
 
           <div className="flex-1">
             <h2 className="text-foreground">Meus pedidos</h2>
@@ -58,7 +58,7 @@ export function ProfileActions() {
             </p>
           </div>
 
-          <ChevronRight className="text-muted-foreground size-5" />
+          <ChevronRight className="text-muted-foreground size-4" />
         </div>
       </NavLink>
     </div>

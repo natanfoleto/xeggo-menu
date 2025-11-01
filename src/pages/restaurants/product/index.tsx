@@ -4,9 +4,11 @@ import { Helmet } from 'react-helmet-async'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { getProduct } from '@/api/products/get-product'
-import { ErrorPage } from '@/components/error-page'
 import { LoadingPage } from '@/components/loading-page'
+import { NavLink } from '@/components/nav-link'
 import { PageHeader } from '@/components/page-header'
+import { ResourceNotFound } from '@/components/resource-not-found'
+import { Button } from '@/components/ui/button'
 import { type BagComplement, useOrder } from '@/contexts/order-context'
 import { useRestaurant } from '@/contexts/restaurant-context'
 
@@ -92,8 +94,22 @@ export function Product() {
   }
 
   if (!restaurant || !slug || !id) return null
+
   if (isLoading) return <LoadingPage text="Carregando produto..." />
-  if (!product) return <ErrorPage error="Produto não encontrado." />
+
+  if (!product)
+    return (
+      <ResourceNotFound
+        title="Produto não encontrado"
+        subtitle="Volte ao cardápio para encontrar os produtos deste restaurante."
+      >
+        <NavLink to="/menu">
+          <Button variant="link" className="font-normal text-violet-700">
+            Cardápio
+          </Button>
+        </NavLink>
+      </ResourceNotFound>
+    )
 
   return (
     <>
