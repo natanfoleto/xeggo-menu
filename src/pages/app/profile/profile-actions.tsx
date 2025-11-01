@@ -8,7 +8,7 @@ export function ProfileActions() {
       <NavLink
         to="/customer"
         disablePrefix
-        className="hover:bg-muted border-b px-4 py-4"
+        className="hover:bg-muted border-b p-4"
       >
         <div className="flex w-full items-center gap-3">
           <UserRound className="text-muted-foreground size-4" />
@@ -27,7 +27,7 @@ export function ProfileActions() {
       <NavLink
         to="/address"
         disablePrefix
-        className="hover:bg-muted border-b px-4 py-4"
+        className="hover:bg-muted border-b p-4"
       >
         <div className="flex w-full items-center gap-3">
           <MapPin className="text-muted-foreground size-4" />
@@ -46,7 +46,7 @@ export function ProfileActions() {
       <NavLink
         to="/orders"
         disablePrefix
-        className="hover:bg-muted border-b px-4 py-4"
+        className="hover:bg-muted border-b p-4"
       >
         <div className="flex w-full items-center gap-3">
           <UtensilsCrossed className="text-muted-foreground size-4" />

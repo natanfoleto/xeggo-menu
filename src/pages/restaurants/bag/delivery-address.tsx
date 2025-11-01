@@ -7,10 +7,6 @@ export function DeliveryAddress() {
   const { address } = useAuth()
   const { orderType } = useOrder()
 
-  const handleAddAddress = () => {
-    console.log('Adicionar endereço')
-  }
-
   if (orderType === 'pickup') return null
 
   return (
@@ -36,22 +32,14 @@ export function DeliveryAddress() {
           </div>
 
           <NavLink to="/address" disablePrefix>
-            <Button
-              variant="link"
-              className="px-0 text-xs"
-              onClick={handleAddAddress}
-            >
+            <Button variant="link" className="px-0 text-xs">
               Alterar endereço
             </Button>
           </NavLink>
         </div>
       ) : (
         <NavLink to="/address" disablePrefix>
-          <Button
-            variant="link"
-            className="w-full text-xs"
-            onClick={handleAddAddress}
-          >
+          <Button variant="link" className="w-full text-xs">
             Adicionar endereço
           </Button>
         </NavLink>

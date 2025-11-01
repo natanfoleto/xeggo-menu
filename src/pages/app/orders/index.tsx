@@ -101,7 +101,7 @@ export function Orders() {
               </div>
 
               {hasMore && (
-                <div className="flex justify-center pt-2">
+                <div className="flex justify-center pt-2 pb-4">
                   <Button
                     variant="link"
                     className="w-full font-normal"

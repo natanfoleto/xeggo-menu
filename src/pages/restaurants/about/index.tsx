@@ -26,7 +26,7 @@ export function About() {
         <RestaurantOpeningHours />
         <RestaurantPaymentMethods />
 
-        <div className="px-4 pt-6">
+        <div className="px-4 py-6">
           <NavLink to="/menu">
             <Button
               variant="outline"
