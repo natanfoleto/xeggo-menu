@@ -1,9 +1,19 @@
 import { useMutation } from '@tanstack/react-query'
-import { ArrowRight, Loader2, Ticket } from 'lucide-react'
+import type { AxiosError } from 'axios'
+import { Ticket } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
 import { checkCoupon } from '@/api/coupons/check-coupon'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { useOrder } from '@/contexts/order-context'
 import { useRestaurant } from '@/contexts/restaurant-context'
@@ -16,7 +26,9 @@ export function CouponCode() {
     useOrder()
 
   const [inputValue, setInputValue] = useState('')
+  const [open, setOpen] = useState(false)
 
+  const [couponError, setCouponError] = useState<string | null>(null)
   const [couponDetails, setCouponDetails] = useState<{
     type: 'percentage' | 'fixed'
     value: number
@@ -25,18 +37,26 @@ export function CouponCode() {
 
   const { mutateAsync: checkCouponFn, isPending } = useMutation({
     mutationFn: checkCoupon,
-    onError: () => handleRemoveCoupon(),
+    onError: (error: AxiosError<{ message: string }>) => {
+      const message = error.response?.data?.message || 'Cupom inválido'
+
+      setCouponError(message)
+    },
   })
 
   const handleRemoveCoupon = useCallback(() => {
     setInputValue('')
     setCouponCode(null)
     setDiscountInCents(null)
+    setCouponDetails(null)
+    setCouponError(null)
   }, [setCouponCode, setDiscountInCents])
 
   const handleApplyCoupon = async () => {
     if (!inputValue) return
     if (!restaurant?.id) return
+
+    setCouponError(null)
 
     const data = await checkCouponFn({
       restaurantId: restaurant.id,
@@ -52,6 +72,8 @@ export function CouponCode() {
         value: data.discount.value,
         discountAmount: data.discount.discountAmount,
       })
+      setOpen(false)
+      setInputValue('')
     }
   }
 
@@ -91,7 +113,12 @@ export function CouponCode() {
 
   return (
     <div className="space-y-2 border-t p-4">
-      <h2 className="text-sm">Cupom de desconto</h2>
+      <div>
+        <h2 className="text-sm">Cupom de desconto</h2>
+        <p className="text-muted-foreground text-xs">
+          Use um cupom para receber desconto
+        </p>
+      </div>
 
       {couponCode && couponDetails ? (
         <div className="bg-muted flex items-center justify-between rounded-md px-4 py-2">
@@ -119,30 +146,52 @@ export function CouponCode() {
           </Button>
         </div>
       ) : (
-        <div className="flex items-center gap-1">
-          <Input
-            placeholder="Código de cupom"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value.trim().toUpperCase())}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') handleApplyCoupon()
-            }}
-            disabled={isPending}
-            className="text-xs"
-          />
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline" size="sm" className="text-xs font-normal">
+              Adicionar cupom
+            </Button>
+          </DialogTrigger>
 
-          <Button
-            size="icon"
-            onClick={handleApplyCoupon}
-            disabled={!inputValue.trim() || isPending}
-          >
-            {isPending ? (
-              <Loader2 className="size-4 animate-spin" />
-            ) : (
-              <ArrowRight className="size-4" />
-            )}
-          </Button>
-        </div>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Cupom de desconto</DialogTitle>
+              <DialogDescription>
+                Digite o código do cupom para aplicar o desconto
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-2">
+              <Input
+                placeholder="Código de cupom"
+                value={inputValue}
+                onChange={(e) =>
+                  setInputValue(e.target.value.trim().toUpperCase())
+                }
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleApplyCoupon()
+                }}
+                disabled={isPending}
+                className="text-sm"
+              />
+
+              {couponError && (
+                <p className="text-center text-xs text-red-600">
+                  {couponError}
+                </p>
+              )}
+            </div>
+
+            <DialogFooter>
+              <Button
+                onClick={handleApplyCoupon}
+                disabled={!inputValue.trim() || isPending}
+              >
+                {isPending ? 'Checando...' : 'Aplicar'}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       )}
     </div>
   )
