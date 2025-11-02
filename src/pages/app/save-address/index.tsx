@@ -1,5 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Loader2 } from 'lucide-react'
+import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate, useSearchParams } from 'react-router-dom'
@@ -7,6 +9,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { createCustomerAddress } from '@/api/addresses/create-customer-address'
+import { getAddressByCep } from '@/api/addresses/get-address-by-cep'
 import {
   getCustomerAddress,
   type GetCustomerAddressResponse,
@@ -18,6 +21,7 @@ import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
+import { formatCEP } from '@/utils/format-cep'
 
 const addressFormSchema = z.object({
   zipCode: z
@@ -43,6 +47,8 @@ export function SaveAddress() {
   const queryClient = useQueryClient()
   const [searchParams] = useSearchParams()
 
+  const [isSearchingCep, setIsSearchingCep] = useState(false)
+
   const addressId = searchParams.get('id')
   const isEditing = !!addressId
 
@@ -56,6 +62,8 @@ export function SaveAddress() {
     register,
     handleSubmit,
     control,
+    setValue,
+    watch,
     formState: { isSubmitting, errors, isDirty },
   } = useForm<AddressFormSchema>({
     resolver: zodResolver(addressFormSchema),
@@ -81,6 +89,8 @@ export function SaveAddress() {
           isActive: false,
         },
   })
+
+  const zipCode = watch('zipCode')
 
   function updateAddressesOnCache(
     newAddress: GetCustomerAddressResponse,
@@ -182,6 +192,10 @@ export function SaveAddress() {
     },
   })
 
+  const { mutateAsync: getAddressByCepFn } = useMutation({
+    mutationFn: getAddressByCep,
+  })
+
   async function handleSaveAddress(data: AddressFormSchema) {
     if (isEditing && addressId) {
       await updateAddress({
@@ -190,6 +204,34 @@ export function SaveAddress() {
       })
     } else {
       await createAddress(data)
+    }
+  }
+
+  const handleZipCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue('zipCode', formatCEP(event.target.value), { shouldDirty: true })
+  }
+
+  const handleZipCodeBlur = async () => {
+    if (!zipCode || zipCode.replace(/\D/g, '').length !== 8) return
+
+    setIsSearchingCep(true)
+
+    try {
+      const addressData = await getAddressByCepFn(zipCode.replace(/\D/g, ''))
+
+      if (!addressData) return
+
+      setValue('street', addressData.street, { shouldDirty: true })
+      setValue('neighborhood', addressData.neighborhood, { shouldDirty: true })
+      setValue('city', addressData.city, { shouldDirty: true })
+      setValue('state', addressData.state, { shouldDirty: true })
+
+      if (addressData.complement) {
+        setValue('complement', addressData.complement, { shouldDirty: true })
+      }
+    } catch (error) {
+    } finally {
+      setIsSearchingCep(false)
     }
   }
 
@@ -208,14 +250,22 @@ export function SaveAddress() {
         >
           <div className="space-y-1.5">
             <Label htmlFor="zipCode">CEP</Label>
-            <FormInput
-              id="zipCode"
-              className="not-dark:border-muted-foreground text-sm"
-              placeholder="00000-000"
-              disabled={isLoading}
-              {...register('zipCode')}
-              error={errors.zipCode?.message}
-            />
+            <div className="relative">
+              <FormInput
+                id="zipCode"
+                className="not-dark:border-muted-foreground text-sm"
+                placeholder="00000-000"
+                maxLength={9}
+                disabled={isLoading || isSearchingCep}
+                {...register('zipCode')}
+                onChange={handleZipCodeChange}
+                onBlur={handleZipCodeBlur}
+                error={errors.zipCode?.message}
+              />
+              {isSearchingCep && (
+                <Loader2 className="text-muted-foreground absolute top-1/2 right-3 size-4 -translate-y-1/2 animate-spin" />
+              )}
+            </div>
           </div>
 
           <div className="space-y-1.5">
