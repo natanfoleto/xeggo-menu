@@ -77,7 +77,7 @@ export function AddressCard({ address }: AddressCardProps) {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
-            <NavLink to={`/address/save?id=${address.id}`}>
+            <NavLink to={`/address/save?id=${address.id}`} disablePrefix>
               <DropdownMenuItem>Editar</DropdownMenuItem>
             </NavLink>
 
