@@ -78,7 +78,7 @@ export function AddressCard({ address }: AddressCardProps) {
 
           <DropdownMenuContent align="end">
             <NavLink to={`/address/save?id=${address.id}`} disablePrefix>
-              <DropdownMenuItem>Editar</DropdownMenuItem>
+              <DropdownMenuItem className="w-full">Editar</DropdownMenuItem>
             </NavLink>
 
             <DropdownMenuItem
