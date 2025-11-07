@@ -17,7 +17,7 @@ export function About() {
 
   return (
     <>
-      <Helmet title={restaurant.name} />
+      <Helmet title={`${restaurant.name} - Sobre`} />
 
       <div>
         <PageHeader title="Perfil do restaurante" />
