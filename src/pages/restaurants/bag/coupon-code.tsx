@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import type { AxiosError } from 'axios'
-import { Ticket } from 'lucide-react'
+import { Loader2, Ticket } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
 import { checkCoupon } from '@/api/coupons/check-coupon'
@@ -40,6 +40,7 @@ export function CouponCode() {
     onError: (error: AxiosError<{ message: string }>) => {
       const message = error.response?.data?.message || 'Cupom inválido'
 
+      setCouponCode(null)
       setCouponError(message)
     },
   })
@@ -187,7 +188,7 @@ export function CouponCode() {
                 onClick={handleApplyCoupon}
                 disabled={!inputValue.trim() || isPending}
               >
-                {isPending ? 'Checando...' : 'Aplicar'}
+                {isPending ? <Loader2 className="animate-spin" /> : 'Aplicar'}
               </Button>
             </DialogFooter>
           </DialogContent>

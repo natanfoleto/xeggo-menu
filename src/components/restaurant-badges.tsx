@@ -1,6 +1,7 @@
 import { Clock } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
+import { useRestaurant } from '@/contexts/restaurant-context'
 import { cn } from '@/lib/utils'
 
 const SEGMENT_LABELS: Record<string, string> = {
@@ -32,6 +33,8 @@ export function RestaurantBadges({
   segments,
   className,
 }: RestaurantBadgesProps) {
+  const { closingTime } = useRestaurant()
+
   return (
     <div className={cn('flex flex-wrap justify-start gap-2', className)}>
       <Badge
@@ -47,8 +50,27 @@ export function RestaurantBadges({
         {isOpen ? 'Aberto' : 'Fechado'}
       </Badge>
 
+      {closingTime?.isOpen && (
+        <Badge
+          variant="outline"
+          className={cn(
+            closingTime.isClosingSoon
+              ? 'border-orange-400 bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-400'
+              : 'border-red-400 bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400',
+          )}
+        >
+          {closingTime.isClosingSoon
+            ? `Fecha em breve às ${closingTime.time}`
+            : `Fecha às ${closingTime.time}`}
+        </Badge>
+      )}
+
       {segments.map((segment) => (
-        <Badge key={segment} variant="outline">
+        <Badge
+          key={segment}
+          variant="outline"
+          className="dark:border-muted-foreground dark:text-muted-foreground"
+        >
           {SEGMENT_LABELS[segment] || segment}
         </Badge>
       ))}

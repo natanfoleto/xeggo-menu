@@ -74,7 +74,7 @@ export function BagActions() {
 
         <NavLink to="/checkout" disabled={!canSubmit}>
           <Button size="lg" className="w-full text-base font-normal">
-            Enviar pedido
+            Continuar
           </Button>
         </NavLink>
 

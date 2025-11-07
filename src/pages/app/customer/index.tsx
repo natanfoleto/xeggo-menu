@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Loader2 } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -143,7 +144,7 @@ export function Customer() {
             type="submit"
             disabled={isLoadingProfile || isSubmitting || !isDirty}
           >
-            {isSubmitting ? 'Salvando...' : 'Salvar'}
+            {isSubmitting ? <Loader2 className="animate-spin" /> : 'Salvar'}
           </Button>
         </form>
       </div>

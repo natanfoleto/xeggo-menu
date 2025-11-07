@@ -4,6 +4,7 @@ import { Address } from './pages/app/address'
 import { Auth } from './pages/app/auth'
 import { Customer } from './pages/app/customer'
 import { Home } from './pages/app/home'
+import { OrderDetails } from './pages/app/order-details'
 import { Orders } from './pages/app/orders'
 import { Profile } from './pages/app/profile'
 import { SaveAddress } from './pages/app/save-address'
@@ -71,6 +72,14 @@ export const router = createBrowserRouter([
             element: (
               <SafeAppLayout>
                 <Orders />
+              </SafeAppLayout>
+            ),
+          },
+          {
+            path: 'orders/:orderId',
+            element: (
+              <SafeAppLayout>
+                <OrderDetails />
               </SafeAppLayout>
             ),
           },

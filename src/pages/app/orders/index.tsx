@@ -1,4 +1,5 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { Loader2 } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import { useSearchParams } from 'react-router-dom'
 
@@ -26,7 +27,11 @@ export function Orders() {
   const restaurantId = searchParams.get('restaurantId')
   const limit = Number(searchParams.get('limit')) || 10
 
-  const { data: result, isLoading } = useQuery({
+  const {
+    data: result,
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: ['customer-orders', limit, status, date, restaurantId],
     queryFn: () =>
       getCustomerOrders({
@@ -106,9 +111,13 @@ export function Orders() {
                     variant="link"
                     className="w-full font-normal"
                     onClick={handleLoadMore}
-                    disabled={isLoading}
+                    disabled={isFetching}
                   >
-                    Carregar mais
+                    {isFetching ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                      'Carregar mais'
+                    )}
                   </Button>
                 </div>
               )}

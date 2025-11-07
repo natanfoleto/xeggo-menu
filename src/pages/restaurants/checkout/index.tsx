@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+import { Loader2 } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -43,7 +44,7 @@ export function Checkout() {
 
       resetOrder()
 
-      navigate('/orders')
+      navigate('/orders', { replace: true })
     },
   })
 
@@ -102,10 +103,14 @@ export function Checkout() {
           <Button
             onClick={handleCreateOrder}
             disabled={!canSubmit}
-            className="w-full"
+            className="w-full text-base"
             size="lg"
           >
-            {isPending ? 'Finalizando...' : 'Finalizar pedido'}
+            {isPending ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              'Finalizar pedido'
+            )}
           </Button>
         </div>
       </div>
