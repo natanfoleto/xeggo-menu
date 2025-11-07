@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { CircleCheck, EllipsisVertical } from 'lucide-react'
+import { CircleCheck, EllipsisVertical, Loader2 } from 'lucide-react'
 
 import { deleteCustomerAddress } from '@/api/addresses/delete-customer-address'
 import type { CustomerAddress } from '@/api/addresses/get-customer-addresses'
@@ -96,7 +96,11 @@ export function AddressCard({ address }: AddressCardProps) {
         disabled={isSettingActive || address.isActive}
         className="bg-muted hover:bg-muted/75 disabled:text-foreground flex w-full justify-start border-none text-xs font-normal text-blue-500 transition-colors"
       >
-        {isSettingActive ? 'Definindo...' : 'Definir como principal'}
+        {isSettingActive ? (
+          <Loader2 className="animate-spin" />
+        ) : (
+          'Definir como principal'
+        )}
       </Button>
     </div>
   )

@@ -63,7 +63,7 @@ export function AuthAccount({ slug }: AuthAccountProps) {
   }
 
   return (
-    <div className="space-y-4 px-4 pb-8">
+    <div className="space-y-4">
       {!showEmailForm ? (
         <div className="space-y-2">
           <Button

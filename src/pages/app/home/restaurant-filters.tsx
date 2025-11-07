@@ -94,7 +94,6 @@ export function RestaurantFilters({
               variant="brand"
               size="sm"
               data-state={filters.segments.length > 0 ? 'active' : 'inactive'}
-              className="flex-shrink-0 text-xs font-normal"
             >
               Categorias
             </Button>
@@ -147,7 +146,7 @@ export function RestaurantFilters({
           variant="brand"
           size="sm"
           data-state={filters.open ? 'active' : 'inactive'}
-          className="flex-shrink-0 text-xs font-normal"
+          className="flex shrink-0 text-xs font-normal"
           onClick={() => onFiltersChange({ ...filters, open: !filters.open })}
         >
           Abertos
@@ -157,7 +156,6 @@ export function RestaurantFilters({
           variant="brand"
           size="sm"
           data-state={filters.deliveryFee ? 'active' : 'inactive'}
-          className="flex-shrink-0 text-xs font-normal"
           onClick={() =>
             onFiltersChange({
               ...filters,
@@ -173,7 +171,6 @@ export function RestaurantFilters({
             variant="brand"
             size="sm"
             data-state="active"
-            className="flex-shrink-0 text-xs font-normal"
             onClick={handleClearFilters}
           >
             Limpar

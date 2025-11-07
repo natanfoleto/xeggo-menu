@@ -371,7 +371,7 @@ export function SaveAddress() {
             disabled={isLoading || isSubmitting || !isDirty}
             className="w-full"
           >
-            {isSubmitting ? 'Salvando...' : 'Salvar'}
+            {isSubmitting ? <Loader2 className="animate-spin" /> : 'Salvar'}
           </Button>
         </form>
       </div>

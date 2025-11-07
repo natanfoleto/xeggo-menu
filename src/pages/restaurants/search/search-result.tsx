@@ -21,7 +21,7 @@ export function SearchResult() {
 
   if (!search) return null
 
-  if (isLoading) return <LoadingSection text="Carregando produtos..." />
+  if (isLoading) return <LoadingSection />
 
   if (!products || products.length === 0) {
     return (
@@ -46,7 +46,7 @@ export function SearchResult() {
 
       <div className="bg-background">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} slug={slug!} />
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </div>
