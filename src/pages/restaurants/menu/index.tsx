@@ -13,7 +13,7 @@ export function Menu() {
 
   return (
     <>
-      <Helmet title={restaurant.name} />
+      <Helmet title={`Cardápio - ${restaurant.name}`} />
 
       <div className="flex min-h-screen flex-col pb-16">
         <RestaurantInfo restaurant={restaurant} />

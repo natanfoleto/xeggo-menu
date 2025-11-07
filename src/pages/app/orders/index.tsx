@@ -79,7 +79,7 @@ export function Orders() {
 
   return (
     <>
-      <Helmet title="Meus pedidos" />
+      <Helmet title="Pedidos" />
 
       <div className="min-h-screen space-y-4">
         <PageHeader title="Meus pedidos" />
