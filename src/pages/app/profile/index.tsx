@@ -14,7 +14,7 @@ export function Profile() {
 
   return (
     <>
-      <Helmet title="Perfil" />
+      <Helmet title="Meu perfil - Xeggo" />
 
       <div className="flex min-h-screen flex-col">
         <PageHeader title="Perfil" />

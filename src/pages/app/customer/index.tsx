@@ -90,7 +90,7 @@ export function Customer() {
 
   return (
     <>
-      <Helmet title="Meus dados" />
+      <Helmet title="Meus dados - Xeggo" />
 
       <div className="flex min-h-screen flex-col">
         <PageHeader title="Meus dados" />

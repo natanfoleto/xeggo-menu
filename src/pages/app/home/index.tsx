@@ -64,7 +64,7 @@ export function Home() {
 
   return (
     <>
-      <Helmet title="Delivery de Comida" />
+      <Helmet title="Delivery de Comida - Xeggo" />
 
       <div className="flex flex-col">
         <Header />

@@ -13,7 +13,7 @@ export function Address() {
 
   return (
     <>
-      <Helmet title="Endereços" />
+      <Helmet title="Meus endereços - Xeggo" />
 
       <div className="flex min-h-screen flex-col">
         <PageHeader title="Endereços" />
