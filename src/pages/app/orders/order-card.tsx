@@ -115,9 +115,7 @@ export function OrderCard({ order }: OrderCardProps) {
             )}
           </div>
 
-          <div className="text-xs">
-            <OrderStatus status={order.status} />
-          </div>
+          <OrderStatus status={order.status} className="text-xs" />
         </div>
       </div>
     </NavLink>
