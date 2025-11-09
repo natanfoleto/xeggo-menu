@@ -10,7 +10,7 @@ import { z } from 'zod'
 import { signInWithGoogle } from '@/api/auth/sign-in-with-google'
 import { signInWithLink } from '@/api/auth/sign-in-with-link'
 import { FormInput } from '@/components/form/form-input'
-import { GoogleIcon } from '@/components/google-icon'
+import { GoogleIcon } from '@/components/icon/google-icon'
 import { Button } from '@/components/ui/button'
 
 interface AuthAccountProps {
