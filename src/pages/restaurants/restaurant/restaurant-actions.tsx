@@ -6,7 +6,7 @@ export function RestaurantActions() {
   const { isAuthenticated, logout } = useAuth()
 
   return (
-    <div className="flex flex-col justify-between space-y-6 px-4 py-6">
+    <div className="mx-auto flex w-full max-w-7xl flex-col justify-between space-y-6 px-4 py-6">
       <div className="space-y-2">
         <NavLink to="/menu">
           <Button

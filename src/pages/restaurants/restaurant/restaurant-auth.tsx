@@ -5,7 +5,7 @@ export function RestaurantAuth() {
   const { slug } = useRestaurant()
 
   return (
-    <div className="border-b px-4 py-6">
+    <div className="mx-auto w-full max-w-7xl border-b px-4 py-6">
       <AuthAccount slug={slug} />
     </div>
   )

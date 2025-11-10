@@ -89,7 +89,7 @@ export function Customer() {
 
         <form
           onSubmit={handleSubmit(handleUpdateCustomerProfile)}
-          className="flex flex-1 flex-col gap-4 p-4"
+          className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 p-4"
         >
           <div className="space-y-1.5">
             <Label htmlFor="name">Nome completo</Label>

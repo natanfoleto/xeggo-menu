@@ -39,12 +39,12 @@ export function Checkout() {
 
   const { mutateAsync: createOrderFn, isPending } = useMutation({
     mutationFn: createOrder,
-    onSuccess: () => {
+    onSuccess: ({ orderId }) => {
       toast.success('Pedido realizado com sucesso!')
 
       resetOrder()
 
-      navigate('/orders', { replace: true })
+      navigate(`/orders/${orderId}`, { replace: true })
     },
   })
 
@@ -88,30 +88,32 @@ export function Checkout() {
       <div className="flex min-h-screen flex-col pb-36">
         <PageHeader title="Finalize seu pedido" />
 
-        <div className="flex flex-1 flex-col gap-0 px-4">
-          <CheckoutItems />
-          <CheckoutOrderType />
-          <CheckoutAddress />
-          <CheckoutPaymentMethods />
-          <CheckoutChangeFor />
-          <CheckoutCouponCode />
-          <CheckoutObservations />
-          <CheckoutValues />
-        </div>
+        <div className="mx-auto w-full max-w-7xl">
+          <div className="flex flex-1 flex-col gap-0 px-4">
+            <CheckoutItems />
+            <CheckoutOrderType />
+            <CheckoutAddress />
+            <CheckoutPaymentMethods />
+            <CheckoutChangeFor />
+            <CheckoutCouponCode />
+            <CheckoutObservations />
+            <CheckoutValues />
+          </div>
 
-        <div className="bg-background fixed inset-x-0 bottom-16 border-t p-4">
-          <Button
-            onClick={handleCreateOrder}
-            disabled={!canSubmit}
-            className="w-full text-base"
-            size="lg"
-          >
-            {isPending ? (
-              <Loader2 className="animate-spin" />
-            ) : (
-              'Finalizar pedido'
-            )}
-          </Button>
+          <div className="bg-background fixed inset-x-0 bottom-16 mx-auto max-w-7xl border-t p-4">
+            <Button
+              onClick={handleCreateOrder}
+              disabled={!canSubmit}
+              className="w-full text-base"
+              size="lg"
+            >
+              {isPending ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                'Finalizar pedido'
+              )}
+            </Button>
+          </div>
         </div>
       </div>
 

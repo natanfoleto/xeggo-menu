@@ -14,7 +14,7 @@ export function BottomNavigation() {
   const canShowBag = !!(restaurant && restaurant.isOpen && bagItemsCount > 0)
 
   return (
-    <div className="bg-background fixed right-0 bottom-0 left-0 z-50 border-t">
+    <div className="bg-background fixed right-0 bottom-0 left-0 z-50 mx-auto w-full max-w-7xl border-t">
       <nav className="flex h-16 items-center justify-evenly gap-4 lg:space-x-6">
         <NavLink to={`/menu`}>
           <div className="flex flex-col items-center gap-1">

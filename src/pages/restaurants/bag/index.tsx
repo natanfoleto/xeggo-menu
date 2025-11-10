@@ -26,23 +26,25 @@ export function Bag() {
       <div className="relative min-h-screen pb-16">
         <PageHeader title="Sacola" />
 
-        <div className="flex items-center justify-between p-4">
-          <div>
-            <p className="text-muted-foreground text-sm">Seu pedido em</p>
-            <p>{restaurant.name}</p>
+        <div className="mx-auto max-w-7xl">
+          <div className="flex items-center justify-between p-4">
+            <div>
+              <p className="text-muted-foreground text-sm">Seu pedido em</p>
+              <p>{restaurant.name}</p>
+            </div>
+
+            <NavLink to={`/menu`}>Ver cardápio</NavLink>
           </div>
 
-          <NavLink to={`/menu`}>Ver cardápio</NavLink>
+          <BagItems />
+          <OrderType />
+          <DeliveryAddress />
+          <PaymentMethod />
+          <ChangeFor />
+          <CouponCode />
+          <OrderObservations />
+          <BagActions />
         </div>
-
-        <BagItems />
-        <OrderType />
-        <DeliveryAddress />
-        <PaymentMethod />
-        <ChangeFor />
-        <CouponCode />
-        <OrderObservations />
-        <BagActions />
       </div>
 
       <BottomNavigation />

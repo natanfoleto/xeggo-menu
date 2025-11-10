@@ -21,7 +21,7 @@ export function Search() {
     <>
       <Helmet title={`Buscar - ${restaurant.name}`} />
 
-      <div className="flex min-h-screen flex-col pb-16">
+      <div className="mx-auto flex min-h-screen max-w-7xl flex-col pb-16">
         <InputSearch />
 
         <div className="flex flex-1 flex-col justify-between pb-6">

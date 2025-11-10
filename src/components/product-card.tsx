@@ -24,7 +24,7 @@ export function ProductCard({ product, lastBorder = false }: ProductCardProps) {
     <NavLink
       to={`/product/${product.id}`}
       className={cn(
-        'hover:bg-muted flex items-center gap-4 border-b px-4 py-6 transition-colors',
+        'hover:bg-muted flex items-center gap-4 border-b px-4 py-8 transition-colors',
         !lastBorder && 'last:border-0',
       )}
     >

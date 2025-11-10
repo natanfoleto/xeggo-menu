@@ -118,23 +118,25 @@ export function Product() {
       <div className="min-h-screen">
         <PageHeader title={product.name} />
 
-        <ProductDetails product={product} />
+        <div className="mx-auto w-full max-w-7xl">
+          <ProductDetails product={product} />
 
-        <ProductOptions
-          complementGroups={product.complementGroups}
-          selectedComplements={selectedComplements}
-          observations={observations}
-          onComplementChange={handleComplementChange}
-          onObservationsChange={setObservations}
-        />
+          <ProductOptions
+            complementGroups={product.complementGroups}
+            selectedComplements={selectedComplements}
+            observations={observations}
+            onComplementChange={handleComplementChange}
+            onObservationsChange={setObservations}
+          />
 
-        <ProductActions
-          isOpen={restaurant.isOpen}
-          quantity={quantity}
-          totalPrice={totalPrice}
-          onQuantityChange={setQuantity}
-          onAddToBag={handleAddToBag}
-        />
+          <ProductActions
+            isOpen={restaurant.isOpen}
+            quantity={quantity}
+            totalPrice={totalPrice}
+            onQuantityChange={setQuantity}
+            onAddToBag={handleAddToBag}
+          />
+        </div>
       </div>
     </>
   )

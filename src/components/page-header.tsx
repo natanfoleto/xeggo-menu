@@ -9,7 +9,7 @@ export function PageHeader({ title }: PageHeaderProps) {
   const navigate = useNavigate()
 
   return (
-    <div className="relative flex items-center justify-center border-b p-4">
+    <div className="relative mx-auto flex w-full max-w-7xl items-center justify-center border-b p-4">
       <button
         onClick={() => navigate(-1)}
         className="absolute top-4 left-4 cursor-pointer"

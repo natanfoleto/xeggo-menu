@@ -8,57 +8,57 @@ export function ProfileActions() {
       <NavLink
         to="/customer"
         disablePrefix
-        className="hover:bg-muted border-b p-4"
+        className="hover:bg-muted border-b px-4 py-6"
       >
-        <div className="flex w-full items-center gap-3">
-          <UserRound className="text-muted-foreground size-4" />
+        <div className="flex w-full items-center gap-4">
+          <UserRound className="text-muted-foreground size-5" />
 
           <div className="flex-1">
-            <h2 className="text-foreground">Meus dados</h2>
-            <p className="text-muted-foreground text-xs">
+            <h2 className="text-foreground text-base">Meus dados</h2>
+            <p className="text-muted-foreground text-sm">
               Atualize os dados da sua conta
             </p>
           </div>
 
-          <ChevronRight className="text-muted-foreground size-4" />
+          <ChevronRight className="text-muted-foreground size-5" />
         </div>
       </NavLink>
 
       <NavLink
         to="/address"
         disablePrefix
-        className="hover:bg-muted border-b p-4"
+        className="hover:bg-muted border-b px-4 py-6"
       >
-        <div className="flex w-full items-center gap-3">
-          <MapPin className="text-muted-foreground size-4" />
+        <div className="flex w-full items-center gap-4">
+          <MapPin className="text-muted-foreground size-5" />
 
           <div className="flex-1">
-            <h2 className="text-foreground">Endereços</h2>
-            <p className="text-muted-foreground text-xs">
+            <h2 className="text-foreground text-base">Endereços</h2>
+            <p className="text-muted-foreground text-sm">
               Endereços salvos na sua conta
             </p>
           </div>
 
-          <ChevronRight className="text-muted-foreground size-4" />
+          <ChevronRight className="text-muted-foreground size-5" />
         </div>
       </NavLink>
 
       <NavLink
         to="/orders"
         disablePrefix
-        className="hover:bg-muted border-b p-4"
+        className="hover:bg-muted border-b px-4 py-6"
       >
-        <div className="flex w-full items-center gap-3">
-          <UtensilsCrossed className="text-muted-foreground size-4" />
+        <div className="flex w-full items-center gap-4">
+          <UtensilsCrossed className="text-muted-foreground size-5" />
 
           <div className="flex-1">
-            <h2 className="text-foreground">Meus pedidos</h2>
-            <p className="text-muted-foreground text-xs">
+            <h2 className="text-foreground text-base">Meus pedidos</h2>
+            <p className="text-muted-foreground text-sm">
               Histórico de pedidos
             </p>
           </div>
 
-          <ChevronRight className="text-muted-foreground size-4" />
+          <ChevronRight className="text-muted-foreground size-5" />
         </div>
       </NavLink>
     </div>
