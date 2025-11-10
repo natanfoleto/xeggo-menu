@@ -5,11 +5,11 @@ import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { type GetCustomerProfileResponse } from '@/api/customers/get-customer-profile'
+import { type GetProfileResponse } from '@/api/customer/profile/get-profile'
 import {
-  updateCustomerProfile,
-  type UpdateCustomerProfileRequest,
-} from '@/api/customers/update-customer-profile'
+  updateProfile,
+  type UpdateProfileRequest,
+} from '@/api/customer/profile/update-profile'
 import { FormInput } from '@/components/form/form-input'
 import { FormPhoneInput } from '@/components/form/form-phone-input'
 import { PageHeader } from '@/components/page-header'
@@ -45,31 +45,23 @@ export function Customer() {
     },
   })
 
-  function updateProfileDataOnCache({
-    name,
-    phone,
-  }: UpdateCustomerProfileRequest) {
-    const cached = queryClient.getQueryData<GetCustomerProfileResponse>([
-      'customer-profile',
-    ])
+  function updateProfileDataOnCache({ name, phone }: UpdateProfileRequest) {
+    const cached = queryClient.getQueryData<GetProfileResponse>(['profile'])
 
     if (cached) {
-      queryClient.setQueryData<GetCustomerProfileResponse>(
-        ['customer-profile'],
-        {
-          ...cached,
-          name,
-          phone,
-        },
-      )
+      queryClient.setQueryData<GetProfileResponse>(['profile'], {
+        ...cached,
+        name,
+        phone,
+      })
     }
 
     return { cached }
   }
 
   const { mutateAsync: updateCustomerProfileFn } = useMutation({
-    mutationFn: updateCustomerProfile,
-    onMutate: ({ name, phone }: UpdateCustomerProfileRequest) => {
+    mutationFn: updateProfile,
+    onMutate: ({ name, phone }: UpdateProfileRequest) => {
       const { cached } = updateProfileDataOnCache({ name, phone })
 
       return { previousCustomerProfile: cached }

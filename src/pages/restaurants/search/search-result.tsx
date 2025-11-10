@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 
-import { getProducts } from '@/api/products/get-products'
+import { getProducts } from '@/api/public/products/get-products'
 import { LoadingSection } from '@/components/loading-section'
 import { ProductCard } from '@/components/product-card'
 import { useRestaurant } from '@/contexts/restaurant-context'

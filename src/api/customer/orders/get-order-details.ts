@@ -1,4 +1,3 @@
-// src/api/orders/get-order-details.ts
 import { api } from '@/lib/axios'
 
 export interface GetCustomerOrderDetailsParams {
@@ -47,8 +46,8 @@ export interface GetCustomerOrderDetailsResponse {
 export async function getCustomerOrderDetails({
   orderId,
 }: GetCustomerOrderDetailsParams) {
-  const response = await api.auth.get<GetCustomerOrderDetailsResponse>(
-    `/customers/orders/${orderId}`,
+  const response = await api.customer.get<GetCustomerOrderDetailsResponse>(
+    `/orders/${orderId}`,
   )
 
   return response.data

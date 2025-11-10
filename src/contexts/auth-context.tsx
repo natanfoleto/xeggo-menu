@@ -2,23 +2,23 @@ import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 
-import type { CustomerAddress } from '@/api/addresses/get-customer-addresses'
-import { getCustomerAddresses } from '@/api/addresses/get-customer-addresses'
-import { signOut } from '@/api/auth/sign-out'
-import { authCheckCustomer } from '@/api/customers/auth-check-customer'
+import type { Address } from '@/api/customer/addresses/get-addresses'
+import { getAddresses } from '@/api/customer/addresses/get-addresses'
+import { authCheck } from '@/api/customer/profile/auth-check'
 import {
-  getCustomerProfile,
-  type GetCustomerProfileResponse,
-} from '@/api/customers/get-customer-profile'
+  getProfile,
+  type GetProfileResponse,
+} from '@/api/customer/profile/get-profile'
+import { signOut } from '@/api/public/authentication/sign-out'
 import { useStorage } from '@/hooks/use-storage'
 import { resetOrder } from '@/utils/reset-order'
 
-export interface CustomerProfile extends GetCustomerProfileResponse {}
+export interface CustomerProfile extends GetProfileResponse {}
 
 interface AuthContextData {
   user: CustomerProfile | null
-  address: CustomerAddress | null
-  addresses: CustomerAddress[]
+  address: Address | null
+  addresses: Address[]
   isLoading: boolean
   isAuthenticated: boolean
   isCheckingAuth: boolean
@@ -34,8 +34,8 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useStorage<CustomerProfile | null>('user', null)
-  const [address, setAddress] = useState<CustomerAddress | null>(null)
-  const [addresses, setAddresses] = useState<CustomerAddress[]>([])
+  const [address, setAddress] = useState<Address | null>(null)
+  const [addresses, setAddresses] = useState<Address[]>([])
 
   const {
     data: authCheckData,
@@ -43,7 +43,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     isLoading: isLoadingAuthCheck,
   } = useQuery({
     queryKey: ['auth-check'],
-    queryFn: authCheckCustomer,
+    queryFn: authCheck,
     retry: false,
     staleTime: Infinity,
   })
@@ -55,16 +55,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
     isLoading: isLoadingCustomerData,
     refetch: refetchCustomerData,
   } = useQuery({
-    queryKey: ['customer-profile'],
-    queryFn: getCustomerProfile,
+    queryKey: ['profile'],
+    queryFn: getProfile,
     retry: false,
     staleTime: 5 * 60 * 1000,
     enabled: isAuthCheckSuccess,
   })
 
   const { data: addressesData } = useQuery({
-    queryKey: ['customer-addresses'],
-    queryFn: getCustomerAddresses,
+    queryKey: ['addresses'],
+    queryFn: getAddresses,
     retry: false,
     staleTime: 5 * 60 * 1000,
     enabled: isAuthCheckSuccess && !!customerData,

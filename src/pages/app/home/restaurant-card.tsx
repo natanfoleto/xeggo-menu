@@ -1,4 +1,4 @@
-import type { Restaurant } from '@/api/restaurants/get-restaurants'
+import type { Restaurant } from '@/api/public/restaurants/get-restaurants'
 import { NavLink } from '@/components/nav-link'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { formatCurrency } from '@/utils/format-currency'

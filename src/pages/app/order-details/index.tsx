@@ -5,7 +5,7 @@ import { RefreshCcw } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import { useParams } from 'react-router-dom'
 
-import { getCustomerOrderDetails } from '@/api/customers/get-customer-order-details'
+import { getCustomerOrderDetails } from '@/api/customer/orders/get-order-details'
 import { OrderStatus } from '@/components/order-status'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'

@@ -28,7 +28,7 @@ export async function getProducts({
   categoryId,
   search,
 }: GetProductsParams) {
-  const response = await api.deauth.get<GetProductsResponse>(
+  const response = await api.public.get<GetProductsResponse>(
     `/restaurants/${slug}/products`,
     {
       params: {

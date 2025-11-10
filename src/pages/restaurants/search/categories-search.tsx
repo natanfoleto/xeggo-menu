@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { getCategories } from '@/api/categories/get-categories'
+import { getCategories } from '@/api/public/categories/get-categories'
 import { LoadingSection } from '@/components/loading-section'
 import { NavLink } from '@/components/nav-link'
 import { Button } from '@/components/ui/button'

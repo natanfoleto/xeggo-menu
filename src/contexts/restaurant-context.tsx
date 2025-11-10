@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import {
   getRestaurant,
   type Restaurant,
-} from '@/api/restaurants/get-restaurant'
+} from '@/api/public/restaurants/get-restaurant'
 import {
   getCurrentTimeInMinutes,
   getCurrentWeekDay,

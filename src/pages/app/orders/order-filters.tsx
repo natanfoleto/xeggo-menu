@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
 
-import { getCustomerRestaurants } from '@/api/customers/get-customer-restaurants'
+import { getRestaurants } from '@/api/customer/restaurants/get-restaurants'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -32,11 +32,11 @@ export function OrderFilters() {
   const restaurantId = searchParams.get('restaurantId')
 
   const { data: restaurantsData } = useQuery({
-    queryKey: ['customer-restaurants'],
-    queryFn: getCustomerRestaurants,
+    queryKey: ['restaurants'],
+    queryFn: getRestaurants,
   })
 
-  const { register, handleSubmit, reset, getValues } =
+  const { register, handleSubmit, reset, watch, setValue } =
     useForm<OrderFiltersSchema>({
       resolver: zodResolver(orderFiltersSchema),
       defaultValues: {
@@ -45,6 +45,11 @@ export function OrderFilters() {
         restaurantId: restaurantId ?? 'all',
       },
     })
+
+  // Observar mudanças nos campos
+  const watchedRestaurantId = watch('restaurantId')
+  const watchedStatus = watch('status')
+  const watchedDate = watch('date')
 
   function handleFilter({ date, status, restaurantId }: OrderFiltersSchema) {
     setSearchParams((state) => {
@@ -84,14 +89,13 @@ export function OrderFilters() {
   return (
     <form onSubmit={handleSubmit(handleFilter)} className="flex flex-col gap-2">
       <Select
-        defaultValue={restaurantId ?? 'all'}
+        value={watchedRestaurantId}
         onValueChange={(value) => {
-          const currentDate = getValues('date')
-          const currentStatus = getValues('status')
+          setValue('restaurantId', value)
           handleFilter({
             restaurantId: value,
-            date: currentDate,
-            status: currentStatus,
+            date: watchedDate,
+            status: watchedStatus,
           })
         }}
       >
@@ -111,14 +115,13 @@ export function OrderFilters() {
       </Select>
 
       <Select
-        defaultValue={status ?? 'all'}
+        value={watchedStatus}
         onValueChange={(value) => {
-          const currentDate = getValues('date')
-          const currentRestaurantId = getValues('restaurantId')
+          setValue('status', value)
           handleFilter({
             status: value,
-            date: currentDate,
-            restaurantId: currentRestaurantId,
+            date: watchedDate,
+            restaurantId: watchedRestaurantId,
           })
         }}
       >

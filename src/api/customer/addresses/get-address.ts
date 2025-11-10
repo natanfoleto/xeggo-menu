@@ -1,6 +1,10 @@
 import { api } from '@/lib/axios'
 
-export interface CustomerAddress {
+export interface GetAddressRequest {
+  addressId: string
+}
+
+export interface GetAddressResponse {
   id: string
   zipCode: string
   street: string
@@ -14,13 +18,9 @@ export interface CustomerAddress {
   updatedAt: Date
 }
 
-export interface GetCustomerAddressesResponse {
-  addresses: CustomerAddress[]
-}
-
-export async function getCustomerAddresses() {
-  const response = await api.auth.get<GetCustomerAddressesResponse>(
-    '/addresses/customer',
+export async function getAddress({ addressId }: GetAddressRequest) {
+  const response = await api.customer.get<GetAddressResponse>(
+    `/addresses/${addressId}`,
   )
 
   return response.data

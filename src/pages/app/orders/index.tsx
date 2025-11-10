@@ -3,7 +3,7 @@ import { Loader2 } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import { useSearchParams } from 'react-router-dom'
 
-import { getCustomerOrders } from '@/api/customers/get-customer-orders'
+import { getOrders } from '@/api/customer/orders/get-orders'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'
 
@@ -32,9 +32,9 @@ export function Orders() {
     isLoading,
     isFetching,
   } = useQuery({
-    queryKey: ['customer-orders', limit, status, date, restaurantId],
+    queryKey: ['orders', limit, status, date, restaurantId],
     queryFn: () =>
-      getCustomerOrders({
+      getOrders({
         limit,
         status: status as
           | 'pending'

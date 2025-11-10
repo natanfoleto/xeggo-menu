@@ -1,13 +1,13 @@
 import { api } from '@/lib/axios'
 
-export interface GetCustomerOrdersQuery {
+export interface GetOrdersQuery {
   limit?: number
   restaurantId?: string
   status?: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
   date?: Date
 }
 
-export interface GetCustomerOrdersResponse {
+export interface GetOrdersResponse {
   orders: {
     orderId: string
     createdAt: string
@@ -30,23 +30,20 @@ export interface GetCustomerOrdersResponse {
   }
 }
 
-export async function getCustomerOrders({
+export async function getOrders({
   limit,
   restaurantId,
   status,
   date,
-}: GetCustomerOrdersQuery) {
-  const response = await api.auth.get<GetCustomerOrdersResponse>(
-    '/customers/orders',
-    {
-      params: {
-        limit,
-        restaurantId,
-        status,
-        date: date?.toISOString(),
-      },
+}: GetOrdersQuery) {
+  const response = await api.customer.get<GetOrdersResponse>('/orders', {
+    params: {
+      limit,
+      restaurantId,
+      status,
+      date: date?.toISOString(),
     },
-  )
+  })
 
   return response.data
 }

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
 import { useSearchParams } from 'react-router-dom'
 
-import { getRestaurants } from '@/api/restaurants/get-restaurants'
+import { getRestaurants } from '@/api/public/restaurants/get-restaurants'
 import { Header } from '@/components/header'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/contexts/auth-context'

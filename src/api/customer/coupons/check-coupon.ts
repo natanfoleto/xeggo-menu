@@ -19,7 +19,7 @@ export async function checkCoupon({
   code,
   orderTotal,
 }: CheckCouponRequest) {
-  const response = await api.auth.post<CheckCouponResponse>(
+  const response = await api.customer.post<CheckCouponResponse>(
     `/coupons/check/${restaurantId}`,
     {
       code,

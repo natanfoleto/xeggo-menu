@@ -8,14 +8,14 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { createCustomerAddress } from '@/api/addresses/create-customer-address'
-import { getAddressByCep } from '@/api/addresses/get-address-by-cep'
+import { createAddress } from '@/api/customer/addresses/create-address'
 import {
-  getCustomerAddress,
-  type GetCustomerAddressResponse,
-} from '@/api/addresses/get-customer-address'
-import type { GetCustomerAddressesResponse } from '@/api/addresses/get-customer-addresses'
-import { updateCustomerAddress } from '@/api/addresses/update-customer-address'
+  getAddress,
+  type GetAddressResponse,
+} from '@/api/customer/addresses/get-address'
+import { getAddressByCep } from '@/api/customer/addresses/get-address-by-cep'
+import type { GetAddressesResponse } from '@/api/customer/addresses/get-addresses'
+import { updateAddress } from '@/api/customer/addresses/update-address'
 import { FormInput } from '@/components/form/form-input'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'
@@ -53,8 +53,8 @@ export function SaveAddress() {
   const isEditing = !!addressId
 
   const { data: address, isLoading: isLoadingAddress } = useQuery({
-    queryKey: ['customer-address', addressId],
-    queryFn: () => getCustomerAddress({ addressId: addressId! }),
+    queryKey: ['address', addressId],
+    queryFn: () => getAddress({ addressId: addressId! }),
     enabled: isEditing,
   })
 
@@ -93,12 +93,10 @@ export function SaveAddress() {
   const zipCode = watch('zipCode')
 
   function updateAddressesOnCache(
-    newAddress: GetCustomerAddressResponse,
+    newAddress: GetAddressResponse,
     isNew: boolean,
   ) {
-    const cached = queryClient.getQueryData<GetCustomerAddressesResponse>([
-      'customer-addresses',
-    ])
+    const cached = queryClient.getQueryData<GetAddressesResponse>(['addresses'])
 
     if (cached) {
       let updatedAddresses = [...cached.addresses]
@@ -126,21 +124,18 @@ export function SaveAddress() {
         })
       }
 
-      queryClient.setQueryData<GetCustomerAddressesResponse>(
-        ['customer-addresses'],
-        {
-          addresses: updatedAddresses,
-        },
-      )
+      queryClient.setQueryData<GetAddressesResponse>(['addresses'], {
+        addresses: updatedAddresses,
+      })
     }
 
     return { cached }
   }
 
-  const { mutateAsync: createAddress } = useMutation({
-    mutationFn: createCustomerAddress,
+  const { mutateAsync: createAddressFn } = useMutation({
+    mutationFn: createAddress,
     onSuccess: (response) => {
-      const newAddress: GetCustomerAddressResponse = {
+      const newAddress: GetAddressResponse = {
         id: response.addressId,
         zipCode: '',
         street: '',
@@ -156,7 +151,7 @@ export function SaveAddress() {
 
       updateAddressesOnCache(newAddress, true)
 
-      queryClient.invalidateQueries({ queryKey: ['customer-addresses'] })
+      queryClient.invalidateQueries({ queryKey: ['addresses'] })
 
       toast.success('Endereço criado com sucesso!')
 
@@ -164,12 +159,12 @@ export function SaveAddress() {
     },
   })
 
-  const { mutateAsync: updateAddress } = useMutation({
-    mutationFn: updateCustomerAddress,
+  const { mutateAsync: updateAddressFn } = useMutation({
+    mutationFn: updateAddress,
     onMutate: (data) => {
       if (!address) return
 
-      const updatedAddress: GetCustomerAddressResponse = {
+      const updatedAddress: GetAddressResponse = {
         ...address,
         ...data,
       }
@@ -179,7 +174,7 @@ export function SaveAddress() {
       return { previousAddress: address }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['customer-addresses'] })
+      queryClient.invalidateQueries({ queryKey: ['addresses'] })
 
       toast.success('Endereço atualizado com sucesso!')
 
@@ -198,12 +193,12 @@ export function SaveAddress() {
 
   async function handleSaveAddress(data: AddressFormSchema) {
     if (isEditing && addressId) {
-      await updateAddress({
+      await updateAddressFn({
         addressId,
         ...data,
       })
     } else {
-      await createAddress(data)
+      await createAddressFn(data)
     }
   }
 

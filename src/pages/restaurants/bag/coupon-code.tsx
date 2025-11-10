@@ -3,7 +3,7 @@ import type { AxiosError } from 'axios'
 import { Loader2, Ticket } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { checkCoupon } from '@/api/coupons/check-coupon'
+import { checkCoupon } from '@/api/customer/coupons/check-coupon'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
