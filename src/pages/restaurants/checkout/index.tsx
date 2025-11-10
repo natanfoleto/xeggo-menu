@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
-import { createOrder } from '@/api/orders/create-order'
+import { createOrder } from '@/api/customer/orders/create-order'
 import { BottomNavigation } from '@/components/bottom-navigation'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'

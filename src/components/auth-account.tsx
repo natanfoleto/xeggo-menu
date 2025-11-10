@@ -7,8 +7,8 @@ import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { signInWithGoogle } from '@/api/auth/sign-in-with-google'
-import { signInWithLink } from '@/api/auth/sign-in-with-link'
+import { authenticateFromGoogle } from '@/api/public/authentication/authenticate-from-google'
+import { authenticateFromLink } from '@/api/public/authentication/authenticate-from-link'
 import { FormInput } from '@/components/form/form-input'
 import { GoogleIcon } from '@/components/icon/google-icon'
 import { Button } from '@/components/ui/button'
@@ -39,18 +39,18 @@ export function AuthAccount({ slug }: AuthAccountProps) {
     },
   })
 
-  const { mutateAsync: authenticateWithLink } = useMutation({
-    mutationFn: signInWithLink,
+  const { mutateAsync: authenticateFromLinkFn } = useMutation({
+    mutationFn: authenticateFromLink,
   })
 
-  async function handleAuthenticateWithLink({ email }: SignInSchema) {
+  async function handleAuthenticateFromLink({ email }: SignInSchema) {
     try {
-      await authenticateWithLink({ email })
+      await authenticateFromLinkFn({ email })
 
       toast.success('Enviamos um link de autenticação para seu e-mail.', {
         action: {
           label: 'Reenviar',
-          onClick: () => authenticateWithLink({ email }),
+          onClick: () => authenticateFromLinkFn({ email }),
         },
       })
     } catch (err) {
@@ -58,8 +58,8 @@ export function AuthAccount({ slug }: AuthAccountProps) {
     }
   }
 
-  async function handleSignInWithGoogle() {
-    await signInWithGoogle({ slug })
+  async function handleAuthenticateFromGoogle() {
+    await authenticateFromGoogle({ slug })
   }
 
   return (
@@ -76,7 +76,7 @@ export function AuthAccount({ slug }: AuthAccountProps) {
           </Button>
 
           <Button
-            onClick={handleSignInWithGoogle}
+            onClick={handleAuthenticateFromGoogle}
             variant="outline"
             className="not-dark:border-muted-foreground w-full font-normal"
           >
@@ -87,7 +87,7 @@ export function AuthAccount({ slug }: AuthAccountProps) {
       ) : (
         <div className="space-y-1">
           <form
-            onSubmit={handleSubmit(handleAuthenticateWithLink)}
+            onSubmit={handleSubmit(handleAuthenticateFromLink)}
             className="space-y-2"
           >
             <FormInput

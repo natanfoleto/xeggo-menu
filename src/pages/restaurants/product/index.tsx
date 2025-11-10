@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { getProduct } from '@/api/products/get-product'
+import { getProduct } from '@/api/public/products/get-product'
 import { LoadingPage } from '@/components/loading-page'
 import { NavLink } from '@/components/nav-link'
 import { PageHeader } from '@/components/page-header'

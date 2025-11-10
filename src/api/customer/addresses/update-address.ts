@@ -1,6 +1,6 @@
 import { api } from '@/lib/axios'
 
-export interface UpdateCustomerAddressRequest {
+export interface UpdateAddressRequest {
   addressId: string
   zipCode?: string
   street?: string
@@ -11,9 +11,9 @@ export interface UpdateCustomerAddressRequest {
   state?: string
 }
 
-export async function updateCustomerAddress({
+export async function updateAddress({
   addressId,
   ...data
-}: UpdateCustomerAddressRequest) {
-  await api.auth.put(`/addresses/${addressId}/customer`, data)
+}: UpdateAddressRequest) {
+  await api.customer.put(`/addresses/${addressId}`, data)
 }

@@ -38,7 +38,7 @@ export interface GetProductParams {
 }
 
 export async function getProduct({ slug, productId }: GetProductParams) {
-  const response = await api.deauth.get<GetProductResponse>(
+  const response = await api.public.get<GetProductResponse>(
     `/restaurants/${slug}/products/${productId}`,
   )
 

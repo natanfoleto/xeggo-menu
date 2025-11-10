@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CircleCheck, EllipsisVertical, Loader2 } from 'lucide-react'
 
-import { deleteCustomerAddress } from '@/api/addresses/delete-customer-address'
-import type { CustomerAddress } from '@/api/addresses/get-customer-addresses'
-import { setActiveCustomerAddress } from '@/api/addresses/set-active-customer-address'
+import { deleteAddress } from '@/api/customer/addresses/delete-address'
+import type { Address } from '@/api/customer/addresses/get-addresses'
+import { setActiveAddress } from '@/api/customer/addresses/set-active-address'
 import { NavLink } from '@/components/nav-link'
 import { Button } from '@/components/ui/button'
 import {
@@ -14,35 +14,35 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 interface AddressCardProps {
-  address: CustomerAddress
+  address: Address
 }
 
 export function AddressCard({ address }: AddressCardProps) {
   const queryClient = useQueryClient()
 
-  const { mutateAsync: setActiveAddress, isPending: isSettingActive } =
+  const { mutateAsync: setActiveAddressFn, isPending: isSettingActive } =
     useMutation({
-      mutationFn: setActiveCustomerAddress,
+      mutationFn: setActiveAddress,
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['customer-addresses'] })
+        queryClient.invalidateQueries({ queryKey: ['addresses'] })
       },
     })
 
-  const { mutateAsync: deleteAddress, isPending: isDeleting } = useMutation({
-    mutationFn: deleteCustomerAddress,
+  const { mutateAsync: deleteAddressFn, isPending: isDeleting } = useMutation({
+    mutationFn: deleteAddress,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['customer-addresses'] })
+      queryClient.invalidateQueries({ queryKey: ['addresses'] })
     },
   })
 
   async function handleSetActive() {
     if (address.isActive) return
 
-    await setActiveAddress({ addressId: address.id })
+    await setActiveAddressFn({ addressId: address.id })
   }
 
   async function handleDelete() {
-    await deleteAddress({ addressId: address.id })
+    await deleteAddressFn({ addressId: address.id })
   }
 
   return (

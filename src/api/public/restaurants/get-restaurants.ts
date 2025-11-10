@@ -28,7 +28,7 @@ export interface GetRestaurantsParams {
 }
 
 export async function getRestaurants(params?: GetRestaurantsParams) {
-  const response = await api.deauth.get<GetRestaurantsResponse>(
+  const response = await api.public.get<GetRestaurantsResponse>(
     '/restaurants',
     {
       params: {

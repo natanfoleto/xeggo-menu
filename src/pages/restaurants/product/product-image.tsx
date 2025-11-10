@@ -41,7 +41,11 @@ export function ProductImage({
         </DialogHeader>
 
         <div className="space-y-2">
-          <img src={src} alt={alt} className="rounded-md object-contain" />
+          <img
+            src={src}
+            alt={alt}
+            className="w-full rounded-md object-contain"
+          />
 
           {ingredients.length > 0 && (
             <p className="text-muted-foreground text-center text-sm font-light">

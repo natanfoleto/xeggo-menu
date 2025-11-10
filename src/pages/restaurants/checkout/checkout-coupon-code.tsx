@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Ticket } from 'lucide-react'
 
-import { checkCoupon } from '@/api/coupons/check-coupon'
+import { checkCoupon } from '@/api/customer/coupons/check-coupon'
 import { NavLink } from '@/components/nav-link'
 import { Button } from '@/components/ui/button'
 import { useOrder } from '@/contexts/order-context'

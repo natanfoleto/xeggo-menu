@@ -11,7 +11,7 @@ export interface GetCategoriesResponse {
 }
 
 export async function getCategories(slug: string) {
-  const response = await api.deauth.get<GetCategoriesResponse>(
+  const response = await api.public.get<GetCategoriesResponse>(
     `/restaurants/${slug}/categories`,
   )
 

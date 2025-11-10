@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 import { FormPriceInput } from '@/components/form/form-price-input'
 import { Button } from '@/components/ui/button'
@@ -15,7 +16,8 @@ import { useOrder } from '@/contexts/order-context'
 import { formatCurrency } from '@/utils/format-currency'
 
 export function ChangeFor() {
-  const { paymentMethods, changeForInCents, setChangeForInCents } = useOrder()
+  const { paymentMethods, changeForInCents, setChangeForInCents, bagTotal } =
+    useOrder()
 
   const [inputValue, setInputValue] = useState(changeForInCents ?? 0)
   const [open, setOpen] = useState(false)
@@ -25,6 +27,9 @@ export function ChangeFor() {
   if (!hasCashPayment) return null
 
   const handleConfirm = () => {
+    if (bagTotal >= inputValue)
+      return toast.warning('Troco precisa ser maior que o valor total')
+
     setChangeForInCents(inputValue)
     setOpen(false)
   }

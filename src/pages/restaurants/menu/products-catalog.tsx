@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 
-import { getCategories } from '@/api/categories/get-categories'
-import { getProducts } from '@/api/products/get-products'
+import { getCategories } from '@/api/public/categories/get-categories'
+import { getProducts } from '@/api/public/products/get-products'
 import { BackToTop } from '@/components/back-to-top'
 import { LoadingSection } from '@/components/loading-section'
 import { useRestaurant } from '@/contexts/restaurant-context'

@@ -37,7 +37,7 @@ export async function createOrder({
   observations,
   items,
 }: CreateOrderRequest) {
-  const response = await api.auth.post<CreateOrderResponse>(
+  const response = await api.customer.post<CreateOrderResponse>(
     `/restaurants/${restaurantId}/orders`,
     {
       orderType,
