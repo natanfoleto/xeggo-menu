@@ -19,9 +19,7 @@ export function Auth() {
       <div className="flex flex-col">
         <Header />
 
-        <div className="flex-1 space-y-4 p-4 py-4">
-          <p className="text-center font-medium">xeggo</p>
-
+        <div className="mx-auto w-full max-w-7xl flex-1 space-y-8 p-4 py-4">
           <div className="space-y-1 text-center">
             <h1>Seus pedidos com mais agilidade e segurança</h1>
             <p className="text-muted-foreground text-sm">
@@ -30,11 +28,13 @@ export function Auth() {
             </p>
           </div>
 
-          <p className="text-muted-foreground text-center text-xs">
-            Selecione uma opção para continuar:
-          </p>
+          <div className="space-y-4">
+            <p className="text-muted-foreground text-center text-xs">
+              Selecione uma opção para continuar:
+            </p>
 
-          <AuthAccount />
+            <AuthAccount />
+          </div>
         </div>
       </div>
     </>

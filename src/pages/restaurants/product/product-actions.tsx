@@ -26,7 +26,7 @@ export function ProductActions({
 
   if (!isAuthenticated) {
     return (
-      <div className="bg-background fixed right-0 bottom-0 left-0 border-t">
+      <div className="bg-background fixed right-0 bottom-0 left-0 mx-auto max-w-7xl border-t">
         <div className="p-4 text-center">
           <p className="font-semibold">Faça login para comprar</p>
           <p className="text-muted-foreground mb-3 text-sm">
@@ -43,7 +43,7 @@ export function ProductActions({
 
   if (!isOpen) {
     return (
-      <div className="bg-background fixed right-0 bottom-0 left-0 border-t">
+      <div className="bg-background fixed right-0 bottom-0 left-0 mx-auto max-w-7xl border-t">
         <div className="p-4 text-center">
           <p className="font-semibold">Fechado no momento</p>
           <p className="text-muted-foreground text-sm">
@@ -55,7 +55,7 @@ export function ProductActions({
   }
 
   return (
-    <div className="bg-background fixed right-0 bottom-0 left-0 border-t">
+    <div className="bg-background fixed right-0 bottom-0 left-0 mx-auto max-w-7xl border-t">
       <div className="flex items-center gap-3 p-4">
         <div className="flex items-center gap-3">
           <Button

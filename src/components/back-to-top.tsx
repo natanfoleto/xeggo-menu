@@ -8,7 +8,7 @@ export function BackToTop() {
   }
 
   return (
-    <div className="bg-muted flex justify-center py-6">
+    <div className="bg-background flex justify-center py-6">
       <Button
         variant="ghost"
         onClick={scrollToTop}

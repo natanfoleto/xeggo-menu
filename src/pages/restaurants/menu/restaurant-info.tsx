@@ -28,12 +28,12 @@ export function RestaurantInfo({ restaurant }: RestaurantInfoProps) {
         style={{ backgroundColor: restaurant.primaryColor ?? '' }}
       />
 
-      <div className="relative flex flex-col gap-6 py-6">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 py-6">
         <NavLink to="/about">
           <ChevronRight className="absolute top-6 right-4 size-5" />
 
           <div className="flex items-start gap-4 px-4">
-            <Avatar className="border-muted size-20 rounded-2xl border-2 shadow-lg sm:h-28 sm:w-28">
+            <Avatar className="border-muted size-20 rounded-2xl border-2 shadow-lg sm:size-28">
               <AvatarImage
                 src={restaurant.avatarUrl || ''}
                 alt={restaurant.name}

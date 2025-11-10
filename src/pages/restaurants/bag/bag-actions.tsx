@@ -31,7 +31,7 @@ export function BagActions() {
 
   return (
     <div className="bg-background border-t p-4">
-      <div className="w-full space-y-1">
+      <div className="w-full space-y-2">
         <div className="space-y-1">
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground text-sm">Subtotal</span>

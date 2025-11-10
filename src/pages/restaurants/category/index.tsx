@@ -43,7 +43,7 @@ export function Category() {
         title={`${currentCategory?.name || 'Categoria'} - ${restaurant.name}`}
       />
 
-      <div className="min-h-screen">
+      <div className="mx-auto min-h-screen max-w-7xl">
         <PageHeader title={currentCategory?.name || 'Categoria'} />
 
         <CategoryProducts products={products || []} slug={slug} />

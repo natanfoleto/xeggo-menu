@@ -119,7 +119,7 @@ export function ProductsCatalog() {
   }
 
   return (
-    <div className="bg-muted">
+    <div className="bg-muted mx-auto w-full max-w-7xl">
       <CategoriesNav
         ref={scrollContainerRef}
         categories={productsByCategory}

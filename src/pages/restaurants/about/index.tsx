@@ -21,21 +21,24 @@ export function About() {
 
       <div>
         <PageHeader title="Perfil do restaurante" />
-        <RestaurantData />
-        <RestaurantAddress />
-        <RestaurantOpeningHours />
-        <RestaurantPaymentMethods />
 
-        <div className="px-4 py-6">
-          <NavLink to="/menu">
-            <Button
-              variant="outline"
-              size="lg"
-              className="not-dark:border-muted-foreground text-foreground w-full"
-            >
-              Voltar para o cardápio
-            </Button>
-          </NavLink>
+        <div className="mx-auto max-w-7xl">
+          <RestaurantData />
+          <RestaurantAddress />
+          <RestaurantOpeningHours />
+          <RestaurantPaymentMethods />
+
+          <div className="px-4 py-6">
+            <NavLink to="/menu">
+              <Button
+                variant="outline"
+                size="lg"
+                className="not-dark:border-muted-foreground text-foreground w-full"
+              >
+                Voltar para o cardápio
+              </Button>
+            </NavLink>
+          </div>
         </div>
       </div>
     </>

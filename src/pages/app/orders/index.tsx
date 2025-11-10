@@ -84,7 +84,7 @@ export function Orders() {
       <div className="min-h-screen space-y-4">
         <PageHeader title="Meus pedidos" />
 
-        <div className="space-y-4 px-4">
+        <div className="mx-auto max-w-7xl space-y-4 px-4">
           <OrderFilters />
 
           {isLoading && !result && <OrderSkeleton />}
