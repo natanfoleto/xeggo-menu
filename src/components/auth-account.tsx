@@ -66,20 +66,12 @@ export function AuthAccount({ slug }: AuthAccountProps) {
     <div className="space-y-4">
       {!showEmailForm ? (
         <div className="space-y-2">
-          <Button
-            onClick={() => setShowEmailForm(true)}
-            variant="outline"
-            className="not-dark:border-muted-foreground w-full font-normal"
-          >
+          <Button onClick={() => setShowEmailForm(true)} className="w-full">
             <Mail className="size-4" />
             Continuar com e-mail
           </Button>
 
-          <Button
-            onClick={handleAuthenticateFromGoogle}
-            variant="outline"
-            className="not-dark:border-muted-foreground w-full font-normal"
-          >
+          <Button onClick={handleAuthenticateFromGoogle} className="w-full">
             <GoogleIcon />
             Continuar com Google
           </Button>
@@ -101,12 +93,7 @@ export function AuthAccount({ slug }: AuthAccountProps) {
               {...register('email')}
             />
 
-            <Button
-              type="submit"
-              variant="outline"
-              className="not-dark:border-muted-foreground w-full font-normal"
-              disabled={isSubmitting}
-            >
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
               Continuar
             </Button>
           </form>
@@ -115,7 +102,7 @@ export function AuthAccount({ slug }: AuthAccountProps) {
             type="button"
             variant="link"
             onClick={() => setShowEmailForm(false)}
-            className="text-muted-foreground w-full text-sm font-normal"
+            className="w-full text-sm font-normal"
           >
             Outras opções de login
           </Button>

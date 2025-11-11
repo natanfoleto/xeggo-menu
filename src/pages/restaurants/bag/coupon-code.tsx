@@ -113,7 +113,7 @@ export function CouponCode() {
   ])
 
   return (
-    <div className="space-y-2 border-t p-4">
+    <div className="space-y-2 border-t px-4 py-6">
       <div>
         <h2 className="text-sm">Cupom de desconto</h2>
         <p className="text-muted-foreground text-xs">
@@ -149,7 +149,7 @@ export function CouponCode() {
       ) : (
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline" size="sm" className="text-xs font-normal">
+            <Button variant="brand" size="sm" className="text-xs font-normal">
               Adicionar cupom
             </Button>
           </DialogTrigger>
