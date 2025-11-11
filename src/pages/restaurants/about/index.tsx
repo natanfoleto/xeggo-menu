@@ -30,11 +30,7 @@ export function About() {
 
           <div className="px-4 py-6">
             <NavLink to="/menu">
-              <Button
-                variant="outline"
-                size="lg"
-                className="not-dark:border-muted-foreground text-foreground w-full"
-              >
+              <Button size="lg" className="w-full">
                 Voltar para o cardápio
               </Button>
             </NavLink>

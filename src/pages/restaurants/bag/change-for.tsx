@@ -35,7 +35,7 @@ export function ChangeFor() {
   }
 
   return (
-    <div className="space-y-2 border-t p-4">
+    <div className="space-y-2 border-t px-4 py-6">
       <div>
         <h2 className="text-sm">Troco para</h2>
         <p className="text-muted-foreground text-xs">
@@ -46,7 +46,7 @@ export function ChangeFor() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button
-            variant={changeForInCents ? 'default' : 'outline'}
+            variant={changeForInCents ? 'default' : 'brand'}
             size="sm"
             className="text-xs font-normal"
           >

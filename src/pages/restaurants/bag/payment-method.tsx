@@ -30,7 +30,7 @@ export function PaymentMethod() {
   }
 
   return (
-    <div className="space-y-4 border-t p-4">
+    <div className="space-y-4 border-t px-4 py-6">
       <div>
         <h2 className="text-sm">Formas de pagamento</h2>
         <p className="text-muted-foreground text-xs">
@@ -38,14 +38,14 @@ export function PaymentMethod() {
         </p>
       </div>
 
-      <div className="flex items-center gap-1">
+      <div className="flex flex-wrap items-center gap-1">
         {restaurant.paymentMethods.map((method) => {
           const isSelected = paymentMethods?.includes(method) || false
 
           return (
             <Button
               key={method}
-              variant={isSelected ? 'default' : 'outline'}
+              variant={isSelected ? 'default' : 'brand'}
               size="xs"
               onClick={() => handleTogglePaymentMethod(method)}
               className="w-min text-xs font-normal transition-all"

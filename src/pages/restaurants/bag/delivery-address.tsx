@@ -10,7 +10,7 @@ export function DeliveryAddress() {
   if (orderType === 'pickup') return null
 
   return (
-    <div className="space-y-2 border-t p-4">
+    <div className="space-y-2 border-t px-4 py-6">
       <h2 className="text-sm">Endereço de entrega</h2>
 
       {address ? (
