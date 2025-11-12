@@ -50,9 +50,11 @@ export function Customer() {
 
     if (cached) {
       queryClient.setQueryData<GetProfileResponse>(['profile'], {
-        ...cached,
-        name,
-        phone,
+        profile: {
+          ...cached.profile,
+          name,
+          phone,
+        },
       })
     }
 
@@ -68,7 +70,10 @@ export function Customer() {
     },
     onError(_, __, context) {
       if (context?.previousCustomerProfile) {
-        updateProfileDataOnCache(context.previousCustomerProfile)
+        queryClient.setQueryData<GetProfileResponse>(
+          ['profile'],
+          context.previousCustomerProfile,
+        )
       }
     },
   })

@@ -4,7 +4,7 @@ export interface GetCustomerOrderDetailsParams {
   orderId: string
 }
 
-export interface GetCustomerOrderDetailsResponse {
+export interface CustomerOrderDetails {
   id: string
   createdAt: string
   status: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
@@ -41,6 +41,10 @@ export interface GetCustomerOrderDetailsResponse {
       }
     }[]
   }[]
+}
+
+export interface GetCustomerOrderDetailsResponse {
+  order: CustomerOrderDetails
 }
 
 export async function getCustomerOrderDetails({

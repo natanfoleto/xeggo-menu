@@ -9,10 +9,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { createAddress } from '@/api/customer/addresses/create-address'
-import {
-  getAddress,
-  type GetAddressResponse,
-} from '@/api/customer/addresses/get-address'
+import { type Address, getAddress } from '@/api/customer/addresses/get-address'
 import { getAddressByCep } from '@/api/customer/addresses/get-address-by-cep'
 import type { GetAddressesResponse } from '@/api/customer/addresses/get-addresses'
 import { updateAddress } from '@/api/customer/addresses/update-address'
@@ -52,11 +49,13 @@ export function SaveAddress() {
   const addressId = searchParams.get('id')
   const isEditing = !!addressId
 
-  const { data: address, isLoading: isLoadingAddress } = useQuery({
+  const { data: addressData, isLoading: isLoadingAddress } = useQuery({
     queryKey: ['address', addressId],
     queryFn: () => getAddress({ addressId: addressId! }),
     enabled: isEditing,
   })
+
+  const address = addressData?.address
 
   const {
     register,
@@ -92,10 +91,7 @@ export function SaveAddress() {
 
   const zipCode = watch('zipCode')
 
-  function updateAddressesOnCache(
-    newAddress: GetAddressResponse,
-    isNew: boolean,
-  ) {
+  function updateAddressesOnCache(newAddress: Address, isNew: boolean) {
     const cached = queryClient.getQueryData<GetAddressesResponse>(['addresses'])
 
     if (cached) {
@@ -135,7 +131,7 @@ export function SaveAddress() {
   const { mutateAsync: createAddressFn } = useMutation({
     mutationFn: createAddress,
     onSuccess: (response) => {
-      const newAddress: GetAddressResponse = {
+      const newAddress: Address = {
         id: response.addressId,
         zipCode: '',
         street: '',
@@ -164,7 +160,7 @@ export function SaveAddress() {
     onMutate: (data) => {
       if (!address) return
 
-      const updatedAddress: GetAddressResponse = {
+      const updatedAddress: Address = {
         ...address,
         ...data,
       }
