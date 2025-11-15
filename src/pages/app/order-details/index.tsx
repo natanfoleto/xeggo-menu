@@ -32,7 +32,7 @@ export function OrderDetails() {
   const { orderId } = useParams<{ orderId: string }>()
 
   const {
-    data: order,
+    data: orderData,
     isLoading: isLoadingOrder,
     isFetching: isFetchingOrder,
     refetch,
@@ -44,6 +44,7 @@ export function OrderDetails() {
     enabled: !!orderId,
   })
 
+  const order = orderData?.order
   const hasCashPayment = order?.paymentMethods.includes('cash')
 
   return (

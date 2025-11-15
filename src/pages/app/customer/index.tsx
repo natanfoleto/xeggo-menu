@@ -17,13 +17,13 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { useAuth } from '@/contexts/auth-context'
 
-const customerProfileFormSchema = z.object({
+const profileSchema = z.object({
   name: z.string().min(1, { message: 'Informe seu nome completo' }),
   email: z.string().email({ message: 'Informe um e-mail válido' }),
   phone: z.string().nullable(),
 })
 
-type CustomerProfileFormSchema = z.infer<typeof customerProfileFormSchema>
+type ProfileSchema = z.infer<typeof profileSchema>
 
 export function Customer() {
   const queryClient = useQueryClient()
@@ -36,8 +36,8 @@ export function Customer() {
     setValue,
     watch,
     formState: { isSubmitting, errors, isDirty },
-  } = useForm<CustomerProfileFormSchema>({
-    resolver: zodResolver(customerProfileFormSchema),
+  } = useForm<ProfileSchema>({
+    resolver: zodResolver(profileSchema),
     values: {
       name: user?.name ?? '',
       email: user?.email ?? '',
@@ -50,31 +50,36 @@ export function Customer() {
 
     if (cached) {
       queryClient.setQueryData<GetProfileResponse>(['profile'], {
-        ...cached,
-        name,
-        phone,
+        profile: {
+          ...cached.profile,
+          name,
+          phone,
+        },
       })
     }
 
     return { cached }
   }
 
-  const { mutateAsync: updateCustomerProfileFn } = useMutation({
+  const { mutateAsync: updateProfileFn } = useMutation({
     mutationFn: updateProfile,
     onMutate: ({ name, phone }: UpdateProfileRequest) => {
       const { cached } = updateProfileDataOnCache({ name, phone })
 
-      return { previousCustomerProfile: cached }
+      return { previousProfile: cached }
     },
     onError(_, __, context) {
-      if (context?.previousCustomerProfile) {
-        updateProfileDataOnCache(context.previousCustomerProfile)
+      if (context?.previousProfile) {
+        queryClient.setQueryData<GetProfileResponse>(
+          ['profile'],
+          context.previousProfile,
+        )
       }
     },
   })
 
-  async function handleUpdateCustomerProfile(data: CustomerProfileFormSchema) {
-    await updateCustomerProfileFn({
+  async function handleUpdateProfile(data: ProfileSchema) {
+    await updateProfileFn({
       name: data.name,
       phone: data.phone,
     })
@@ -88,7 +93,7 @@ export function Customer() {
         <PageHeader title="Meus dados" />
 
         <form
-          onSubmit={handleSubmit(handleUpdateCustomerProfile)}
+          onSubmit={handleSubmit(handleUpdateProfile)}
           className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 p-4"
         >
           <div className="space-y-1.5">

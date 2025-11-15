@@ -5,18 +5,13 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import type { Address } from '@/api/customer/addresses/get-addresses'
 import { getAddresses } from '@/api/customer/addresses/get-addresses'
 import { authCheck } from '@/api/customer/profile/auth-check'
-import {
-  getProfile,
-  type GetProfileResponse,
-} from '@/api/customer/profile/get-profile'
+import { getProfile, type Profile } from '@/api/customer/profile/get-profile'
 import { signOut } from '@/api/public/authentication/sign-out'
 import { useStorage } from '@/hooks/use-storage'
 import { resetOrder } from '@/utils/reset-order'
 
-export interface CustomerProfile extends GetProfileResponse {}
-
 interface AuthContextData {
-  user: CustomerProfile | null
+  user: Profile | null
   address: Address | null
   addresses: Address[]
   isLoading: boolean
@@ -33,7 +28,7 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useStorage<CustomerProfile | null>('user', null)
+  const [user, setUser] = useStorage<Profile | null>('user', null)
   const [address, setAddress] = useState<Address | null>(null)
   const [addresses, setAddresses] = useState<Address[]>([])
 
@@ -51,7 +46,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthCheckSuccess = authCheckData?.authenticated === true
 
   const {
-    data: customerData,
+    data: profileData,
     isLoading: isLoadingCustomerData,
     refetch: refetchCustomerData,
   } = useQuery({
@@ -62,12 +57,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     enabled: isAuthCheckSuccess,
   })
 
+  const profile = profileData?.profile
+
   const { data: addressesData } = useQuery({
     queryKey: ['addresses'],
     queryFn: getAddresses,
     retry: false,
     staleTime: 5 * 60 * 1000,
-    enabled: isAuthCheckSuccess && !!customerData,
+    enabled: isAuthCheckSuccess && !!profile,
   })
 
   useEffect(() => {
@@ -79,8 +76,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [isAuthCheckError, setUser])
 
   useEffect(() => {
-    if (customerData) setUser(customerData)
-  }, [customerData, setUser])
+    if (profile) setUser(profile)
+  }, [profile, setUser])
 
   useEffect(() => {
     if (addressesData?.addresses) {
@@ -117,8 +114,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         addresses,
         isLoading,
         isAuthenticated,
-        isCheckingAuth:
-          !isAuthCheckError && !customerData && !isAuthCheckSuccess,
+        isCheckingAuth: !isAuthCheckError && !profile && !isAuthCheckSuccess,
         refetch,
         logout,
       }}

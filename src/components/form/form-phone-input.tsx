@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { FormInput } from '@/components/form/form-input'
 
@@ -17,6 +17,10 @@ export function FormPhoneInput({
   className,
   error,
 }: PhoneInputProps) {
+  useEffect(() => {
+    setDisplayValue(formatPhone(value))
+  }, [value])
+
   const formatPhone = (phone: string): string => {
     if (!phone) return ''
 

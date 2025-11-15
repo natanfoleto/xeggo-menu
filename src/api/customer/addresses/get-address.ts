@@ -1,10 +1,6 @@
 import { api } from '@/lib/axios'
 
-export interface GetAddressRequest {
-  addressId: string
-}
-
-export interface GetAddressResponse {
+export interface Address {
   id: string
   zipCode: string
   street: string
@@ -16,6 +12,14 @@ export interface GetAddressResponse {
   isActive: boolean
   createdAt: Date
   updatedAt: Date
+}
+
+export interface GetAddressRequest {
+  addressId: string
+}
+
+export interface GetAddressResponse {
+  address: Address
 }
 
 export async function getAddress({ addressId }: GetAddressRequest) {
