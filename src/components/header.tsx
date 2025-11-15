@@ -13,8 +13,12 @@ export function Header() {
 
   return (
     <div className="flex items-center justify-between border-b p-4">
-      <NavLink to="/" className="text-foreground" disablePrefix>
-        <BrandIcon className="size-8" />
+      <NavLink
+        to="/"
+        className="text-foreground rounded-lg bg-violet-500 p-2"
+        disablePrefix
+      >
+        <BrandIcon className="size-6 fill-white" />
       </NavLink>
 
       <div className="flex items-center gap-2">
