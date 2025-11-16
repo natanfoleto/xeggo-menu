@@ -1,18 +1,6 @@
 import { api } from '@/lib/axios'
 
-export interface Address {
-  id: string
-  zipCode: string
-  street: string
-  number: string
-  complement: string | null
-  neighborhood: string
-  city: string
-  state: string
-  isActive: boolean
-  createdAt: Date
-  updatedAt: Date
-}
+import type { Address } from './get-address'
 
 export interface GetAddressesResponse {
   addresses: Address[]
@@ -21,5 +9,5 @@ export interface GetAddressesResponse {
 export async function getAddresses() {
   const response = await api.customer.get<GetAddressesResponse>('/addresses')
 
-  return response.data
+  return response.data.addresses
 }

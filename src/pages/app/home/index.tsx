@@ -27,6 +27,17 @@ export function Home() {
     open: searchParams.get('open') === 'true',
   }
 
+  const { data: restaurantsData, isLoading } = useQuery({
+    queryKey: ['restaurants', filters, address?.city],
+    queryFn: () =>
+      getRestaurants({
+        ...filters,
+        city: address?.city || undefined,
+        limit: 50,
+      }),
+    staleTime: 5 * 60 * 1000,
+  })
+
   const handleFiltersChange = (newFilters: RestaurantFilters) => {
     setSearchParams((params) => {
       if (newFilters.segments.length > 0)
@@ -51,17 +62,6 @@ export function Home() {
     })
   }
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['restaurants', filters, address?.city],
-    queryFn: () =>
-      getRestaurants({
-        ...filters,
-        city: address?.city || undefined,
-        limit: 50,
-      }),
-    staleTime: 5 * 60 * 1000,
-  })
-
   return (
     <>
       <Helmet title="Delivery de Comida - Xeggo" />
@@ -77,15 +77,16 @@ export function Home() {
 
           {isLoading && <RestaurantSkeleton />}
 
-          {data?.restaurants && data.restaurants.length > 0 && (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {data.restaurants.map((restaurant) => (
-                <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-              ))}
-            </div>
-          )}
+          {restaurantsData?.restaurants &&
+            restaurantsData.restaurants.length > 0 && (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {restaurantsData.restaurants.map((restaurant) => (
+                  <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+                ))}
+              </div>
+            )}
 
-          {!isLoading && data?.restaurants.length === 0 && (
+          {!isLoading && restaurantsData?.restaurants.length === 0 && (
             <div className="flex flex-col items-center justify-center gap-2 p-4 text-center">
               <div className="space-y-1">
                 <h3>Nenhum resultado encontrado</h3>

@@ -31,7 +31,7 @@ export function OrderFilters() {
   const status = searchParams.get('status')
   const restaurantId = searchParams.get('restaurantId')
 
-  const { data: restaurantsData } = useQuery({
+  const { data: restaurants } = useQuery({
     queryKey: ['restaurants'],
     queryFn: getRestaurants,
   })
@@ -106,7 +106,7 @@ export function OrderFilters() {
         <SelectContent>
           <SelectItem value="all">Todos os restaurantes</SelectItem>
 
-          {restaurantsData?.restaurants.map((restaurant) => (
+          {restaurants?.map((restaurant) => (
             <SelectItem key={restaurant.id} value={restaurant.id}>
               {restaurant.name}
             </SelectItem>

@@ -49,13 +49,11 @@ export function SaveAddress() {
   const addressId = searchParams.get('id')
   const isEditing = !!addressId
 
-  const { data: addressData, isLoading: isLoadingAddress } = useQuery({
+  const { data: address, isLoading: isLoadingAddress } = useQuery({
     queryKey: ['address', addressId],
     queryFn: () => getAddress({ addressId: addressId! }),
     enabled: isEditing,
   })
-
-  const address = addressData?.address
 
   const {
     register,

@@ -1,6 +1,6 @@
 import { api } from '@/lib/axios'
 
-export interface GetOrdersQuery {
+export interface GetOrdersRequest {
   limit?: number
   restaurantId?: string
   status?: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
@@ -35,7 +35,7 @@ export async function getOrders({
   restaurantId,
   status,
   date,
-}: GetOrdersQuery) {
+}: GetOrdersRequest) {
   const response = await api.customer.get<GetOrdersResponse>('/orders', {
     params: {
       limit,

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 
-import type { Address } from '@/api/customer/addresses/get-addresses'
+import type { Address } from '@/api/customer/addresses/get-address'
 import { getAddresses } from '@/api/customer/addresses/get-addresses'
 import { authCheck } from '@/api/customer/profile/auth-check'
 import { getProfile, type Profile } from '@/api/customer/profile/get-profile'
@@ -46,7 +46,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthCheckSuccess = authCheckData?.authenticated === true
 
   const {
-    data: profileData,
+    data: profile,
     isLoading: isLoadingCustomerData,
     refetch: refetchCustomerData,
   } = useQuery({
@@ -56,8 +56,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     staleTime: 5 * 60 * 1000,
     enabled: isAuthCheckSuccess,
   })
-
-  const profile = profileData?.profile
 
   const { data: addressesData } = useQuery({
     queryKey: ['addresses'],
@@ -80,12 +78,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [profile, setUser])
 
   useEffect(() => {
-    if (addressesData?.addresses) {
-      setAddresses(addressesData.addresses)
+    if (addressesData) {
+      setAddresses(addressesData)
 
-      const activeAddress = addressesData.addresses.find(
-        (addr) => addr.isActive,
-      )
+      const activeAddress = addressesData.find((addr) => addr.isActive)
 
       setAddress(activeAddress || null)
     }

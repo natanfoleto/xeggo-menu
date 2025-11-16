@@ -12,7 +12,7 @@ export function CheckoutCouponCode() {
   const { restaurant } = useRestaurant()
   const { couponCode, bagSubtotal } = useOrder()
 
-  const { data: coupon } = useQuery({
+  const { data: discount } = useQuery({
     queryKey: ['check-coupon', couponCode],
     queryFn: () =>
       checkCoupon({
@@ -22,8 +22,6 @@ export function CheckoutCouponCode() {
       }),
     enabled: !!couponCode && !!restaurant?.id,
   })
-
-  const discount = coupon?.discount
 
   if (!couponCode || !discount) return null
 

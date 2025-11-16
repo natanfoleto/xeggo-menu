@@ -13,7 +13,21 @@ export interface UpdateAddressRequest {
 
 export async function updateAddress({
   addressId,
-  ...data
+  zipCode,
+  street,
+  number,
+  complement,
+  neighborhood,
+  city,
+  state,
 }: UpdateAddressRequest) {
-  await api.customer.put(`/addresses/${addressId}`, data)
+  await api.customer.put(`/addresses/${addressId}`, {
+    zipCode,
+    street,
+    number,
+    complement,
+    neighborhood,
+    city,
+    state,
+  })
 }

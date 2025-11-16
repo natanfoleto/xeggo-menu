@@ -27,5 +27,5 @@ export async function checkCoupon({
     },
   )
 
-  return response.data
+  return response.data.discount
 }

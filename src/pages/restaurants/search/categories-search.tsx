@@ -11,7 +11,7 @@ export function CategoriesSearch() {
 
   const { data: categories, isLoading } = useQuery({
     queryKey: ['categories', slug],
-    queryFn: () => getCategories(slug!),
+    queryFn: () => getCategories({ slug: slug! }),
     enabled: !!slug,
   })
 

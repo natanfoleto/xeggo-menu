@@ -46,7 +46,7 @@ export function RestaurantProvider({
     isError,
   } = useQuery({
     queryKey: ['restaurant', slug],
-    queryFn: () => getRestaurant(slug!),
+    queryFn: () => getRestaurant({ slug: slug! }),
     enabled: !!slug,
     staleTime: 5 * 60 * 1000,
     refetchInterval: 5 * 60 * 1000,

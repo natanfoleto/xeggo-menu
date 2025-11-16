@@ -15,10 +15,28 @@ export interface CreateAddressResponse {
   addressId: string
 }
 
-export async function createAddress(data: CreateAddressRequest) {
+export async function createAddress({
+  zipCode,
+  street,
+  number,
+  complement,
+  neighborhood,
+  city,
+  state,
+  isActive,
+}: CreateAddressRequest) {
   const response = await api.customer.post<CreateAddressResponse>(
     '/addresses',
-    data,
+    {
+      zipCode,
+      street,
+      number,
+      complement,
+      neighborhood,
+      city,
+      state,
+      isActive,
+    },
   )
 
   return response.data
