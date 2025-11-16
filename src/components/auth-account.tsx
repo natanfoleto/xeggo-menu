@@ -43,7 +43,7 @@ export function AuthAccount({ slug }: AuthAccountProps) {
     mutationFn: authenticateFromLink,
   })
 
-  async function handleAuthenticateFromLink({ email }: SignInSchema) {
+  async function onSubmit({ email }: SignInSchema) {
     try {
       await authenticateFromLinkFn({ email })
 
@@ -78,10 +78,7 @@ export function AuthAccount({ slug }: AuthAccountProps) {
         </div>
       ) : (
         <div className="space-y-1">
-          <form
-            onSubmit={handleSubmit(handleAuthenticateFromLink)}
-            className="space-y-2"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
             <FormInput
               id="email"
               type="email"

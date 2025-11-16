@@ -46,12 +46,11 @@ export function OrderFilters() {
       },
     })
 
-  // Observar mudanças nos campos
   const watchedRestaurantId = watch('restaurantId')
   const watchedStatus = watch('status')
   const watchedDate = watch('date')
 
-  function handleFilter({ date, status, restaurantId }: OrderFiltersSchema) {
+  function onSubmit({ date, status, restaurantId }: OrderFiltersSchema) {
     setSearchParams((state) => {
       if (date) state.set('date', date)
       else state.delete('date')
@@ -87,12 +86,12 @@ export function OrderFilters() {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleFilter)} className="flex flex-col gap-2">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
       <Select
         value={watchedRestaurantId}
         onValueChange={(value) => {
           setValue('restaurantId', value)
-          handleFilter({
+          onSubmit({
             restaurantId: value,
             date: watchedDate,
             status: watchedStatus,
@@ -118,7 +117,7 @@ export function OrderFilters() {
         value={watchedStatus}
         onValueChange={(value) => {
           setValue('status', value)
-          handleFilter({
+          onSubmit({
             status: value,
             date: watchedDate,
             restaurantId: watchedRestaurantId,

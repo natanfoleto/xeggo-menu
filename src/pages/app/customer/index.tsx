@@ -35,6 +35,7 @@ export function Customer() {
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { isSubmitting, errors, isDirty },
   } = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
@@ -78,10 +79,16 @@ export function Customer() {
     },
   })
 
-  async function handleUpdateProfile(data: ProfileSchema) {
+  async function onSubmit({ name, email, phone }: ProfileSchema) {
     await updateProfileFn({
-      name: data.name,
-      phone: data.phone,
+      name,
+      phone,
+    })
+
+    reset({
+      name,
+      email,
+      phone,
     })
   }
 
@@ -93,7 +100,7 @@ export function Customer() {
         <PageHeader title="Meus dados" />
 
         <form
-          onSubmit={handleSubmit(handleUpdateProfile)}
+          onSubmit={handleSubmit(onSubmit)}
           className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 p-4"
         >
           <div className="space-y-1.5">

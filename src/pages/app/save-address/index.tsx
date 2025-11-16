@@ -92,52 +92,52 @@ export function SaveAddress() {
   function updateAddressesOnCache(newAddress: Address, isNew: boolean) {
     const cached = queryClient.getQueryData<GetAddressesResponse>(['addresses'])
 
-    if (cached) {
-      let updatedAddresses = [...cached.addresses]
+    if (!cached || !cached.addresses) return { cached: null }
 
-      if (isNew) {
-        if (newAddress.isActive) {
-          updatedAddresses = updatedAddresses.map((addr) => ({
-            ...addr,
-            isActive: false,
-          }))
-        }
+    let updatedAddresses = [...cached.addresses]
 
-        updatedAddresses.push(newAddress)
-      } else {
-        updatedAddresses = updatedAddresses.map((addr) => {
-          if (addr.id === newAddress.id) {
-            return newAddress
-          }
-
-          if (newAddress.isActive && addr.isActive) {
-            return { ...addr, isActive: false }
-          }
-
-          return addr
-        })
+    if (isNew) {
+      if (newAddress.isActive) {
+        updatedAddresses = updatedAddresses.map((addr) => ({
+          ...addr,
+          isActive: false,
+        }))
       }
 
-      queryClient.setQueryData<GetAddressesResponse>(['addresses'], {
-        addresses: updatedAddresses,
+      updatedAddresses.push(newAddress)
+    } else {
+      updatedAddresses = updatedAddresses.map((addr) => {
+        if (addr.id === newAddress.id) {
+          return newAddress
+        }
+
+        if (newAddress.isActive && addr.isActive) {
+          return { ...addr, isActive: false }
+        }
+
+        return addr
       })
     }
+
+    queryClient.setQueryData<GetAddressesResponse>(['addresses'], {
+      addresses: updatedAddresses,
+    })
 
     return { cached }
   }
 
   const { mutateAsync: createAddressFn } = useMutation({
     mutationFn: createAddress,
-    onSuccess: (response) => {
+    onSuccess: (response, request) => {
       const newAddress: Address = {
         id: response.addressId,
-        zipCode: '',
-        street: '',
-        number: '',
-        complement: null,
-        neighborhood: '',
-        city: '',
-        state: '',
+        zipCode: request.zipCode,
+        street: request.street,
+        number: request.number,
+        complement: request.complement || null,
+        neighborhood: request.neighborhood,
+        city: request.city,
+        state: request.state,
         isActive: false,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -158,7 +158,7 @@ export function SaveAddress() {
     onMutate: (data) => {
       if (!address) return
 
-      const updatedAddress: Address = {
+      const updatedAddress = {
         ...address,
         ...data,
       }
@@ -185,14 +185,36 @@ export function SaveAddress() {
     mutationFn: getAddressByCep,
   })
 
-  async function handleSaveAddress(data: AddressFormSchema) {
+  async function onSubmit({
+    zipCode,
+    state,
+    street,
+    number,
+    neighborhood,
+    city,
+    complement,
+  }: AddressFormSchema) {
     if (isEditing && addressId) {
       await updateAddressFn({
         addressId,
-        ...data,
+        zipCode,
+        state,
+        street,
+        number,
+        neighborhood,
+        city,
+        complement,
       })
     } else {
-      await createAddressFn(data)
+      await createAddressFn({
+        zipCode,
+        state,
+        street,
+        number,
+        neighborhood,
+        city,
+        complement,
+      })
     }
   }
 
@@ -234,7 +256,7 @@ export function SaveAddress() {
         <PageHeader title={isEditing ? 'Editar endereço' : 'Novo endereço'} />
 
         <form
-          onSubmit={handleSubmit(handleSaveAddress)}
+          onSubmit={handleSubmit(onSubmit)}
           className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 p-4"
         >
           <div className="space-y-1.5">
