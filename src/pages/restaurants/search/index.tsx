@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import { useSearchParams } from 'react-router-dom'
 
 import { BottomNavigation } from '@/components/bottom-navigation'
+import { PageHeader } from '@/components/page-header'
 import { useRestaurant } from '@/contexts/restaurant-context'
 
 import { CategoriesSearch } from './categories-search'
@@ -19,13 +20,17 @@ export function Search() {
 
   return (
     <>
-      <Helmet title={`Buscar - ${restaurant.name}`} />
+      <Helmet title="Buscar produto" />
 
-      <div className="mx-auto flex min-h-screen max-w-7xl flex-col pb-16">
-        <InputSearch />
+      <div className="min-h-screen pb-16">
+        <PageHeader title="Buscar produto" />
 
-        <div className="flex flex-1 flex-col justify-between pb-6">
-          {hasSearch ? <SearchResult /> : <CategoriesSearch />}
+        <div className="mx-auto max-w-7xl">
+          <InputSearch />
+
+          <div className="flex flex-1 flex-col justify-between pb-6">
+            {hasSearch ? <SearchResult /> : <CategoriesSearch />}
+          </div>
         </div>
       </div>
 
