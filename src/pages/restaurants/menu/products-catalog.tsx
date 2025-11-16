@@ -21,7 +21,7 @@ export function ProductsCatalog() {
 
   const { data: categories, isLoading: categoriesLoading } = useQuery({
     queryKey: ['categories', slug],
-    queryFn: () => getCategories(slug!),
+    queryFn: () => getCategories({ slug: slug! }),
     enabled: !!slug,
   })
 

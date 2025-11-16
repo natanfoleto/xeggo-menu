@@ -12,5 +12,5 @@ export async function getRestaurants() {
   const response =
     await api.customer.get<GetRestaurantsResponse>('/restaurants')
 
-  return response.data
+  return response.data.restaurants
 }

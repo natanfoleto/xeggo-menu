@@ -1,4 +1,3 @@
-// src/api/menu/get-product.ts
 import { api } from '@/lib/axios'
 
 export interface ProductDetail {
@@ -28,16 +27,16 @@ export interface ProductDetail {
   }[]
 }
 
-export interface GetProductResponse {
-  product: ProductDetail
-}
-
-export interface GetProductParams {
+export interface GetProductRequest {
   slug: string
   productId: string
 }
 
-export async function getProduct({ slug, productId }: GetProductParams) {
+export interface GetProductResponse {
+  product: ProductDetail
+}
+
+export async function getProduct({ slug, productId }: GetProductRequest) {
   const response = await api.public.get<GetProductResponse>(
     `/restaurants/${slug}/products/${productId}`,
   )

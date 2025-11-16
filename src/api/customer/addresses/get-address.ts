@@ -27,5 +27,5 @@ export async function getAddress({ addressId }: GetAddressRequest) {
     `/addresses/${addressId}`,
   )
 
-  return response.data
+  return response.data.address
 }

@@ -28,7 +28,7 @@ export function Orders() {
   const limit = Number(searchParams.get('limit')) || 10
 
   const {
-    data: result,
+    data: ordersData,
     isLoading,
     isFetching,
   } = useQuery({
@@ -75,7 +75,8 @@ export function Orders() {
     return `Nenhum pedido encontrado na ${parts.join(' com ')}.`
   }
 
-  const hasMore = result && result.orders.length < result.meta.totalCount
+  const hasMore =
+    ordersData && ordersData.orders.length < ordersData.meta.totalCount
 
   return (
     <>
@@ -87,16 +88,16 @@ export function Orders() {
         <div className="mx-auto max-w-7xl space-y-4 px-4">
           <OrderFilters />
 
-          {isLoading && !result && <OrderSkeleton />}
+          {isLoading && !ordersData && <OrderSkeleton />}
 
-          {result && (
+          {ordersData && (
             <div className="space-y-2">
               <div>
-                {result.orders.map((order) => (
+                {ordersData.orders.map((order) => (
                   <OrderCard key={order.orderId} order={order} />
                 ))}
 
-                {result.orders.length === 0 && (
+                {ordersData.orders.length === 0 && (
                   <div className="p-4">
                     <p className="text-muted-foreground text-center text-sm">
                       {getEmptyMessage()}

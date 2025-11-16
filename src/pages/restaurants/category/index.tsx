@@ -16,13 +16,13 @@ export function Category() {
 
   const { id } = useParams<{ id: string }>()
 
-  const { data: categories, isLoading: categoriesLoading } = useQuery({
+  const { data: categories, isLoading: isLoadingCategories } = useQuery({
     queryKey: ['categories', slug],
-    queryFn: () => getCategories(slug!),
+    queryFn: () => getCategories({ slug: slug! }),
     enabled: !!slug,
   })
 
-  const { data: products, isLoading: productsLoading } = useQuery({
+  const { data: products, isLoading: isLoadingProducts } = useQuery({
     queryKey: ['products-category', slug, id],
     queryFn: () => getProducts({ slug: slug!, categoryId: id }),
     enabled: !!slug && !!id,
@@ -30,7 +30,7 @@ export function Category() {
 
   if (!restaurant || !slug || !id) return null
 
-  if (categoriesLoading || productsLoading) {
+  if (isLoadingCategories || isLoadingProducts) {
     return <LoadingPage text="Carregando produtos..." />
   }
 

@@ -49,14 +49,14 @@ export function Checkout() {
   })
 
   async function handleCreateOrder() {
-    if (!address) return toast.error('Selecione um endereço de entrega')
+    if (!address) return toast.error('Selecione um endereço de entrega.')
 
     if (paymentMethods.length === 0)
-      return toast.error('Selecione ao menos uma forma de pagamento')
+      return toast.error('Selecione ao menos uma forma de pagamento.')
 
-    if (bagItems.length === 0) return toast.error('Adicione itens ao carrinho')
+    if (bagItems.length === 0) return toast.error('Adicione itens ao carrinho.')
 
-    if (!restaurant) return toast.error('Restaurante não encontrado')
+    if (!restaurant) return toast.error('Restaurante não encontrado.')
 
     await createOrderFn({
       restaurantId: restaurant.id,

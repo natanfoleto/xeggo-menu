@@ -11,6 +11,14 @@ export interface Restaurant {
   segments: string[]
 }
 
+export interface GetRestaurantsRequest {
+  segments?: string[]
+  deliveryFee?: boolean
+  open?: boolean
+  city?: string
+  limit?: number
+}
+
 export interface GetRestaurantsResponse {
   restaurants: Restaurant[]
   meta: {
@@ -19,27 +27,23 @@ export interface GetRestaurantsResponse {
   }
 }
 
-export interface GetRestaurantsParams {
-  segments?: string[]
-  deliveryFee?: boolean
-  open?: boolean
-  city?: string
-  limit?: number
-}
-
-export async function getRestaurants(params?: GetRestaurantsParams) {
+export async function getRestaurants({
+  segments,
+  deliveryFee,
+  open,
+  city,
+  limit = 12,
+}: GetRestaurantsRequest = {}) {
   const response = await api.public.get<GetRestaurantsResponse>(
     '/restaurants',
     {
       params: {
         segments:
-          params?.segments && params.segments.length > 0
-            ? params.segments.join(',')
-            : undefined,
-        deliveryFee: params?.deliveryFee,
-        open: params?.open,
-        city: params?.city,
-        limit: params?.limit || 12,
+          segments && segments.length > 0 ? segments.join(',') : undefined,
+        deliveryFee,
+        open,
+        city,
+        limit,
       },
     },
   )

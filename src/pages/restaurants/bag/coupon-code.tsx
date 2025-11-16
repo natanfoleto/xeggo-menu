@@ -59,19 +59,19 @@ export function CouponCode() {
 
     setCouponError(null)
 
-    const data = await checkCouponFn({
+    const discount = await checkCouponFn({
       restaurantId: restaurant.id,
       code: inputValue,
       orderTotal: bagSubtotal,
     })
 
-    if (data.discount) {
+    if (discount) {
       setCouponCode(inputValue)
-      setDiscountInCents(data.discount.discountAmount)
+      setDiscountInCents(discount.discountAmount)
       setCouponDetails({
-        type: data.discount.type,
-        value: data.discount.value,
-        discountAmount: data.discount.discountAmount,
+        type: discount.type,
+        value: discount.value,
+        discountAmount: discount.discountAmount,
       })
       setOpen(false)
       setInputValue('')
@@ -82,20 +82,20 @@ export function CouponCode() {
     const validateSavedCoupon = async () => {
       if (!couponCode || !restaurant?.id) return
 
-      const data = await checkCouponFn({
+      const discount = await checkCouponFn({
         restaurantId: restaurant.id,
         code: couponCode,
         orderTotal: bagSubtotal,
       })
 
-      if (!data.discount) {
+      if (!discount) {
         handleRemoveCoupon()
       } else {
-        setDiscountInCents(data.discount.discountAmount)
+        setDiscountInCents(discount.discountAmount)
         setCouponDetails({
-          type: data.discount.type,
-          value: data.discount.value,
-          discountAmount: data.discount.discountAmount,
+          type: discount.type,
+          value: discount.value,
+          discountAmount: discount.discountAmount,
         })
       }
     }

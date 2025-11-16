@@ -34,7 +34,7 @@ export const queryClient = new QueryClient({
           if ('message' in error.response?.data) {
             toast.error(error.response?.data.message)
           } else {
-            toast.error('Erro ao processar operação!')
+            toast.error('Erro ao processar operação.')
           }
         }
       },

@@ -59,11 +59,15 @@ export interface Restaurant {
   )[]
 }
 
+export interface GetRestaurantRequest {
+  slug: string
+}
+
 export interface GetRestaurantResponse {
   restaurant: Restaurant
 }
 
-export async function getRestaurant(slug: string) {
+export async function getRestaurant({ slug }: GetRestaurantRequest) {
   const response = await api.public.get<GetRestaurantResponse>(
     `/restaurants/${slug}`,
   )

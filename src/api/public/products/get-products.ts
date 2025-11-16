@@ -13,21 +13,21 @@ export interface Product {
   }[]
 }
 
-export interface GetProductsResponse {
-  products: Product[]
-}
-
-export interface GetProductsParams {
+export interface GetProductsRequest {
   slug: string
   categoryId?: string
   search?: string
+}
+
+export interface GetProductsResponse {
+  products: Product[]
 }
 
 export async function getProducts({
   slug,
   categoryId,
   search,
-}: GetProductsParams) {
+}: GetProductsRequest) {
   const response = await api.public.get<GetProductsResponse>(
     `/restaurants/${slug}/products`,
     {
