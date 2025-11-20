@@ -1,3 +1,4 @@
+// src/components/change-for.tsx
 import { useState } from 'react'
 import { toast } from 'sonner'
 
@@ -16,21 +17,28 @@ import { useOrder } from '@/contexts/order-context'
 import { formatCurrency } from '@/utils/format-currency'
 
 export function ChangeFor() {
-  const { paymentMethods, changeForInCents, setChangeForInCents, bagTotal } =
+  const { paymentMethod, changeForInCents, setChangeForInCents, bagTotal } =
     useOrder()
 
   const [inputValue, setInputValue] = useState(changeForInCents ?? 0)
   const [open, setOpen] = useState(false)
 
-  const hasCashPayment = paymentMethods.includes('cash')
+  const isCashPayment = paymentMethod === 'cash'
 
-  if (!hasCashPayment) return null
+  if (!isCashPayment) return null
 
   const handleConfirm = () => {
-    if (bagTotal >= inputValue)
+    if (bagTotal >= inputValue) {
       return toast.warning('Troco precisa ser maior que o valor total')
+    }
 
     setChangeForInCents(inputValue)
+    setOpen(false)
+  }
+
+  const handleClear = () => {
+    setInputValue(0)
+    setChangeForInCents(null)
     setOpen(false)
   }
 
@@ -73,7 +81,12 @@ export function ChangeFor() {
             className="text-sm"
           />
 
-          <DialogFooter>
+          <DialogFooter className="gap-2">
+            {changeForInCents !== null && (
+              <Button variant="outline" onClick={handleClear}>
+                Limpar
+              </Button>
+            )}
             <Button onClick={handleConfirm}>Confirmar</Button>
           </DialogFooter>
         </DialogContent>

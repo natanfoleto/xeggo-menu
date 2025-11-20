@@ -7,11 +7,20 @@ export interface GetCustomerOrderDetailsRequest {
 export interface CustomerOrderDetails {
   id: string
   createdAt: string
-  status: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
+  status:
+    | 'pending'
+    | 'awaiting_payment'
+    | 'payment_failed'
+    | 'payment_confirmed'
+    | 'processing'
+    | 'delivering'
+    | 'delivered'
+    | 'canceled'
   orderType: 'delivery' | 'pickup'
   totalInCents: number
   deliveryAddress: string | null
-  paymentMethods: string[]
+  paymentType: string
+  paymentMethod: string
   changeForInCents: number | null
   deliveryFeeInCents: number | null
   discountInCents: number | null
@@ -19,6 +28,7 @@ export interface CustomerOrderDetails {
   observations: string | null
   estimatedDeliveryTime: number | null
   cancellationReason: string | null
+  paidAt: string | null
   customer: {
     name: string
     email: string

@@ -3,8 +3,6 @@ const PAYMENT_METHOD_LABELS: Record<string, string> = {
   creditCard: 'Crédito',
   debitCard: 'Débito',
   pix: 'Pix',
-  voucher: 'Vale',
-  bankTransfer: 'Transferência',
 }
 
 export function formatPaymentMethods(methods: string[]): string {

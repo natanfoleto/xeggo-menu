@@ -49,14 +49,8 @@ export interface Restaurant {
     | 'arabic'
     | 'bar'
   )[]
-  paymentMethods: (
-    | 'cash'
-    | 'creditCard'
-    | 'debitCard'
-    | 'pix'
-    | 'voucher'
-    | 'bankTransfer'
-  )[]
+  paymentTypes: ('online' | 'onDelivery')[]
+  paymentMethods: ('cash' | 'creditCard' | 'debitCard' | 'pix')[]
 }
 
 export interface GetRestaurantRequest {

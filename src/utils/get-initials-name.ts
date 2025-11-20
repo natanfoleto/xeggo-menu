@@ -1,4 +1,6 @@
 export function getInitialsName(name: string): string {
+  if (!name) return name
+
   const initials = name
     .split(' ')
     .map((word) => word.charAt(0).toUpperCase())

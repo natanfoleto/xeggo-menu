@@ -38,10 +38,13 @@ export function Orders() {
         limit,
         status: status as
           | 'pending'
-          | 'canceled'
+          | 'awaiting_payment'
+          | 'payment_failed'
+          | 'payment_confirmed'
           | 'processing'
           | 'delivering'
-          | 'delivered',
+          | 'delivered'
+          | 'canceled',
         date: date ? new Date(date) : undefined,
         restaurantId: restaurantId || undefined,
       }),

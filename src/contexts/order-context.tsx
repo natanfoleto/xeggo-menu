@@ -29,7 +29,8 @@ interface OrderContextData {
   bagTotal: number
   bagItemsCount: number
   orderType: 'delivery' | 'pickup'
-  paymentMethods: string[]
+  paymentType: string | null
+  paymentMethod: string | null
   changeForInCents: number | null
   deliveryFeeInCents: number | null
   discountInCents: number | null
@@ -40,7 +41,8 @@ interface OrderContextData {
   updateItemQuantity: (itemId: string, quantity: number) => void
   clearBag: () => void
   setOrderType: (type: 'delivery' | 'pickup') => void
-  setPaymentMethods: (methods: string[]) => void
+  setPaymentType: (type: string | null) => void
+  setPaymentMethod: (method: string | null) => void
   setChangeForInCents: (value: number | null) => void
   setDiscountInCents: (value: number | null) => void
   setCouponCode: (code: string | null) => void
@@ -64,9 +66,14 @@ export function OrderProvider({ children }: OrderProviderProps) {
     'delivery',
   )
 
-  const [paymentMethods, setPaymentMethods] = useStorage<string[]>(
-    'payment-methods',
-    [],
+  const [paymentType, setPaymentType] = useStorage<string | null>(
+    'payment-type',
+    null,
+  )
+
+  const [paymentMethod, setPaymentMethod] = useStorage<string | null>(
+    'payment-method',
+    null,
   )
 
   const [changeForInCents, setChangeForInCents] = useStorage<number | null>(
@@ -168,7 +175,7 @@ export function OrderProvider({ children }: OrderProviderProps) {
   const resetOrder = () => {
     clearBag()
     setOrderType('delivery')
-    setPaymentMethods([])
+    setPaymentMethod(null)
     setChangeForInCents(null)
     setDiscountInCents(null)
     setCouponCode(null)
@@ -183,7 +190,8 @@ export function OrderProvider({ children }: OrderProviderProps) {
         bagTotal,
         bagItemsCount,
         orderType,
-        paymentMethods,
+        paymentType,
+        paymentMethod,
         changeForInCents,
         deliveryFeeInCents,
         discountInCents,
@@ -194,7 +202,8 @@ export function OrderProvider({ children }: OrderProviderProps) {
         updateItemQuantity,
         clearBag,
         setOrderType,
-        setPaymentMethods,
+        setPaymentType,
+        setPaymentMethod,
         setChangeForInCents,
         setDiscountInCents,
         setCouponCode,
