@@ -73,7 +73,7 @@ export function SaveAddress() {
           neighborhood: address?.neighborhood ?? '',
           city: address?.city ?? '',
           state: address?.state ?? '',
-          isActive: address?.isActive ?? false,
+          isActive: address?.isActive ?? true,
         }
       : {
           zipCode: '',
@@ -83,7 +83,7 @@ export function SaveAddress() {
           neighborhood: '',
           city: '',
           state: '',
-          isActive: false,
+          isActive: true,
         },
   })
 
@@ -193,6 +193,7 @@ export function SaveAddress() {
     neighborhood,
     city,
     complement,
+    isActive,
   }: AddressFormSchema) {
     if (isEditing && addressId) {
       await updateAddressFn({
@@ -204,6 +205,7 @@ export function SaveAddress() {
         neighborhood,
         city,
         complement,
+        isActive,
       })
     } else {
       await createAddressFn({
@@ -214,6 +216,7 @@ export function SaveAddress() {
         neighborhood,
         city,
         complement,
+        isActive,
       })
     }
   }

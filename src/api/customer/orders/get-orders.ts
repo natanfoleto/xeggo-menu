@@ -4,10 +4,13 @@ export interface GetOrdersRequest {
   limit?: number
   restaurantId?: string
   status?:
-    | 'pending'
     | 'awaiting_payment'
     | 'payment_failed'
     | 'payment_confirmed'
+    | 'payment_overdue'
+    | 'payment_refunded'
+    | 'chargeback_requested'
+    | 'pending'
     | 'processing'
     | 'delivering'
     | 'delivered'
@@ -31,10 +34,13 @@ export interface GetOrdersResponse {
     totalItemsQuantity: number
     total: number
     status:
-      | 'pending'
       | 'awaiting_payment'
       | 'payment_failed'
       | 'payment_confirmed'
+      | 'payment_overdue'
+      | 'payment_refunded'
+      | 'chargeback_requested'
+      | 'pending'
       | 'processing'
       | 'delivering'
       | 'delivered'

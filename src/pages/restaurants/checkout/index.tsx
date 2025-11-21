@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+import { AxiosError } from 'axios'
 import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
@@ -67,8 +68,22 @@ export function Checkout() {
       resetOrder()
       navigate(`/orders/${orderId}`, { replace: true })
     },
-    onError: () => {
-      toast.error('Erro ao criar pedido. Tente novamente.')
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        const data = error.response?.data
+        const firstError = data?.errors?.[0]?.description
+
+        if (data.code === 'invalid_object') {
+          return toast.error(
+            'Dados inválidos',
+            firstError ?? data?.message ?? 'Erro inesperado.',
+          )
+        }
+
+        toast.error(firstError ?? data?.message ?? 'Erro inesperado.')
+      } else {
+        toast.error('Erro inesperado.')
+      }
     },
   })
 
