@@ -24,7 +24,18 @@ interface OrderCardProps {
     }[]
     totalItemsQuantity: number
     total: number
-    status: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
+    status:
+      | 'awaiting_payment'
+      | 'payment_failed'
+      | 'payment_confirmed'
+      | 'payment_overdue'
+      | 'payment_refunded'
+      | 'chargeback_requested'
+      | 'pending'
+      | 'processing'
+      | 'delivering'
+      | 'delivered'
+      | 'canceled'
   }
 }
 

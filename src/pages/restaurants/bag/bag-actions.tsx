@@ -13,7 +13,7 @@ export function BagActions() {
     orderType,
     bagTotal,
     bagItems,
-    paymentMethods,
+    paymentMethod,
   } = useOrder()
 
   const subtotal = bagItems.reduce((total, item) => {
@@ -27,7 +27,7 @@ export function BagActions() {
   }, 0)
 
   const canSubmit =
-    bagItems.length > 0 && address !== null && paymentMethods.length > 0
+    bagItems.length > 0 && address !== null && paymentMethod !== null
 
   return (
     <div className="bg-background border-t p-4">

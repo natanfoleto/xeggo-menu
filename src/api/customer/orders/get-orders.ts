@@ -3,7 +3,18 @@ import { api } from '@/lib/axios'
 export interface GetOrdersRequest {
   limit?: number
   restaurantId?: string
-  status?: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
+  status?:
+    | 'awaiting_payment'
+    | 'payment_failed'
+    | 'payment_confirmed'
+    | 'payment_overdue'
+    | 'payment_refunded'
+    | 'chargeback_requested'
+    | 'pending'
+    | 'processing'
+    | 'delivering'
+    | 'delivered'
+    | 'canceled'
   date?: Date
 }
 
@@ -22,7 +33,18 @@ export interface GetOrdersResponse {
     }[]
     totalItemsQuantity: number
     total: number
-    status: 'pending' | 'canceled' | 'processing' | 'delivering' | 'delivered'
+    status:
+      | 'awaiting_payment'
+      | 'payment_failed'
+      | 'payment_confirmed'
+      | 'payment_overdue'
+      | 'payment_refunded'
+      | 'chargeback_requested'
+      | 'pending'
+      | 'processing'
+      | 'delivering'
+      | 'delivered'
+      | 'canceled'
   }[]
   meta: {
     limit: number

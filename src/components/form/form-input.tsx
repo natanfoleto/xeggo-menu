@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 
 interface FormInputProps extends React.ComponentProps<'input'> {
-  error?: string
+  error?: string | null
 }
 
 export function FormInput({ error, className, ...rest }: FormInputProps) {

@@ -1,10 +1,13 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { RefreshCcw } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import { useParams } from 'react-router-dom'
+import { toast } from 'sonner'
 
+import { cancelOrder } from '@/api/customer/orders/cancel-order'
+import { getCheckoutUrl } from '@/api/customer/orders/get-checkout-url'
 import { getCustomerOrderDetails } from '@/api/customer/orders/get-order-details'
 import { OrderStatus } from '@/components/order-status'
 import { PageHeader } from '@/components/page-header'
@@ -14,13 +17,16 @@ import { formatCurrency } from '@/utils/format-currency'
 
 import { OrderDetailsSkeleton } from './order-details-skeleton'
 
+const PAYMENT_TYPES: Record<string, string> = {
+  online: 'Pagamento online',
+  onDelivery: 'Pagamento na entrega/retirada',
+}
+
 const PAYMENT_METHODS: Record<string, string> = {
   cash: 'Dinheiro',
   creditCard: 'Cartão de Crédito',
   debitCard: 'Cartão de Débito',
   pix: 'PIX',
-  voucher: 'Voucher',
-  bankTransfer: 'Transferência Bancária',
 }
 
 const ORDER_TYPES: Record<string, string> = {
@@ -44,13 +50,37 @@ export function OrderDetails() {
     enabled: !!orderId,
   })
 
-  const hasCashPayment = order?.paymentMethods.includes('cash')
+  const { mutate: getCheckoutUrlFn, isPending: isLoadingCheckout } =
+    useMutation({
+      mutationFn: () => getCheckoutUrl({ orderId: orderId! }),
+      onSuccess: (checkoutUrl) => {
+        window.location.href = checkoutUrl
+      },
+      onError: () => {
+        toast.error('Não foi possível obter o link de pagamento.')
+      },
+    })
+
+  const { mutate: cancelOrderFn, isPending: isCanceling } = useMutation({
+    mutationFn: () => cancelOrder({ orderId: orderId! }),
+    onSuccess: () => {
+      toast.success('Pedido cancelado com sucesso!')
+      refetch()
+    },
+  })
+
+  const hasCashPayment = order?.paymentMethod === 'cash'
+  const canRetryPayment = order?.status === 'awaiting_payment'
+  const canCancel =
+    order?.status === 'awaiting_payment' || order?.status === 'pending'
 
   return (
     <>
       <Helmet title="Acompanhar pedido" />
 
-      <div className="min-h-screen">
+      <div
+        className={`min-h-screen ${(canRetryPayment || canCancel) && 'pb-12'}`}
+      >
         <PageHeader title="Acompanhar pedido" />
 
         <div className="mx-auto max-w-7xl">
@@ -83,7 +113,7 @@ export function OrderDetails() {
           {order && (
             <div>
               <section className="bg-muted p-4">
-                <p className="text-muted-foreground text-center text-xs">
+                <p className="text-muted-foreground text-xs">
                   Realizado{' '}
                   {formatDistanceToNow(new Date(order.createdAt), {
                     locale: ptBR,
@@ -105,19 +135,48 @@ export function OrderDetails() {
                     </div>
                   )}
                 </div>
-
-                {order.cancellationReason && (
-                  <div className="mt-4 rounded-md bg-red-100 p-3 text-center dark:bg-red-950/20">
-                    <p className="text-sm font-medium">
-                      Motivo do cancelamento
-                    </p>
-
-                    <p className="text-muted-foreground text-xs">
-                      {order.cancellationReason}
-                    </p>
-                  </div>
-                )}
               </section>
+
+              {canRetryPayment && (
+                <section className="space-y-1 border-b bg-yellow-50 p-4 text-sm dark:bg-yellow-950/20">
+                  <h3 className="font-semibold">Aguardando pagamento</h3>
+
+                  <p className="text-muted-foreground text-xs">
+                    Seu pedido foi criado mas ainda não foi pago. Finalize o
+                    pagamento para que o restaurante possa processar seu pedido.
+                  </p>
+                </section>
+              )}
+
+              {order.status === 'pending' && (
+                <section className="space-y-1 border-b bg-zinc-50 p-4 text-sm dark:bg-zinc-950/20">
+                  <h3 className="font-semibold">Aguardando restaurante</h3>
+
+                  <p className="text-muted-foreground text-xs">
+                    Aguarde o restaurante aceitar seu pedido
+                  </p>
+                </section>
+              )}
+
+              {order.status === 'payment_confirmed' && (
+                <section className="space-y-1 border-b bg-blue-50 p-4 text-sm dark:bg-blue-950/20">
+                  <h3 className="font-semibold">Aguardando restaurante</h3>
+
+                  <p className="text-muted-foreground text-xs">
+                    Aguarde o restaurante começar a preparar seu pedido
+                  </p>
+                </section>
+              )}
+
+              {order.cancellationReason && (
+                <section className="space-y-1 border-b bg-red-50 p-4 text-sm dark:bg-red-950/20">
+                  <h3 className="font-semibold">Motivo do cancelamento</h3>
+
+                  <p className="text-muted-foreground text-xs">
+                    {order.cancellationReason}
+                  </p>
+                </section>
+              )}
 
               <section className="space-y-2 border-b p-4">
                 <h2 className="font-medium">Tipo de pedido</h2>
@@ -170,12 +229,10 @@ export function OrderDetails() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-muted-foreground text-sm">
-                      Forma de pagamento
+                      Forma de pagamento — {PAYMENT_TYPES[order.paymentType]}
                     </p>
                     <p className="text-sm font-medium">
-                      {order.paymentMethods
-                        .map((method) => PAYMENT_METHODS[method] || method)
-                        .join(', ')}
+                      {PAYMENT_METHODS[order.paymentMethod]}
                     </p>
                   </div>
 
@@ -348,6 +405,35 @@ export function OrderDetails() {
             </div>
           )}
         </div>
+
+        {order && (canRetryPayment || canCancel) && (
+          <div className="bg-background fixed inset-x-0 bottom-0 border-t p-2">
+            <div className="mx-auto flex max-w-7xl gap-2">
+              {canRetryPayment && (
+                <Button
+                  onClick={() => getCheckoutUrlFn()}
+                  disabled={isLoadingCheckout || isCanceling}
+                  className="flex-1"
+                  size="sm"
+                >
+                  {isLoadingCheckout ? 'Carregando...' : 'Finalizar pagamento'}
+                </Button>
+              )}
+
+              {canCancel && (
+                <Button
+                  variant="destructive"
+                  onClick={() => cancelOrderFn()}
+                  disabled={isCanceling || isLoadingCheckout}
+                  className={canRetryPayment ? '' : 'flex-1'}
+                  size="sm"
+                >
+                  {isCanceling ? 'Cancelando...' : 'Cancelar pedido'}
+                </Button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </>
   )

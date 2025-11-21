@@ -10,16 +10,29 @@ import {
   updateProfile,
   type UpdateProfileRequest,
 } from '@/api/customer/profile/update-profile'
+import { FormCpfCnpjInput } from '@/components/form/form-cpf-cnpj-input'
 import { FormInput } from '@/components/form/form-input'
 import { FormPhoneInput } from '@/components/form/form-phone-input'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { useAuth } from '@/contexts/auth-context'
+import { isValidCPF } from '@/utils/validate-document'
 
 const profileSchema = z.object({
   name: z.string().min(1, { message: 'Informe seu nome completo' }),
   email: z.string().email({ message: 'Informe um e-mail válido' }),
+  cpf: z
+    .string()
+    .refine(
+      (value) => {
+        if (value.length === 0) return true
+        const only = value.replace(/\D/g, '')
+        return isValidCPF(only)
+      },
+      { message: 'CPF inválido' },
+    )
+    .nullable(),
   phone: z.string().nullable(),
 })
 
@@ -42,6 +55,7 @@ export function Customer() {
     values: {
       name: user?.name ?? '',
       email: user?.email ?? '',
+      cpf: user?.cpf ?? null,
       phone: user?.phone ?? null,
     },
   })
@@ -64,8 +78,8 @@ export function Customer() {
 
   const { mutateAsync: updateProfileFn } = useMutation({
     mutationFn: updateProfile,
-    onMutate: ({ name, phone }: UpdateProfileRequest) => {
-      const { cached } = updateProfileDataOnCache({ name, phone })
+    onMutate: ({ name, cpf, phone }: UpdateProfileRequest) => {
+      const { cached } = updateProfileDataOnCache({ name, cpf, phone })
 
       return { previousProfile: cached }
     },
@@ -79,15 +93,17 @@ export function Customer() {
     },
   })
 
-  async function onSubmit({ name, email, phone }: ProfileSchema) {
+  async function onSubmit({ name, email, cpf, phone }: ProfileSchema) {
     await updateProfileFn({
       name,
+      cpf,
       phone,
     })
 
     reset({
       name,
       email,
+      cpf,
       phone,
     })
   }
@@ -128,6 +144,22 @@ export function Customer() {
               disabled
               {...register('email')}
               error={errors.email?.message}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="cpf">CPF</Label>
+            <FormCpfCnpjInput
+              value={watch('cpf') ?? ''}
+              onChange={(value) =>
+                setValue('cpf', value, {
+                  shouldDirty: true,
+                  shouldValidate: true,
+                })
+              }
+              className="text-sm"
+              disabled={isSubmitting || isLoadingProfile}
+              error={errors.cpf?.message}
             />
           </div>
 

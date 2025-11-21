@@ -9,6 +9,7 @@ export interface UpdateAddressRequest {
   neighborhood?: string
   city?: string
   state?: string
+  isActive?: boolean
 }
 
 export async function updateAddress({
@@ -20,6 +21,7 @@ export async function updateAddress({
   neighborhood,
   city,
   state,
+  isActive,
 }: UpdateAddressRequest) {
   await api.customer.put(`/addresses/${addressId}`, {
     zipCode,
@@ -29,5 +31,6 @@ export async function updateAddress({
     neighborhood,
     city,
     state,
+    isActive,
   })
 }

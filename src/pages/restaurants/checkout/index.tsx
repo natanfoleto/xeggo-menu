@@ -1,17 +1,31 @@
 import { useMutation } from '@tanstack/react-query'
+import { AxiosError } from 'axios'
 import { Loader2 } from 'lucide-react'
+import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { createOrder } from '@/api/customer/orders/create-order'
 import { BottomNavigation } from '@/components/bottom-navigation'
+import { FormCpfCnpjInput } from '@/components/form/form-cpf-cnpj-input'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Label } from '@/components/ui/label'
 import { useAuth } from '@/contexts/auth-context'
 import { useOrder } from '@/contexts/order-context'
 import { useRestaurant } from '@/contexts/restaurant-context'
 import { formatAddress } from '@/utils/format-address'
+import { isValidCPF } from '@/utils/validate-document'
 
 import { CheckoutAddress } from './checkout-address'
 import { CheckoutChangeFor } from './checkout-change-for'
@@ -25,11 +39,12 @@ import { CheckoutValues } from './checkout-values'
 export function Checkout() {
   const navigate = useNavigate()
 
-  const { address } = useAuth()
+  const { user, address } = useAuth()
   const { restaurant } = useRestaurant()
   const {
     orderType,
-    paymentMethods,
+    paymentType,
+    paymentMethod,
     changeForInCents,
     couponCode,
     observations,
@@ -37,32 +52,84 @@ export function Checkout() {
     resetOrder,
   } = useOrder()
 
+  const [documentAlert, setDocumentAlert] = useState(false)
+  const [cpf, setCpf] = useState(user?.cpf ?? '')
+  const [cpfError, setCpfError] = useState<string | null>()
+
   const { mutateAsync: createOrderFn, isPending } = useMutation({
     mutationFn: createOrder,
-    onSuccess: ({ orderId }) => {
+    onSuccess: ({ orderId, checkoutUrl }) => {
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl
+        return
+      }
+
       toast.success('Pedido realizado com sucesso!')
-
       resetOrder()
-
       navigate(`/orders/${orderId}`, { replace: true })
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        const data = error.response?.data
+        const firstError = data?.errors?.[0]?.description
+
+        if (data.code === 'invalid_object') {
+          return toast.error(
+            'Dados inválidos',
+            firstError ?? data?.message ?? 'Erro inesperado.',
+          )
+        }
+
+        toast.error(firstError ?? data?.message ?? 'Erro inesperado.')
+      } else {
+        toast.error('Erro inesperado.')
+      }
     },
   })
 
+  function handleValidateCpf() {
+    setCpfError(null)
+
+    if (!cpf) {
+      return setCpfError('CPF é obrigatório')
+    }
+
+    if (!isValidCPF(cpf)) {
+      return setCpfError('CPF inválido')
+    }
+
+    setDocumentAlert(false)
+  }
+
   async function handleCreateOrder() {
-    if (!address) return toast.error('Selecione um endereço de entrega.')
+    if (!address) {
+      return toast.error('Selecione um endereço de entrega.')
+    }
 
-    if (paymentMethods.length === 0)
-      return toast.error('Selecione ao menos uma forma de pagamento.')
+    if (!paymentType || !paymentMethod) {
+      return toast.error('Selecione uma forma de pagamento.')
+    }
 
-    if (bagItems.length === 0) return toast.error('Adicione itens ao carrinho.')
+    if (bagItems.length === 0) {
+      return toast.error('Adicione itens ao carrinho.')
+    }
 
-    if (!restaurant) return toast.error('Restaurante não encontrado.')
+    if (!restaurant) {
+      return toast.error('Restaurante não encontrado.')
+    }
+
+    if (paymentType === 'online' && !user?.cpf && !cpf) {
+      return setDocumentAlert(true)
+    }
 
     await createOrderFn({
       restaurantId: restaurant.id,
+      customerCpf: cpf,
+      customerPhone: user?.phone,
       orderType,
       deliveryAddress: formatAddress(address),
-      paymentMethods,
+      paymentType,
+      paymentMethod,
       changeForInCents,
       couponCode,
       observations,
@@ -70,16 +137,26 @@ export function Checkout() {
         productId: item.productId,
         quantity: item.quantity,
         observations: item.observations || undefined,
-        complements: item.complements.map((comp) => ({
-          complementId: comp.id,
-          quantity: comp.quantity,
+        complements: item.complements.map((complement) => ({
+          complementId: complement.id,
+          quantity: complement.quantity,
         })),
       })),
     })
   }
 
+  function handleOpenChange(open: boolean) {
+    if (!open) setCpfError(null)
+
+    setDocumentAlert(open)
+  }
+
   const canSubmit =
-    bagItems.length > 0 && paymentMethods.length > 0 && address && !isPending
+    bagItems.length > 0 &&
+    address &&
+    paymentType !== null &&
+    paymentMethod !== null &&
+    !isPending
 
   return (
     <>
@@ -118,6 +195,42 @@ export function Checkout() {
       </div>
 
       <BottomNavigation />
+
+      <Dialog open={documentAlert} onOpenChange={handleOpenChange}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>CPF necessário para pagamentos online</DialogTitle>
+            <DialogDescription>
+              Para finalizar a compra com pagamento online, é obrigatório
+              informar o número do seu CPF (Cadastro de Pessoa Física) para a
+              emissão da nota fiscal eletrônica.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-2">
+            <Label htmlFor="cpf">CPF</Label>
+            <FormCpfCnpjInput
+              id="cpf"
+              value={cpf}
+              onChange={(value) => {
+                setCpf(value)
+                if (cpfError) setCpfError(null)
+              }}
+              maxLength={14}
+              className="text-sm"
+              error={cpfError}
+            />
+          </div>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancelar</Button>
+            </DialogClose>
+
+            <Button onClick={handleValidateCpf}>Confirmar</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

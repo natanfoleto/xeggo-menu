@@ -11,10 +11,29 @@ import { OrderCard } from './order-card'
 import { OrderFilters } from './order-filters'
 import { OrderSkeleton } from './order-skeleton'
 
-const statusMap: Record<string, string> = {
+type OrderStatus =
+  | 'awaiting_payment'
+  | 'payment_failed'
+  | 'payment_confirmed'
+  | 'payment_overdue'
+  | 'payment_refunded'
+  | 'chargeback_requested'
+  | 'pending'
+  | 'processing'
+  | 'delivering'
+  | 'delivered'
+  | 'canceled'
+
+const orderStatusMap: Record<OrderStatus, string> = {
+  awaiting_payment: 'Aguardando pagamento',
+  payment_failed: 'Pagamento falhou',
+  payment_confirmed: 'Pagamento confirmado',
+  payment_overdue: 'Pagamento expirado',
+  payment_refunded: 'Pagamento reembolsado',
+  chargeback_requested: 'Estorno solicitado',
   pending: 'Pendente',
   canceled: 'Cancelado',
-  processing: 'Preparando',
+  processing: 'Em preparo',
   delivering: 'Em entrega',
   delivered: 'Entregue',
 }
@@ -22,7 +41,7 @@ const statusMap: Record<string, string> = {
 export function Orders() {
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const status = searchParams.get('status')
+  const status = searchParams.get('status') as OrderStatus
   const date = searchParams.get('date')
   const restaurantId = searchParams.get('restaurantId')
   const limit = Number(searchParams.get('limit')) || 10
@@ -36,12 +55,7 @@ export function Orders() {
     queryFn: () =>
       getOrders({
         limit,
-        status: status as
-          | 'pending'
-          | 'canceled'
-          | 'processing'
-          | 'delivering'
-          | 'delivered',
+        status: status as OrderStatus,
         date: date ? new Date(date) : undefined,
         restaurantId: restaurantId || undefined,
       }),
@@ -70,7 +84,7 @@ export function Orders() {
       parts.push(`data ${formattedDate}`)
     }
 
-    if (status) parts.push(`status ${statusMap[status] || status}`)
+    if (status) parts.push(`status ${orderStatusMap[status] || status}`)
 
     return `Nenhum pedido encontrado na ${parts.join(' com ')}.`
   }
