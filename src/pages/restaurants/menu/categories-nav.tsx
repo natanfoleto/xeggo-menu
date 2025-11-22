@@ -3,10 +3,10 @@ import { forwardRef } from 'react'
 import { Button } from '@/components/ui/button'
 
 interface CategoriesNavProps {
-  categories: Array<{
+  categories: {
     id: string
     name: string
-  }>
+  }[]
   activeCategory: string | null
   onCategoryClick: (categoryId: string) => void
   buttonRefs: React.MutableRefObject<Record<string, HTMLButtonElement | null>>

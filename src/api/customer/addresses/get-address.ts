@@ -10,8 +10,6 @@ export interface Address {
   city: string
   state: string
   isActive: boolean
-  createdAt: Date
-  updatedAt: Date
 }
 
 export interface GetAddressRequest {

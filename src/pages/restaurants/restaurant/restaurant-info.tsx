@@ -1,5 +1,6 @@
 import { RestaurantBadges } from '@/components/restaurant-badges'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import type { Segment } from '@/dtos/segments/segment'
 import { getInitialsName } from '@/utils/get-initials-name'
 
 interface RestaurantInfoProps {
@@ -9,7 +10,7 @@ interface RestaurantInfoProps {
     primaryColor: string | null
     avatarUrl: string | null
     isOpen: boolean
-    segments: string[]
+    segments: Segment[]
   }
 }
 

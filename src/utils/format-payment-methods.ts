@@ -1,11 +1,13 @@
-const PAYMENT_METHOD_LABELS: Record<string, string> = {
+import type { PaymentMethod } from '@/dtos/payment-methods/payment-method'
+
+const PAYMENT_METHOD_LABELS: Record<PaymentMethod, string> = {
   cash: 'Dinheiro',
   creditCard: 'Crédito',
   debitCard: 'Débito',
   pix: 'Pix',
 }
 
-export function formatPaymentMethods(methods: string[]): string {
+export function formatPaymentMethods(methods: PaymentMethod[]): string {
   const formattedMethods = methods.map(
     (method) => PAYMENT_METHOD_LABELS[method] || method,
   )

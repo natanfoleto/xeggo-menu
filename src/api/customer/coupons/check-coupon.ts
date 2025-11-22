@@ -1,4 +1,11 @@
+import type { CouponType } from '@/dtos/coupons/coupon-type'
 import { api } from '@/lib/axios'
+
+export interface Discount {
+  type: CouponType
+  value: number
+  discountAmount: number
+}
 
 export interface CheckCouponRequest {
   restaurantId: string
@@ -7,11 +14,7 @@ export interface CheckCouponRequest {
 }
 
 export interface CheckCouponResponse {
-  discount: {
-    type: 'percentage' | 'fixed'
-    value: number
-    discountAmount: number
-  }
+  discount: Discount
 }
 
 export async function checkCoupon({

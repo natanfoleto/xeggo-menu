@@ -17,6 +17,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { useOrder } from '@/contexts/order-context'
 import { useRestaurant } from '@/contexts/restaurant-context'
+import type { CouponType } from '@/dtos/coupons/coupon-type'
 import { formatCurrency } from '@/utils/format-currency'
 
 export function CouponCode() {
@@ -30,7 +31,7 @@ export function CouponCode() {
 
   const [couponError, setCouponError] = useState<string | null>(null)
   const [couponDetails, setCouponDetails] = useState<{
-    type: 'percentage' | 'fixed'
+    type: CouponType
     value: number
     discountAmount: number
   } | null>(null)

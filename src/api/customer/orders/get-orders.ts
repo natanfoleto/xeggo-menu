@@ -1,20 +1,10 @@
+import type { OrderStatus } from '@/dtos/orders/order-status'
 import { api } from '@/lib/axios'
 
 export interface GetOrdersRequest {
   limit?: number
   restaurantId?: string
-  status?:
-    | 'awaiting_payment'
-    | 'payment_failed'
-    | 'payment_confirmed'
-    | 'payment_overdue'
-    | 'payment_refunded'
-    | 'chargeback_requested'
-    | 'pending'
-    | 'processing'
-    | 'delivering'
-    | 'delivered'
-    | 'canceled'
+  status?: OrderStatus
   date?: Date
 }
 
@@ -33,18 +23,7 @@ export interface GetOrdersResponse {
     }[]
     totalItemsQuantity: number
     total: number
-    status:
-      | 'awaiting_payment'
-      | 'payment_failed'
-      | 'payment_confirmed'
-      | 'payment_overdue'
-      | 'payment_refunded'
-      | 'chargeback_requested'
-      | 'pending'
-      | 'processing'
-      | 'delivering'
-      | 'delivered'
-      | 'canceled'
+    status: OrderStatus
   }[]
   meta: {
     limit: number

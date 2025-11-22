@@ -2,13 +2,15 @@ import { NavLink } from '@/components/nav-link'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useOrder } from '@/contexts/order-context'
+import type { PaymentType } from '@/dtos/orders/payment-type'
+import type { PaymentMethod } from '@/dtos/payment-methods/payment-method'
 
-const PAYMENT_TYPES: Record<string, string> = {
+const PAYMENT_TYPES: Record<PaymentType, string> = {
   online: 'Pagamento online',
   onDelivery: 'Pagamento na entrega/retirada',
 }
 
-const PAYMENT_METHODS: Record<string, string> = {
+const PAYMENT_METHODS: Record<PaymentMethod, string> = {
   cash: 'Dinheiro',
   creditCard: 'Cartão de Crédito',
   debitCard: 'Cartão de Débito',

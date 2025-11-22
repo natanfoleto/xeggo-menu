@@ -1,3 +1,7 @@
+import type { OrderStatus } from '@/dtos/orders/order-status'
+import type { OrderType } from '@/dtos/orders/order-type'
+import type { PaymentType } from '@/dtos/orders/payment-type'
+import type { PaymentMethod } from '@/dtos/payment-methods/payment-method'
 import { api } from '@/lib/axios'
 
 export interface GetCustomerOrderDetailsRequest {
@@ -7,20 +11,12 @@ export interface GetCustomerOrderDetailsRequest {
 export interface CustomerOrderDetails {
   id: string
   createdAt: string
-  status:
-    | 'pending'
-    | 'awaiting_payment'
-    | 'payment_failed'
-    | 'payment_confirmed'
-    | 'processing'
-    | 'delivering'
-    | 'delivered'
-    | 'canceled'
-  orderType: 'delivery' | 'pickup'
+  status: OrderStatus
+  orderType: OrderType
   totalInCents: number
   deliveryAddress: string | null
-  paymentType: string
-  paymentMethod: string
+  paymentType: PaymentType
+  paymentMethod: PaymentMethod
   changeForInCents: number | null
   deliveryFeeInCents: number | null
   discountInCents: number | null

@@ -1,3 +1,4 @@
+import type { OrderType } from '@/dtos/orders/order-type'
 import { api } from '@/lib/axios'
 
 export interface OrderItemComplement {
@@ -16,7 +17,7 @@ export interface CreateOrderRequest {
   restaurantId: string
   customerCpf?: string | null
   customerPhone?: string | null
-  orderType: 'delivery' | 'pickup'
+  orderType: OrderType
   deliveryAddress?: string | null
   paymentType: string
   paymentMethod: string

@@ -3,6 +3,7 @@ export function resetOrder() {
     'bag-items',
     'order-type',
     'payment-methods',
+    'payment-type',
     'change-for-in-cents',
     'delivery-fee-in-cents',
     'discount-in-cents',

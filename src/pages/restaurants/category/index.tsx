@@ -46,7 +46,7 @@ export function Category() {
       <div className="mx-auto min-h-screen max-w-7xl">
         <PageHeader title={currentCategory?.name || 'Categoria'} />
 
-        <CategoryProducts products={products || []} slug={slug} />
+        <CategoryProducts products={products || []} />
         <OtherCategories categories={otherCategories} />
       </div>
     </>

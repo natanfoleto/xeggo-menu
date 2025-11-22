@@ -1,19 +1,21 @@
 import { Button } from '@/components/ui/button'
 import { useOrder } from '@/contexts/order-context'
 import { useRestaurant } from '@/contexts/restaurant-context'
+import type { PaymentType } from '@/dtos/orders/payment-type'
+import type { PaymentMethod } from '@/dtos/payment-methods/payment-method'
 
-const PAYMENT_TYPES: Record<string, string> = {
+const PAYMENT_TYPES: Record<PaymentType, string> = {
   online: 'Pagamento online',
   onDelivery: 'Pagamento na entrega/retirada',
 }
 
-const ONLINE_PAYMENT_METHODS: Record<string, string> = {
+const ONLINE_PAYMENT_METHODS: Record<Exclude<PaymentMethod, 'cash'>, string> = {
   creditCard: 'Cartão de Crédito',
   debitCard: 'Cartão de Débito',
   pix: 'PIX',
 }
 
-const DELIVERY_PAYMENT_METHODS: Record<string, string> = {
+const DELIVERY_PAYMENT_METHODS: Record<PaymentMethod, string> = {
   cash: 'Dinheiro',
   creditCard: 'Cartão de Crédito',
   debitCard: 'Cartão de Débito',
@@ -22,6 +24,7 @@ const DELIVERY_PAYMENT_METHODS: Record<string, string> = {
 
 export function PaymentMethod() {
   const { restaurant } = useRestaurant()
+
   const { paymentType, setPaymentType, paymentMethod, setPaymentMethod } =
     useOrder()
 
@@ -61,12 +64,21 @@ export function PaymentMethod() {
                 const isSelected =
                   paymentType === type && paymentMethod === method
 
-                const PAYMENT_METHODS =
-                  type === 'online'
-                    ? ONLINE_PAYMENT_METHODS
-                    : DELIVERY_PAYMENT_METHODS
+                if (type === 'online') {
+                  if (method === 'cash') return null
 
-                if (type === 'online' && method === 'cash') return null
+                  return (
+                    <Button
+                      key={method}
+                      variant={isSelected ? 'default' : 'brand'}
+                      size="xs"
+                      onClick={() => handleSelectPaymentMethod(type, method)}
+                      className="w-min text-xs font-normal transition-all"
+                    >
+                      {ONLINE_PAYMENT_METHODS[method]}
+                    </Button>
+                  )
+                }
 
                 return (
                   <Button
@@ -76,7 +88,7 @@ export function PaymentMethod() {
                     onClick={() => handleSelectPaymentMethod(type, method)}
                     className="w-min text-xs font-normal transition-all"
                   >
-                    {PAYMENT_METHODS[method] || method}
+                    {DELIVERY_PAYMENT_METHODS[method]}
                   </Button>
                 )
               })}

@@ -139,8 +139,6 @@ export function SaveAddress() {
         city: request.city,
         state: request.state,
         isActive: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
       }
 
       updateAddressesOnCache(newAddress, true)
