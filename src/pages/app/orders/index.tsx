@@ -6,23 +6,11 @@ import { useSearchParams } from 'react-router-dom'
 import { getOrders } from '@/api/customer/orders/get-orders'
 import { PageHeader } from '@/components/page-header'
 import { Button } from '@/components/ui/button'
+import type { OrderStatus } from '@/dtos/orders/order-status'
 
 import { OrderCard } from './order-card'
 import { OrderFilters } from './order-filters'
 import { OrderSkeleton } from './order-skeleton'
-
-type OrderStatus =
-  | 'awaiting_payment'
-  | 'payment_failed'
-  | 'payment_confirmed'
-  | 'payment_overdue'
-  | 'payment_refunded'
-  | 'chargeback_requested'
-  | 'pending'
-  | 'processing'
-  | 'delivering'
-  | 'delivered'
-  | 'canceled'
 
 const orderStatusMap: Record<OrderStatus, string> = {
   awaiting_payment: 'Aguardando pagamento',

@@ -12,8 +12,9 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer'
 import { Label } from '@/components/ui/label'
+import type { Segment } from '@/dtos/segments/segment'
 
-const SEGMENTS = [
+const SEGMENTS: { value: Segment; label: string }[] = [
   { value: 'restaurant', label: 'Restaurante' },
   { value: 'bakery', label: 'Padaria' },
   { value: 'snackBar', label: 'Lanchonete' },

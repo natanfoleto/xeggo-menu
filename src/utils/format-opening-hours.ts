@@ -1,4 +1,6 @@
-const WEEKDAY_LABELS: Record<string, string> = {
+import type { WeekDay } from '@/dtos/opening-hours/week-day'
+
+const WEEKDAY_LABELS: Record<WeekDay, string> = {
   sunday: 'Domingo',
   monday: 'Segunda-feira',
   tuesday: 'Terça-feira',
@@ -28,7 +30,7 @@ export function formatOpeningHours(openingHours: OpeningHour[]) {
     'friday',
     'saturday',
     'sunday',
-  ]
+  ] as WeekDay[]
 
   const groupedByDay = openingHours.reduce(
     (acc, hour) => {

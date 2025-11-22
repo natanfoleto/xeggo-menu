@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CircleCheck, EllipsisVertical, Loader2 } from 'lucide-react'
 
 import { deleteAddress } from '@/api/customer/addresses/delete-address'
-import type { Address } from '@/api/customer/addresses/get-addresses'
+import type { Address } from '@/api/customer/addresses/get-address'
 import { setActiveAddress } from '@/api/customer/addresses/set-active-address'
 import { NavLink } from '@/components/nav-link'
 import { Button } from '@/components/ui/button'

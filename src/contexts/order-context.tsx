@@ -1,5 +1,8 @@
 import { createContext, type ReactNode, useContext } from 'react'
 
+import type { OrderType } from '@/dtos/orders/order-type'
+import type { PaymentType } from '@/dtos/orders/payment-type'
+import type { PaymentMethod } from '@/dtos/payment-methods/payment-method'
 import { useStorage } from '@/hooks/use-storage'
 import { compareEqualItems } from '@/utils/compare-equal-items'
 
@@ -28,9 +31,9 @@ interface OrderContextData {
   bagSubtotal: number
   bagTotal: number
   bagItemsCount: number
-  orderType: 'delivery' | 'pickup'
-  paymentType: string | null
-  paymentMethod: string | null
+  orderType: OrderType
+  paymentType: PaymentType | null
+  paymentMethod: PaymentMethod | null
   changeForInCents: number | null
   deliveryFeeInCents: number | null
   discountInCents: number | null
@@ -40,9 +43,9 @@ interface OrderContextData {
   removeFromBag: (itemId: string) => void
   updateItemQuantity: (itemId: string, quantity: number) => void
   clearBag: () => void
-  setOrderType: (type: 'delivery' | 'pickup') => void
-  setPaymentType: (type: string | null) => void
-  setPaymentMethod: (method: string | null) => void
+  setOrderType: (type: OrderType) => void
+  setPaymentType: (type: PaymentType) => void
+  setPaymentMethod: (method: PaymentMethod | null) => void
   setChangeForInCents: (value: number | null) => void
   setDiscountInCents: (value: number | null) => void
   setCouponCode: (code: string | null) => void
@@ -61,17 +64,17 @@ export function OrderProvider({ children }: OrderProviderProps) {
 
   const [bagItems, setBagItems] = useStorage<BagItem[]>('bag-items', [])
 
-  const [orderType, setOrderType] = useStorage<'delivery' | 'pickup'>(
+  const [orderType, setOrderType] = useStorage<OrderType>(
     'order-type',
     'delivery',
   )
 
-  const [paymentType, setPaymentType] = useStorage<string | null>(
+  const [paymentType, setPaymentType] = useStorage<PaymentType | null>(
     'payment-type',
     null,
   )
 
-  const [paymentMethod, setPaymentMethod] = useStorage<string | null>(
+  const [paymentMethod, setPaymentMethod] = useStorage<PaymentMethod | null>(
     'payment-method',
     null,
   )

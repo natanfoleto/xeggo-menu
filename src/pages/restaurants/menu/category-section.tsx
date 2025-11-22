@@ -7,7 +7,7 @@ interface CategorySectionProps {
     id: string
     name: string
     description: string | null
-    products: Array<{
+    products: {
       id: string
       name: string
       description?: string | null
@@ -17,7 +17,7 @@ interface CategorySectionProps {
         id: string
         name: string
       }[]
-    }>
+    }[]
   }
 }
 

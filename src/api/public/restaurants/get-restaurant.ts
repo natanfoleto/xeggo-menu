@@ -1,3 +1,7 @@
+import type { WeekDay } from '@/dtos/opening-hours/week-day'
+import type { PaymentType } from '@/dtos/orders/payment-type'
+import type { PaymentMethod } from '@/dtos/payment-methods/payment-method'
+import type { Segment } from '@/dtos/segments/segment'
 import { api } from '@/lib/axios'
 
 export interface Restaurant {
@@ -17,40 +21,15 @@ export interface Restaurant {
   city: string | null
   state: string | null
   isOpen: boolean
-  createdAt: string
-  updatedAt: string
   openingHours: {
     id: string
-    weekDay:
-      | 'sunday'
-      | 'monday'
-      | 'tuesday'
-      | 'wednesday'
-      | 'thursday'
-      | 'friday'
-      | 'saturday'
+    weekDay: WeekDay
     openTime: string
     closeTime: string
   }[]
-  segments: (
-    | 'restaurant'
-    | 'bakery'
-    | 'snackBar'
-    | 'pizzeria'
-    | 'iceCreamShop'
-    | 'coffee'
-    | 'fastFood'
-    | 'barbecue'
-    | 'japanese'
-    | 'brazilian'
-    | 'italian'
-    | 'chinese'
-    | 'mexican'
-    | 'arabic'
-    | 'bar'
-  )[]
-  paymentTypes: ('online' | 'onDelivery')[]
-  paymentMethods: ('cash' | 'creditCard' | 'debitCard' | 'pix')[]
+  segments: Segment[]
+  paymentTypes: PaymentType[]
+  paymentMethods: PaymentMethod[]
 }
 
 export interface GetRestaurantRequest {

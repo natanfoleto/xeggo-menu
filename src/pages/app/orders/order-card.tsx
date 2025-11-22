@@ -3,9 +3,10 @@ import { ptBR } from 'date-fns/locale'
 import { useState } from 'react'
 
 import { NavLink } from '@/components/nav-link'
-import { OrderStatus } from '@/components/order-status'
+import { OrderStatusTag } from '@/components/order-status-tag'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import type { OrderStatus } from '@/dtos/orders/order-status'
 import { formatCurrency } from '@/utils/format-currency'
 import { getInitialsName } from '@/utils/get-initials-name'
 
@@ -24,18 +25,7 @@ interface OrderCardProps {
     }[]
     totalItemsQuantity: number
     total: number
-    status:
-      | 'awaiting_payment'
-      | 'payment_failed'
-      | 'payment_confirmed'
-      | 'payment_overdue'
-      | 'payment_refunded'
-      | 'chargeback_requested'
-      | 'pending'
-      | 'processing'
-      | 'delivering'
-      | 'delivered'
-      | 'canceled'
+    status: OrderStatus
   }
 }
 
@@ -126,7 +116,7 @@ export function OrderCard({ order }: OrderCardProps) {
             )}
           </div>
 
-          <OrderStatus status={order.status} className="text-xs" />
+          <OrderStatusTag status={order.status} className="text-xs" />
         </div>
       </div>
     </NavLink>

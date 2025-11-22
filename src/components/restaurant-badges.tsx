@@ -2,9 +2,10 @@ import { Clock } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 import { useRestaurant } from '@/contexts/restaurant-context'
+import type { Segment } from '@/dtos/segments/segment'
 import { cn } from '@/lib/utils'
 
-const SEGMENT_LABELS: Record<string, string> = {
+const SEGMENT_LABELS: Record<Segment, string> = {
   restaurant: 'Restaurante',
   bakery: 'Padaria',
   snackBar: 'Lanchonete',
@@ -24,7 +25,7 @@ const SEGMENT_LABELS: Record<string, string> = {
 
 interface RestaurantBadgesProps {
   isOpen: boolean
-  segments: string[]
+  segments: Segment[]
   className?: string
 }
 

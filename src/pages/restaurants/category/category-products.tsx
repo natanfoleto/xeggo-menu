@@ -11,10 +11,9 @@ interface CategoryProductsProps {
       name: string
     }[]
   }[]
-  slug: string
 }
 
-export function CategoryProducts({ products, slug }: CategoryProductsProps) {
+export function CategoryProducts({ products }: CategoryProductsProps) {
   if (products.length === 0) {
     return (
       <div className="py-12 text-center">
@@ -28,12 +27,7 @@ export function CategoryProducts({ products, slug }: CategoryProductsProps) {
   return (
     <div className="bg-background">
       {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          slug={slug}
-          lastBorder
-        />
+        <ProductCard key={product.id} product={product} lastBorder />
       ))}
     </div>
   )
